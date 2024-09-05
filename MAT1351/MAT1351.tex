@@ -1,0 +1,230 @@
+
+\documentclass[x11names,reqno,14pt]{extarticle}
+\input{preamble}
+\usepackage[document]{ragged2e}
+\usepackage{epsfig}
+\usepackage{dynkin-diagrams}
+
+\pagestyle{fancy}{
+	\fancyhead[L]{Fall 2024}
+	\fancyhead[C]{MAT1344F}
+	\fancyhead[R]{John White}
+  
+  \fancyfoot[R]{\footnotesize Page \thepage \ of \pageref{LastPage}}
+	\fancyfoot[C]{}
+	}
+\fancypagestyle{firststyle}{
+     \fancyhead[L]{}
+     \fancyhead[R]{}
+     \fancyhead[C]{}
+     \renewcommand{\headrulewidth}{0pt}
+	\fancyfoot[R]{\footnotesize Page \thepage \ of \pageref{LastPage}}
+}
+\newcommand{\pmat}[4]{\begin{pmatrix} #1 & #2 \\ #3 & #4 \end{pmatrix}}
+\newcommand{\A}{\mathbb{A}}
+\newcommand{\B}{\mathbb{B}}
+\newcommand{\fin}{``\in"}
+\newcommand{\mk}[1]{\mathfrak{#1}}
+\newcommand{\g}{\mk{g}}
+\newcommand{\h}{\mk{h}}
+\newcommand{\tphi}{\tilde{\phi}}
+\DeclareMathOperator{\Perm}{Perm}
+\DeclareMathOperator{\pdim}{pdim}
+\DeclareMathOperator{\gldim}{gldim}
+\DeclareMathOperator{\lgldim}{lgldim}
+\DeclareMathOperator{\rgldim}{rgldim}
+\DeclareMathOperator{\idim}{idim}
+\DeclareMathOperator{\SU}{SU}
+\DeclareMathOperator{\SO}{SO}
+\DeclareMathOperator{\Ad}{Ad}
+\DeclareMathOperator{\ad}{ad}
+\DeclareMathOperator{\gr}{gr}
+\newcommand{\Rmod}{R-\text{mod}}
+\newcommand{\RMod}{R-\text{Mod}}
+\newcommand{\onto}{\twoheadrightarrow}
+\newcommand{\into}{\hookrightarrow}
+\newcommand{\barf}{\bar{f}}
+\newcommand{\dd}[2]{\frac{d#1}{d#2}}
+\newcommand{\pp}[2]{\frac{\partial #1}{\partial #2}}
+\newcommand{\gl}{\mk{g}\mk{l}}
+\renewcommand{\P}{\mathbb{P}}
+\renewcommand{\E}{\mathbb{E}}
+\DeclareMathOperator{\Ext}{Ext}
+\DeclareMathOperator{\Rank}{Rank}
+\DeclareMathOperator{\Sp}{Sp}
+
+\newcommand{\exactlon}[5]{
+		\begin{tikzcd}
+			0\ar[r]&#1\ar[r,"#2"]& #3 \ar[r,"#4"]& #5 \ar[r]&0
+		\end{tikzcd}
+}
+
+\title{MAT 1344}
+\author{John White}
+\date{Fall 2024}
+
+
+\begin{document}
+
+\section*{Lecture 2 - 3/5/24}
+
+\underline{Let's try setting notation}
+
+\underline{Notation:}
+
+We denote by $[X,Y]$ the homotopy classes of maps from $X \to Y$. 
+
+We denote by $[(X,A),(Y,B)]$ the homotopy classes of maps relative to $A$ $f:X\to Y$ such that $f(A)\subseteq B$
+
+\defn
+
+The \underline{$n$th homotopy group of $X$ based at $x$}, $\pi_n(X, x)$, is defined as 
+\[
+\pi_n(X,x) \eqdef \underbrace{[(I^n,\partial I^n), (X, x_0)]}_{\text{more useful for technical lemmas}} \cong \underbrace{[(S^n,*),(X,*)]}_{\text{more useful for intuition}}
+\]
+
+\lem
+
+For $n \geq 2$, $\pi_n(X)$ is Abelian. 
+
+\proof
+
+\includegraphics[scale=.2]{1351P1}
+
+\qed
+
+\defn
+
+The \underline{relative homotopy group} $\pi_n(X, A, x_0)$ is
+\[
+[(I^n, \partial I^n, \partial I^n\setminus I^{n-1}),(X,A,x_0)] \cong [(D^n, \partial D^n, *),(X,A,x_0)]
+\]
+
+\underline{Exercise:}
+
+Show that for $n \geq 3$, this is an Abelian group. 
+
+INSERT PICTURE HERE
+
+We have a long exact sequence for homotopy groups:
+\[
+\begin{tikzcd}
+\cdots \ar[r] & \pi_n(A) \ar[r, "i_*"] & \pi_n(X) \ar[r, "tautological"] & \ar[r, "restriction"] \pi_n(X,A) \ar[r] & \pi_{n-1}(A) \ar[r] & \cdots 
+\end{tikzcd}
+\]
+
+\underline{Exercise:} Convince yourself its exact at $\pi_n(X)$. 
+
+\defn
+
+The \underline{Hurewicz homomorphism $H:\pi_n(X)\to H_n(X)$, $\pi_n(X,A) \to H_n(X, A)$} is defined as follows: 
+
+Given $f:(I,\del I^n) \to (X, A)$, define a singular cycle using a homeomorphism from $I^n$ to the $n$-simplex. 
+
+\underline{Exercise:} Check that this is a homomorphism. 
+
+\thm
+
+$H:\pi_n(S^n) \to H_n(S^n)$ is an isomorphism, and therefore $\pi_n(S^n) \cong \Z$. 
+
+\proof
+
+To show it's onto, we need a map of degree $d$. To do this, pick $d$ little balls inside the sphere, map each onto the whole sphere, and map everything outside these balls to the basepoint. No problems arise so long as we correctly consider orientation. 
+
+Now we have to show it's injective. We do this by showing every map of degree 0 is nullhomotopic. 
+
+Take $f:S^n\to S^n$ of degree 0. By some homotopy, we can assume it is smooth. Pick a regular value, and take the preimage of a ball around it. Its preimage is a bunch of balls with local degrees which cancel out. 
+
+Next, take a homotopy $H:S^n\times[0,1]\to S^n$ which spreads the ball around the regular point around the entire sphere, sending everything outside it to the basepoint. Call this a homotopy from $\Id$ to $H_1$. 
+
+Now consider $H \circ (g\times \Id_{[0,1]})$, which is a homotopy from $g$ to $H_1\circ g$. 
+
+Now we have a map $H_1\circ g$ sending everything but these discs in the domain to the basepoint. 
+
+Then, consulting the picture, we connect the balls using spaghettis. 
+
+\includegraphics[scale=.2]{1351P2}
+\qed
+
+\thm[Whitehead Theorem]
+
+Let $X, Y$ be CW complexes, $Y$ connected. Let $f:X\to Y$ such that $f_*:\pi_n(X) \to \pi_n(Y)$ is an isomorphism for all $n \geq0$. 
+
+Then $f$ is a homotopy equivalence. 
+
+\proof
+\,
+
+\underline{note:}
+\begin{enumerate}[label=(\roman*)]
+
+\item It is not enough for $\pi_n(X), \pi_n(Y)$ to be abstractly isomorphic, there must be a map. For example, for every $n$, $\pi_n(S^2) \cong \pi_n(\CP^2\times S^3)$, but we know from their homology groups that they're not homotopy equivalent. 
+
+\item They need to be CW complexes. For example,if we take the map from the point to the warsaw circle, this is an iso on all $\pi_n$, but the warsaw circle is not contractible. 
+
+\end{enumerate}
+
+We now proceed with the proof
+
+\underline{Case 1:} 
+
+We begin by showing that if $\pi_n(Y) \cong 0$ for all $n \geq 0$, then $X$ is contractible. The idea is that we contract skeleton by skeleton. 
+
+\underline{Step 0:} Homotope $Y^{(0)}$ to the basepoint (since $Y$ is connected).
+
+Recall that CW satisfy the \underline{homotopy extension property}, so a nullhomotopy of $Y^{(k)}$ is a map on $Y\times\{0\} \cup Y^{(k)} \times [0, 1]$ which extends to $Y\times[0,1]$. 
+
+\underline{Step $k + 1$:} We've built a map $f_k:Y\to Y$ such that $Y^{(k)}$ goes to the basepoint. So every $(k + 1)$-cell becomes a map $(D^{k + 1}, S^k) \to (Y, y_0)$. Since $\pi_{k + 1}(Y) = 0$, we can contract the $(k + 1)$-skeleton and extend this map to the rest of $Y$. 
+
+\underline{Step $\oo$:}
+
+Do step $0$ on $[0,\frac12]$, step $1$ on $[\frac12,\frac34]$, et cetera. The image of every point is eventually constant, so the homotopy is continuous at 1 (exercise in using the weak topology).
+
+\underline{Case 2:} Suppose $X \into Y$ is a subcomplex (and the inclusion induces $\cong$ on all $\pi_n$). Then
+
+$\pi_n(Y, X)\cong 0$ by the LES from above. We can do the same thing except instead of contracting into a point, we deformation retract onto $X$.
+
+\underline{Case 3:} General case. Let $X \to Y$ be some map. We know $Y \cong M_f = \frac{Y \coprod X\times[0,1]}{(x,1)\sim f(x)}$
+
+This reduces the general case to case 2. 
+
+\qed
+
+\thm[Hurewicz Theorem] 
+
+Let $X$ be a CW complex. If $\pi_k(X) \cong 0$ for $k < n$ (and $n\geq2$), then $H_k(X)\cong 0$ for $k \leq n$, and $H:\pi_n(X) \to H_n(X)$ is an isomorphism. 
+
+\proof
+
+Suppose by induction that $X^{(k-1)}$ is a point, $k < n$. We find a $Y \simeq X$ such that $Y^{(k)}$ is a point. 
+
+\underline{Step 1:} Attach $(k + 1)$-cells to fill each $k$-cell $e_i$. For each $e_i$ there is a map $f_i:D^{k + 1} \to X$ such that $f_i|_{\del}$ is the inclusion of $e_i$.
+
+These together form a map from $S^{k+1}$ along which we can attach a $(k + 2)$-cell. We get a space $Z$ which obviously deformation retracts to $X$. 
+
+\underline{Step 2:} Go from $Z$ to $Y$. 
+
+Inside $Z$ we have a subcomplex $A$ which is contractible, so $Z/A\simeq Z$. So set $Y = Z/A$.
+
+By this ``cell-trading" method, we've shown the first part of the theorem (we have shown that $X$ is homotopy equivalent to something with a trivial $k$-skeleton, so by cellular homology the homology groups vanish. 
+
+\includegraphics[scale=.2]{1351P3}
+
+Now we need to show that if $X^{(n-1)}$ is a point, then $\pi_n(X) \cong H_n(X)$.
+
+Surjectivity is clear (because every homology generator is represented by a sphere). 
+
+For injectivity, we need to show that if a certain sum of $n$-cells is homologically trivial, then it is homotopically trivial. 
+
+If it is homologically trivial, then there's a sum of $(n + 1)$-cells whose $\del$ is $\sum \alpha_ie_i$. 
+
+UNTIL NEXT TIME. 
+
+
+
+
+\end{document}
+
+
+
+
