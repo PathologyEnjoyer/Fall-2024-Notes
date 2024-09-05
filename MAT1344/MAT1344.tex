@@ -1,0 +1,203 @@
+
+\documentclass[x11names,reqno,14pt]{extarticle}
+\input{preamble}
+\usepackage[document]{ragged2e}
+\usepackage{epsfig}
+\usepackage{dynkin-diagrams}
+
+\pagestyle{fancy}{
+	\fancyhead[L]{Fall 2024}
+	\fancyhead[C]{MAT1344F}
+	\fancyhead[R]{John White}
+  
+  \fancyfoot[R]{\footnotesize Page \thepage \ of \pageref{LastPage}}
+	\fancyfoot[C]{}
+	}
+\fancypagestyle{firststyle}{
+     \fancyhead[L]{}
+     \fancyhead[R]{}
+     \fancyhead[C]{}
+     \renewcommand{\headrulewidth}{0pt}
+	\fancyfoot[R]{\footnotesize Page \thepage \ of \pageref{LastPage}}
+}
+\newcommand{\pmat}[4]{\begin{pmatrix} #1 & #2 \\ #3 & #4 \end{pmatrix}}
+\newcommand{\A}{\mathbb{A}}
+\newcommand{\B}{\mathbb{B}}
+\newcommand{\fin}{``\in"}
+\newcommand{\mk}[1]{\mathfrak{#1}}
+\newcommand{\g}{\mk{g}}
+\newcommand{\h}{\mk{h}}
+\newcommand{\tphi}{\tilde{\phi}}
+\DeclareMathOperator{\Perm}{Perm}
+\DeclareMathOperator{\pdim}{pdim}
+\DeclareMathOperator{\gldim}{gldim}
+\DeclareMathOperator{\lgldim}{lgldim}
+\DeclareMathOperator{\rgldim}{rgldim}
+\DeclareMathOperator{\idim}{idim}
+\DeclareMathOperator{\SU}{SU}
+\DeclareMathOperator{\SO}{SO}
+\DeclareMathOperator{\Ad}{Ad}
+\DeclareMathOperator{\ad}{ad}
+\DeclareMathOperator{\gr}{gr}
+\newcommand{\Rmod}{R-\text{mod}}
+\newcommand{\RMod}{R-\text{Mod}}
+\newcommand{\onto}{\twoheadrightarrow}
+\newcommand{\into}{\hookrightarrow}
+\newcommand{\barf}{\bar{f}}
+\newcommand{\dd}[2]{\frac{d#1}{d#2}}
+\newcommand{\pp}[2]{\frac{\partial #1}{\partial #2}}
+\newcommand{\gl}{\mk{g}\mk{l}}
+\renewcommand{\P}{\mathbb{P}}
+\renewcommand{\E}{\mathbb{E}}
+\DeclareMathOperator{\Ext}{Ext}
+\DeclareMathOperator{\Rank}{Rank}
+\DeclareMathOperator{\Sp}{Sp}
+
+\newcommand{\exactlon}[5]{
+		\begin{tikzcd}
+			0\ar[r]&#1\ar[r,"#2"]& #3 \ar[r,"#4"]& #5 \ar[r]&0
+		\end{tikzcd}
+}
+
+\title{MAT 1344}
+\author{John White}
+\date{Fall 2024}
+
+
+\begin{document}
+
+\section*{Lecture 1 - 3/5/24}
+
+A good starting point is Newton's equation $V(q_1, \dots, q_n)$ for a particle: 
+\[
+m\ddot{q_i} = -\pp{V}{q_i}
+\]
+
+The first observation is that if energy is 
+\[
+E = \frac{m}{2}\dot{q}^2 + V(q)
+\]
+then $E$ is constant along solution curves (take the $t$ derivative). 
+
+A classic physics trick is to reduce $n$th order to first order by letting higher derivatives be introduced as new variables. Introduce $p_i = m\dot{q}_i$. We have the equations
+\begin{align*}
+\dot{q_i} & = \frac{1}{m}p_i  & \dot{p_i} = -\pp{V}{q_i}
+\end{align*}
+The energy becomes ``Hamiltonian." 
+\[
+H(q, p) = \frac{1}{2m}\sum_{i=1}^n p_i^2 + V(q)
+\]
+
+We can write these equations from earlier quite nicely in terms of the Hamiltonian (if you know the potential you know the Hamiltonian, and vice-versa) as 
+\begin{align*}
+\dot{q_i} & = \pp{H}{p_i},  & \dot{p_i} = -\pp{H}{q_i}
+\end{align*}
+
+Hamilton's equation. This looks similar to $\dot{X_i} = -\pp{V}{x_i}$, the equation of a gradient flow. 
+
+One advantage of these Hamiltonian equations is that we have \underline{\underline{lots}} of symmetry, i.e. for coordinate changes 
+\begin{align*}
+\tilde{q_i} = f_i(q, p), \,\,\,& \tilde{p_i} = g_i(q, p); & \tilde{H}(\tilde{q},\tilde{p}) = H(q, p)
+\end{align*}
+then in new coordinates, $\dot{\tilde{q_i}} = \pp{\tilde{H}}{\tilde{p_i}}, \dot{\tilde{p_i}} = -\pp{\tilde{H}}{\tilde{q_i}}$
+
+\exm
+
+$\tilde{p_i} = -q_i, \tilde{q_i} = p_i$
+
+\exm
+
+$\tilde{q_i} = q_i, \tilde{p_i} = p_i + \varphi_i(q_1, \dots, q_n)$
+
+We think of this Hamiltonian as having a very large infintie dimensional symmetry group, in contrast to the earlier graident flow, which has a very small symmetry group. 
+
+A \underline{Hamiltonian vector field} 
+\[
+X_H = \sum_{i=1}^n \left(\pp{H}{q_i}\pp{}{p_i} - \pp{H}{p_i}\pp{}{q_i}\right)
+\]
+
+If we take the exterior derivative, 
+\[
+dH = \sum_{i=1}^n\left(\pp{H}{q_i}dq_i + \pp{H}{p_i}dp_i\right)
+\]
+We can write Hamilton's equation as $\iota(X_H)\omega = - dH$, with $\omega = \sum_{i=1}^ndq_i\wedge dp_i$ where $\iota$ means contraction. 
+
+Often we take this equation as the definition of the Hamiltonian vector field, which defines a differential equation, which defines a flow, et cetera. 
+
+\underline{Remark:} The word ``Symplectic" was introduced by Hermann Weyl in the theory of Lie groups. 
+
+Symplectic manifolds were introduced by Charles Ehrsmann and Paulette Libermann around 1948. 
+
+In the 60s and 70s, Souriau, Kostant (SP?), others did more work such as trying to phrase classical mechanics in this language. Many others, such as Arnold, Thurston, who showed that there symplectic and complex manifolds are not the same. Arnold initiated a program of symplectic topology in 74(?). Weinstein, Steinberg, Guillemain...
+
+\section*{\underline{Part 1: Symplectic Linear Algebra}}
+
+\defn
+
+A \underline{symplectic structure} on a finite dimensional (real for now) vector space $E$ is a bilinear form
+\[
+\omega:E\times E \to \R
+\]
+which is
+\begin{enumerate}[label=(\roman*)]
+
+\item Skew-symmetric, meaning $\omega(v, w) = \omega(w, v)$
+
+\item Nondegenerate, meaning $\ker \omega \eqdef \{v \in E \mid \omega(v, w) = 0$ for all $w \in E\}$ is trivial. (Every vector has a friend).
+
+\end{enumerate}
+
+In terms of $\omega^\flat:E\to E^*$, $v \mapsto \omega(v, \cdot)$. 
+
+Skew-symmetry means $(\omega^\flat)* = -\omega^\flat$. 
+
+Non-degeneracy means $\ker(\omega^\flat) = 0$
+
+\exm
+\,
+
+\begin{enumerate}
+
+\item ``Standard symplectic structure" For $E = \R^{2n}$ with basis $e_1, \dots, e_n, f_1, \dots, f_n$, if we set 
+\begin{align*}
+\omega(e_i,e_j) = 0,\omega(f_i,f_j)=0,\,&\omega(e_i,f_j)=\delta_{ij}
+\end{align*}
+
+\item For $V$ any finite dimensional vector space, setting $E = V \oplus V^*$, and 
+\[
+\omega((v_i,\alpha_i),(v_2,\alpha_2)) = \langle\alpha_1,v_2\rangle - \langle \alpha_2,v_1\rangle
+\]
+
+\item If $V$ is any finite-dimensional \underline{complex} inner product space $h:V\times V \to \C$. 
+
+If we take $E = V$, $\omega(v, w) = \Im(h(v, w))$ is symplectic.
+
+\end{enumerate}
+
+Note that these three are all actually the same example. 
+
+\defn
+
+A \underline{symplectomorphism} between symplectic vector spaces $(E_i, \omega_i)$, $(i = 1, 2)$ is a linear isomorphism $A: E_1\to E_2$, such that
+\[
+\omega_2(Av,Aw) = \omega_1(v,w)
+\]
+for all $v, w \in E_1$ (I.e $\omega_1 = A^*\omega_2$).
+
+\underline{Remark:} stipulating that it is an isomorphism is a little overkill, because anything satisfying the second condition is injective. 
+
+Symplectomorphisms of $(E,\omega)$ to itself are denoted $\Sp(E,\omega)$, and is called the \underline{symplectic group}.
+
+In this sense, it is easy to see that those three examples are all symplectomorphic. 
+
+
+
+
+
+
+
+\end{document}
+
+
+
+
