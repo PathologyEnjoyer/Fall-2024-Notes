@@ -52,6 +52,9 @@
 \DeclareMathOperator{\Ext}{Ext}
 \DeclareMathOperator{\Rank}{Rank}
 \DeclareMathOperator{\Sp}{Sp}
+\DeclareMathOperator{\ann}{ann}
+\DeclareMathOperator{\Lag}{Lag}
+\DeclareMathOperator{\Riem}{Riem}
 
 \newcommand{\exactlon}[5]{
 		\begin{tikzcd}
@@ -186,9 +189,309 @@ for all $v, w \in E_1$ (I.e $\omega_1 = A^*\omega_2$).
 
 \underline{Remark:} stipulating that it is an isomorphism is a little overkill, because anything satisfying the second condition is injective. 
 
-Symplectomorphisms of $(E,\omega)$ to itself are denoted $\Sp(E,\omega)$, and is called the \underline{symplectic group}.
+Symplectomorphisms of $(E,\omega)$ to itself are denoted $\Sp(E,\omega)$, and is called the 
+
+\underline{symplectic group}.
 
 In this sense, it is easy to see that those three examples are all symplectomorphic. 
+
+
+\section*{Lecture 2 - 9/10/24}
+
+\subsection*{\underline{Subspace of symplectic vector space}}
+
+Let $F \subseteq E$. Define $F^\omega = \{v\in E \mid \omega(v, w) = 0$ for all $w \in F\}$, the ``$w$-orthogonal" space. 
+
+In terms of $\ann(F) = \{\alpha\in E^* \mid \alpha(v) = 0$ for all $v \in F\}$
+
+Note that $\omega^\flat:F^\omega \to \ann(F)$ is an isomorphism.
+
+\prop
+\,
+\begin{itemize}
+
+\item $\dim F^\omega = \dim E - \dim F$
+
+\item $(F^\omega)^\omega = F$, $(F_1 \cap F_2)^\omega = F_1^\omega + F_2^\omega$, $(F_1 + F_2)^\omega = (F_1)^\omega \cap (F_2)^\omega$
+
+\end{itemize}
+
+\proof
+\,
+\begin{itemize}
+
+\item $\dim F^\omega = \dim(\ann(F)) = \cdots$
+
+\item Since elements of $F$ are orthogonal to elements of $F^\omega$, we have $F\subseteq (F^\omega)^\omega;$ by dimension count have equality. Etc
+
+\end{itemize}
+
+\defn
+
+A subspace $F \subseteq E$ is called
+\begin{itemize}
+
+\item \underline{isotropic} if $F \subseteq F^\omega$
+
+\item \underline{coisotropic} if $F^\omega \subseteq F$
+
+\item \underline{Lagrangian} if $F^\omega = F$. 
+
+\end{itemize}
+
+Note $F$ is isotropic if and only if $\omega|_{F\times F} = 0$
+
+Note: 
+
+If $F$ is isotropic, then $\dim F \leq \frac12\dim E$
+
+If $F$ is coisotropic, then $\dim F \geq \frac12\dim E$
+
+In both cases, if equality holds, $F$ is Lagrangian. 
+
+So if $F$ is Lagrangian, then $\dim F = \frac12 \dim E$.
+
+\defn The set of Lagrangian subspaces is denoted $\Lag(E,\omega)$, called the ``\underline{Lagrangian Grassmannian}". 
+
+\prop
+\,
+\begin{enumerate}[label=(\alph*)]
+
+\item $\Lag(E, \omega) \neq \varnothing$
+
+\item For every $M \in \Lag(E, \omega)$, there exists $L \in \Lag(E,\omega)$ with $L \cap M = \{0\}$ (i.e. $E = L \oplus M$).
+
+\end{enumerate}
+
+\proof
+\,
+\begin{enumerate}[label=(\alph*)]
+
+\item By induction: Suppose $F \subseteq E$ is isotropic. If $F$ is Lagrangian, we're done. Otherwise, $F \subset F^\omega$ is a proper subspace. Pick $v \in F^\omega \setminus F$. Then $F' = F + \operatorname{Span}\{v\}$ is again isotropic. The process ends when it becomes Lagrangian.
+
+\item By induction: suppose $F \subseteq E$ is isotropic, with $F\cap M = \{0\}$. If $F$ is Lagrangian, we are done. Otherwise, $F + (F^\omega \cap M) \subseteq F^\omega$ is an isotropic subspace, hence is a proper subspace of $F^\omega$. Pick $v \in F^\omega\setminus (F + (F^\omega \cap M))$; $F' = F + span\{v\}$
+
+\claim $F' \cap M = \{0\}.$
+
+\proof
+
+Indeed: if $y \in F'\cap M$, write $y = x + tv$, $x \in F, t \in \R$. Then
+\[
+tv = y - x \in (F + M) \cap F^\omega = F + (F^\omega \cap F)
+\]
+
+\qed
+
+\end{enumerate}
+
+\qed
+
+\underline{Exercise:} Given $L \in \Lag(E, \omega)$. Let $F \subseteq E$ be any complement, i.e. $E = L \oplus F$. 
+\begin{enumerate}[label=(\roman*)]
+
+\item Show that there exists a unique linear map $A:F\to L$ such that $F^\omega = \{v + Av\mid v \in F\}$
+
+\item Show that all $F_t = \{v + tAv \mid v \in F\}$ is a complement to $L$.
+
+\item $F_{\frac12}$ is Lagrangian
+
+\end{enumerate}
+
+Given $(E, \omega)$, we can choose a Lagrangian splitting $E = L \oplus M$. 
+
+\prop The choice of splitting identifies $M\cong L^*$ and determines a symplectomorphism 
+\[
+E\to L\oplus L^*
+\]
+
+\proof
+
+Every $w \in M$ defines a linear functional $\alpha_\omega \in L^*$, $\alpha_\omega(v) = \omega(v, w)$
+
+The map $M \to L^*$, $w \mapsto \alpha_w$ is an isomorphism, using the non-degeneracy of the symplectic structure. The resulting map $E \cong L \oplus M \to L \oplus L^*$ is a symplectomorphism (by formula for sympletic structure on $L \oplus L^*$).
+
+\qed
+
+\prop
+
+For every symplectic $(E, \omega)$, there exists a symplectomorphism $E \to \R^{2n}$, where $\R^{2n}$ has the standard symplectic structure. 
+
+\proof
+
+Choose a Lagrangian splitting $E = L \oplus L^*$. Now pick basis of $L, $ dual basis of $L^*$ to identify $E \cong \R^{2n}$
+
+\underline{Remark:}
+
+$\Lag(\R^2) = \RP(1) \cong S^1$
+
+$\Lag(\R^4) = ?$
+
+\underline{Exercise:}
+
+Given $L \in \Lag(E,\omega)$, show that the set of all 
+\begin{itemize}
+
+\item complement to $L$ is an affine space with corresponding linear space $\Hom(E/L,L)$ (note if $L$ is lagrangian, then $E/L$ is naturally identified with $L^*$).
+
+\item Lagrangian complements to $L$ is an affine space with corresponding linear space the self-adjoint maps $L^* \to L$.
+
+\end{itemize}
+
+In general, $\dim \Lag(\R^{2n}) = \frac{n(n + 1)}{2}$
+
+\subsection*{\underline{Linear Reduction:}}
+
+Let $(E, \omega)$ be symplectic. $F \subseteq E$ is \underline{symplectic} if $\omega|_{F\times F}$ is nondegenerate. Equivalently, $\underbrace{F\cap F^\omega}_{=\ker \omega|_{F\times F}} = \{0\}$
+
+Note that $F$ is symplectic if and only if $F^\omega$, and $E = F \oplus F^\omega$.
+
+In general, if $F$ is not symplectic, we can make it symplectic by quotienting by $\ker(\omega|_{F\times F}) = F\cap F^\omega$. 
+
+\prop
+
+For any subspace $F$, the quotient $E_F = F/(F\cap F^\omega)$ inherits a symplectic structure: 
+\[
+\omega_F(\pi(v), \pi(w)) = \omega(v, w)
+\]
+where $\pi$ is the quotient map $\pi:F\to F/(F\cap F^\omega)$
+
+\proof
+
+It's well defined: E.g, if $\pi(v) = 0$, then $v \in F \cap F^\omega$, so $\omega(v, w) = 0$ for all $w\in F$. 
+
+It's non-degenerate: If $\pi(v)\in \ker(\omega_F)$, then $\omega(v, w) = 0$ for all $w \in F$, so $v \in F \cap F^\omega$, so $\pi(v) = 0$. 
+
+Note: For $F$ coisotropic, $E_F = F/F^\omega$
+
+\prop
+
+For $F$ coisotropic, $L \subseteq E$ Lagrangian, the subspace $\pi(L\cap F) = L_F$ is again Lagrangian.
+
+\proof
+
+Clearly, $L_F$ is isotropic. To show $L_F$ is Lagrangian, count dimension: $(L_F) = (L \cap F)/(L \cap F^\omega)$.
+\begin{align*}
+\dim (L \cap F^\omega) & = \dim E - \dim (L \cap F^\omega)^\omega \\
+& = \dim E - \dim (L + F) \\
+& = \underbrace{\dim E}_{2\dim L} - \dim L - \dim F + \dim(L\cap F)\\
+& = \dim L - \dim F + \dim (L \cap F)
+\end{align*}
+
+So 
+\begin{align*}
+\dim (L_F) & = \dim(L\cap F) - \dim(L\cap F^\omega) \\
+& = \dim F - \dim L \\
+\dim E_f & = \dim F - \dim F^\omega \\& = 2\dim F - \dim E \\ & = 2(\dim F - \dim L) 
+\end{align*}
+
+\qed
+
+So, we have constructed a map $\Lag(E, \omega) \to \Lag(E_F, \omega_F), L \mapsto L_F$
+
+\underline{Warning:} This map is not continuous!
+
+It is discontinuous at the set of $L$'s where $L, F$ are not transverse. Away from this set, it's smooth. 
+
+\underline{Exercise:}
+
+Let $E = \R^4$ with standard symplectic basis. Take 
+\[
+F = \operatorname{span}\{e_1, e_2, f_1\}
+\]
+Then $F^\omega = \operatorname{span}\{e_2\}$. 
+
+$F/F^\omega \cong \R^2 = \operatorname{span}\{e_1, f_1\}$. 
+
+Let $L_t = \operatorname{span}\{e_1 + tf_2, e_2 + tf_1\}$. 
+\begin{enumerate}[label=(\alph*)]
+
+\item Check $L_t$ are Lagrangian
+
+\item Compute $(L_t)_F \subseteq \R^2$ and find it's discontinuous at $t = 0$. 
+
+\end{enumerate}
+
+\subsection*{\underline{Compatible complex structures}}
+
+\underline{Recall:} 
+
+Given a complex vector space $V$, we can always regard it as a real vector space of twice the dimension. ``Multiplication by $\sqrt{-1}"$ becomes a real linear transformation $\mathcal{J} \in \Hom_{\R}(V,V)$, $\mathcal{J}^2 = -I$. 
+
+Conversely, a real vector space with such a $\mathcal{J}$ is called a \underline{complex structure}, and we can imbue it with complex multiplication by defining
+\[
+(a + ib)v = av + b(\mathcal{J}v)
+\]
+
+\defn
+
+Let $(E, \omega)$ be a symplectic vector space. A complex structure $\mathcal{J}$ (meaning $\mathcal{J}^2 = -I)$ is \underline{$\omega$-compatible} if 
+\[
+g(v, w) \eqdef \omega(v, \mathcal{J}w)
+\]
+defines an inner product. Denote by $\mathcal{J}(E, \omega) \eqdef \{\omega-$compatible complex structure $\}$.
+
+Given $j \in \mathcal{J}(E, \omega)$, we get a complex inner product by 
+\[
+h(v, w) \eqdef g(v, w) + \sqrt{-1}\omega(v, w)
+\]
+
+\underline{Remark:} $\mathcal{J} \in \mathcal{J}(E,\omega)$ is a symplectomorphism: 
+\begin{align*}
+\omega(\mathcal{J}v, \mathcal{J}w) & = g(\mathcal{J}v, w) \\
+& = g(w, \mc{J}v) \\
+& = \omega(w, \mc{J}^2v) \\
+& = -\omega(w, v)\\
+& = \omega(v, w) \\
+\end{align*}
+
+\underline{Remark:} For $\R^{2n}$, there is a standard complex structure given by $\mc{J}(e_i) = f_i, \mc{J}(f_i) = -e_i$.
+
+This identifies $\R^{2n} \cong \C^n$. We can come up with more complex structures by picking an $A \in \Sp(E, \omega)$ and considering $\mc{J} \mapsto A\mc{J}A^{-1}$. 
+
+We have a map $\mc{J}(E,\omega) \to \operatorname{Riem}(E)$ (real inner products) given by $\mc{J} \mapsto g$, where $g$ is as above. 
+
+There is a canonical left inverse $\varphi:\operatorname{Riem}(E) \to \mc{J}(E,\omega)$ as follows: 
+
+\prop There is a canonical retraction (in the sense of topology) from $\operatorname{Riem}(E) \to \mc{J}(E, \omega)$.
+
+\proof
+
+Given $k \in \Riem(E)$, define $A \in \GL(E)$ by $k(v, w) = \omega(v, Aw)$. 
+
+$A$ is not a complex structure in general, but it's skew-symmetric with respect to $h$: 
+\[
+A^T = -A
+\]
+Define $|A| = (A^TA)^\frac12 = (-A^2)^\frac12$. This commutes with $A$ by functional calculus, and define $\mc{J} = A|A|^{-1}$. This will do the job. 
+
+\qed
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -197,7 +500,3 @@ In this sense, it is easy to see that those three examples are all symplectomorp
 
 
 \end{document}
-
-
-
-
