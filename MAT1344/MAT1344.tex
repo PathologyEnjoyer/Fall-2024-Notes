@@ -27,6 +27,7 @@
 \newcommand{\mk}[1]{\mathfrak{#1}}
 \newcommand{\g}{\mk{g}}
 \newcommand{\h}{\mk{h}}
+\newcommand{\J}{\mc{J}}
 \newcommand{\tphi}{\tilde{\phi}}
 \DeclareMathOperator{\Perm}{Perm}
 \DeclareMathOperator{\pdim}{pdim}
@@ -39,6 +40,7 @@
 \DeclareMathOperator{\Ad}{Ad}
 \DeclareMathOperator{\ad}{ad}
 \DeclareMathOperator{\gr}{gr}
+\DeclareMathOperator{\Sig}{Sig}
 \newcommand{\Rmod}{R-\text{mod}}
 \newcommand{\RMod}{R-\text{Mod}}
 \newcommand{\onto}{\twoheadrightarrow}
@@ -47,6 +49,8 @@
 \newcommand{\dd}[2]{\frac{d#1}{d#2}}
 \newcommand{\pp}[2]{\frac{\partial #1}{\partial #2}}
 \newcommand{\gl}{\mk{g}\mk{l}}
+\newcommand{\spew}{\Sp(E,\omega)}
+\newcommand{\jew}{\mc{J}(E,\omega)}
 \renewcommand{\P}{\mathbb{P}}
 \renewcommand{\E}{\mathbb{E}}
 \DeclareMathOperator{\Ext}{Ext}
@@ -55,7 +59,7 @@
 \DeclareMathOperator{\ann}{ann}
 \DeclareMathOperator{\Lag}{Lag}
 \DeclareMathOperator{\Riem}{Riem}
-
+\DeclareMathOperator{\Span}{span}
 \newcommand{\exactlon}[5]{
 		\begin{tikzcd}
 			0\ar[r]&#1\ar[r,"#2"]& #3 \ar[r,"#4"]& #5 \ar[r]&0
@@ -466,37 +470,534 @@ Define $|A| = (A^TA)^\frac12 = (-A^2)^\frac12$. This commutes with $A$ by functi
 
 \qed
 
+\section*{Lecture 3 - 9/12/24}
+
+Let $(E, \omega)$ be a symplectic vector space. Let $\mc{J} \in \Hom(E, E), \mc{J}^2 = -I$. $Y$ is \underline{$\omega$-compatible} if 
+\[
+g(v, w) \eqdef \omega(v, \mc{J}w)
+\]
+is a (real) inner product. 
+
+\exm 
+
+Let $E = \R^{2n} = \Span\{e_1, \dots, e_n, f_1, \dots, f_n\}$. Let $\mc{J}e_i = f_i, \mc{J}f_i = -e_i$. Then $g$ is the standard inner product. 
+
+\underline{Remark:} 
+\begin{itemize}
+
+\item Note: in the definition of $\omega$-compatible, any two of $\omega, \mc{J}, g$ deetermines the third. 
+
+\item $\mc{J} \in \Sp(E,\omega) \cap O(E, g)$
+
+\item $h(v, w) = g(v, w) + i\omega(v, w)$ is a \underline{complex} inner product, with corresponding unitary group $U(n) = \underbrace{U(E, h)}_{\text{preserves }h} = \underbrace{\Sp(E, \omega)}_{\text{preserves }\omega} \cap \underbrace{O(E, g)}_{\text{preserves }g}$. Recall that $U(n)$ is compact and connected, and has $\pi_1 = \Z$
+
+\end{itemize}
+
+Let $\mc{J}(E, \omega) = \{\mc{J} \mid  \omega$-compatible $\}$
+
+We have a map $\psi:\mc{J}(E,\omega) \to \Riem(E) \subseteq \Sym^2(E)$, which is contractible.
+
+\thm There is a canonical retraction 
+\[
+\phi:\Riem(E) \to \mc{J}(E, \omega)
+\]
+such that $\phi \circ \psi = \Id$.
+
+\cor $\mc{J}(E, \omega)$ is contractible
+\proof
+
+Send 
+\[
+\mc{J} \mapsto \varphi\left((1 - t)\psi(\mc{J}) + tg_0\right)
+\] 
+
+\qed
+
+\proof
+
+Let $k \in \Riem(E)$ be given. Define $A \in \Hom(E, E)$ by $k(v, w) = \omega(v, Aw)$. 
+
+Then $A = -A^T$ (skew-adjoint with respect to $k$). Why? note that 
+\begin{align*}
+k(v, A^{-1}y) &= \omega(v, y) \\&= -\omega(y, v)\\&=-k(y, A^{-1}v\\&=-k(A^{-1}v, y)
+\end{align*}
+
+So $(A^{-1})^T = A^{-1}$, so $A^T = -A$.
+
+Hence, we can define $|A| = \sqrt{A^TA} = \sqrt{-A^2}$. Put $\mc{J} = A|A|^{-1}$. Then $\mc{J}^2 = A|A|^{-1}A|A|^{-1} = A^2|A|^{-2} = -I$. 
+
+Now we check that it defines an inner product: 
+\begin{align*}
+g(v, w) & = \omega(v, \mc{J}w) \\
+& = \omega(v, A|A|^{-1}\omega) \\
+& = k(v, |A|^{-1}w) \\
+& = k(|A|^{-\frac12}v, |A|^{-\frac12}w)
+\end{align*}
+
+is an inner product. 
+
+\qed
+
+If $k$ was instead $g$ with a compatible complex structure, then $A$ must be that complex structure on the nose. 
+
+Now, $\Sp(E, \omega)$ acts on $\mc{J}(E, \omega)$ by 
+\[
+A \cdot \mc{J} = A\mc{J}A^{-1}
+\]
+
+\prop The action of $\Sp(E, \omega)$ on $\mc{J}(E, \omega)$ is transitive. That is, for any $\mc{J}_1, \mc{J}_2 \in \mc{J}(E, \omega)$, there is an $A \in \Sp(E,\omega)$ with $\mc{J}_1 = A\mc{J}_2A^{-1}$. It has stabilizers at $\mc{J}\in\mc{J}(E,\omega)$ the unitary group $U(E)$, with respect to $\mc{J}$. I.e.:
+\[
+\mc{J}(E, \omega) = \Sp(E,\omega)/U(E)
+\]
+
+\cor
+
+$\Sp(E,\omega)$ is connected. 
+
+\proof
+
+$\mc{J}(E,\omega)$ is connected, and $U(E)$ is connected, so $\spew$ is connected. 
+
+\qed
+
+\proof
+
+Given $\mc{J}, \mc{J}' \in \jew$, let $e_1, \dots, e_n$ be an orthonormal basis for $E$ a complex inner product space (with respect to $\mc{J}$).
+
+Then $e_1, \dots, e_n, f_1 = \mc{J}e_1, \dots, f_n = \mc{J}e_n$ is a symplectic basis. Similarly, define $e_1', \dots, e_n', f_1', \dots, f_n'$ by $Ae_i = e_i', Af_i = f_i'$. This defines a symplectic transformation $A \in \spew$, with $A\J A^{-1} = \J'$.
+
+\qed
+
+\subsection*{More on $\spew$}
+
+\prop
+
+$\spew$ is a connected Lie group of dimension $2n^2 + n$, where $\dim E = 2n$
+
+\proof
+
+By Cartan's theorem, every closed (in the sense of topology) subgroup of a Lie group is a Lie group. 
+
+This applies to $\spew \subseteq \GL(E)$ (invertible transformations). For connected, see above. 
+
+To get dimension, consider action of $\GL(E)\supseteq \mc{U} = \{$symplectic forms$\}$ on $\bigwedge^2 E^*$ the space of skew-symmetric bilinear forms.  This action is transitive, with stabilizer at $\omega \in \mc{U}$ given by $\spew$. 
+
+Hence $\mc{U} = \GL(E)/\spew$, and using this we can count dimensions:
+\[
+\underbrace{\dim \mc{U}}_{\dim = \dim\bigvee^2 E^* = {2n\choose 2}} = \underbrace{\dim \GL(E)}_{\dim = (2n)^2} - \dim \spew
+\]
+
+So $\dim \spew = (2n)^2 - \frac{2n(2n-1)}{2} = 2n^2 + n$ 
+
+\section*{Lecture 4 - 9/17/24}
+
+\subsection*{\underline{Geometry of $\spew$ and $\Lag(E,\omega)$}}
+
+So far, we know $\spew$ is a Lie group. It is also connected, with dimension $2n^2 + n$, where $\dim E = 2n$. 
+
+For any $\mc{J}\in\jew$, we have a real inner product $g(v, w) = \omega(v, \mc{J}w)$, and a complex one given by $h = g + \sqrt{-1}\omega$. 
+
+$U(E) \subseteq \spew$, $\jew=\spew/U(E)$
+
+(Enough to consider $E = \R^{2n}$, $\mc{J}e_i = f_i, \mc{J}f_i = -e_i$). 
+
+Let $()^T$ be the transpose with respect to the metric $g$. In other words, $g(Av, w) = g(v, A^Tw)$. 
+
+\prop
+
+$A \in \GL(E)$ is \underline{symplectic} if and only if $A^T = \mc{J}A^{-1}\mc{J}^{-1}$. 
+
+\proof
+
+$A\in\spew$ if and only if for all $v, w, \omega(Av,Aw) = \omega(v, w)$. Note that $g(\mc{J}v,w) = \omega(v, w)$. So for all $v, w$, 
+\begin{align*}
+g(\mc{J}Av, Aw) & = g(\mc{J}v, w) \\
+& = g(A^T\mc{J} Av, w) 
+\end{align*}
+so $A^T\mc{J}A = \mc{J}$ .
+
+\qed
+
+Consequence: if $A\in\spew$, then $\det(A) = 1$. This follows from 
+\begin{align*}
+\det(A) & = \det(A^T) \\
+& = \det(\mc{J}A^{-1}\mc{J}^{-1}) \\
+& = \det(A)^{-1} 
+\end{align*}
+So $\det(A)^2 = 1$, and since $\spew$ is connected, $\det(A) = 1$. 
+
+Now, in $\R^{2n}$, if we let $A = \pmat{a}{b}{c}{d}$, $\mc{J} = \pmat{0}{I}{-I}{0}$.
+\[
+A \in \spew \iff \begin{cases} a^Tc = c^Ta \\ b^Td = d^Tb \\ a^Td - b^Tc = I \\ \end{cases}
+\]
+
+Note: $\spew(\R^2, \omega) = \SL(2,\R)$, the 2x2 matrices of determinant 1. 
+
+Another consequence is: $A$ is symplectic implies that $A^T$ is symplectic. This means we can use \underline{polar decomposition}. 
+
+Recall: $A \in \GL(m, \R)$ has a polar decomposition $A = U|A|$, where $|A|$ is positive definite, $|A| = \sqrt{A^TA}$, and $U \in O(n)$. 
+
+Can write $|A| = \exp(\xi)$, with $\xi^T = \xi$. 
+
+Thus, $\GL(n,\R) = O(n)\times\{\xi \mid \xi^T = \xi\}$ as a manifold. 
+
+For any $G \subseteq \GL(m,\R)$, which is invariant under $A \mapsto A^T$, we get a polar decomposition 
+\[
+G = K\times p
+\]
+where $K = G\cap O(m)$, $p = \mk{g} \cap \{\xi \mid \xi^T = \xi \}$
+where $\mk{g} = \{\xi \mid \exp(t\xi) \in G \text{ for all }t\}$
+
+In particular, $G = \spew \cong \Sp(2n, \omega)$, we get $K = \Sp(2n,\omega) \cap O(2n) = U(n)$ and $p = \{\xi \in \Sp(2n, \omega) \mid \xi = \xi^T\}$. 
+
+So we get that $\spew = U(e)\times p$. 
+
+Upshot: $\spew$ deformation retracts onto its maximal compact subgroup $U(E)$. 
+
+\cor
+
+There is a canonical isomorphism 
+\[
+\mu: \pi_1(\spew)\to\Z
+\]
+
+\proof
+
+$\pi_1(\spew) \cong \pi_1(U(E))$. Now, $\det:U(E) \to \pi_1(U(1))$, and this map is an isomorphism. 
+
+This is the most primitive version of a ``Maslov Index." It is a ``Maslov index of loop of symplectomorphisms. 
+
+\underline{Exercise:} If $A, B:S^1 \to \spew$, then $\mu(AB) = \mu(A) + \mu(B)$. 
+
+\underline{Remark:} We discussed the noncompact group $S_p(E, \omega) = \Sp(2n,\R)$. There is a compact ``symplectic group" denoted $\Sp(n)$. Both are ``real forms" of the complex symplectic group $\Sp(2n, \C)$. 
+\[
+\Sp(2n, \R) \subseteq \Sp(2n,\C) \supseteq \Sp(n)
+\]
+but $\Sp(2n,\R)\neq\Sp(n)$. We have a similar situation for $\SL(n,\C)$: 
+\[
+\SL(n,\R) \subseteq \SL(n,\C) \supseteq \SU(n)
+\]
+These two on the left and right have the same complexification.
+\[
+\R^* \subseteq \C^* \supseteq U(1)
+\]
+
+Recall: The Lagrangian Grassmannian, $\Lag(E) = \{L \subseteq E \mid L^\omega = L \}$. $\Lag(E) \subseteq GR_n(E) = \{n$-dimensional subspaces of $E\}$, so it is a topological space in this way. 
+
+Recall that $Gr_k(E)$ can be seen as a manifold in 2 ways:
+\begin{enumerate}[label=(\roman*)]
+
+\item View it as a homogeneous space
+
+\item Construct charts
+
+\end{enumerate}
+
+\begin{enumerate}[label=(\roman*)]
+
+\item Pick any $G \subseteq \GL(E)$ such that $G$ acts transitively on $Gr_k(E)$ (e.g. $G = \GL(E), G = O(E)$ for some inner product, $G = \SO(E)$). 
+
+Let $H \subseteq G$ be a stabilizer of some \underline{fixed} $k$-dim subspace. So $Gr_k(E) = G/H$
+
+\item For any subspace $M \subseteq E$ of codimension $k$, the set  $\{L \in Gr_k(E) \mid E = L \oplus M \}$ is canonically an affine space. It is isomorphic to $\{j:E/M\to E \mid \pi\circ j = \Id\}$, $\pi: E\to E/M$, an affine space under $\Hom(E/M,E)$
+
+The punchline is that for any fixed $L$, we get a vector space, and we use this as a chart. 
+
+
+\end{enumerate}
 
 
 
+Now, we want to do the same thing with $\Lag(E)$. 
 
+\prop
 
+The group $U(E)$ acts transitively on $\Lag(E)$ with stabilizers at given $L \in \Lag(E)$ equal to $O(L)$. $U(E)$ is a Lie group, so $\Lag(E) = U(E)/O(L)$ is a manifold of dimension $\frac{n(n+1)}{2}$
 
+\proof
 
+Let $h(v, w) = g(v, w) + \sqrt{-1}\omega(v,w)$. 
 
+Note: On any $L \in \Lag(E)$, get $h|_{L\times L} = g|_{L\times L}$. A $g$-orthonormal basis $e_1, \dot, e_n$ of $L$ is an $h$-orthonormal basis of $E$, given symplectic basis $e_1, \dots, e_n, f_i, \dots, f_n$, where $f_i = \mc{J}e_i$. 
 
+Given another $L'$, choose $g$-orthonormal basis $e_1',\dots,e_n'$ of $L'$. It's $h$-orthonormal basis of $E$. 
 
+The transformation taking $e_1, \dots, e_n$ to $e_1', \dots, e_n'$ is in $U(E) \subseteq \spew$ taking $L$ to $L'$. The stabilizers of $L$ are transformations for which $L = L'$, so they're in $O(L)$. 
+Then
+\begin{align*}
+\dim\Lag(E) & = \dim U(n) - \dim O(n) \\
+& = n^2 - \frac{n(n-1)}{2} \\
+&= \frac{n(n+1)}{2}
+\end{align*}
 
+\qed
 
+Alternatively, pick $\mc{J}\in\jew$, then $\Lag(E) = \Sp(E) / \Sp(E)_L$ (?)
 
+We get again a version of the Maslov index by Arnold. 
 
+The map $\det^2:U(n) \to U(1), A \mapsto (\det(A))^2$ descends to a map $\Lag(\R^{2n}) \to U(1)$, hence gives a map on fundamental groups
+\[
+\mu:\pi_1(\Lag(E)) \to \pi_1(U(1)) = \Z
+\]
 
+\prop(Arnold)
 
+This map is again an isomorphism
 
+\proof
 
+\qed
 
+This is the maslov index of loop of Lagrangian subspaces.
 
+Special Case $n = 1$
 
+$\Lag(\R^2) = U(1)/O(1)$. $O(1) = \{\pm1\}$, so this is a circle under polar identifications, so we get $\RP^1$, which is again $S^1$. 
 
+Given $M \in \Lag(E)$, let $\Lag(E; M) = \{L\in\Lag(E) \mid E = L\oplus M \}$
 
+\prop $\Lag(E;M)$ is canonically an affine space, with corresponding linear spaces $\Sym^2(M) = \{$ symmetric bilinear forms on $M^*\} \cong$ self adjoint maps $M^*\to M$. 
 
+\proof
 
+Let $\pi:E\to M^*$ where $\pi(E) = $ restriction of $\omega^\flat(v) \in E^*$ to $M$. 
 
+$\pi(v)(w) = \omega(v,w)$ for $w\in M$. 
 
+This projection map has kernel $M\subseteq E$ since $M$ is Lagrangian, so gives isomorphisms $E/M\to M^*$. 
 
+$\Lag(E;M) = \{L \in \Lag(E) \mid L \oplus M = E\}\cong \{j:E/M \to E \mid j(M^*)$ is isotropic $, \pi\circ j= \Id\}$. 
 
+Given any such $j$, any other splitting $j'$ is of the form $j'(m) = j(m) + \psi(m)$ for some $\psi:E/M = M^*\to M$.
 
+For all $\mu_1,\mu_2\in M^*$, 
+\begin{align*}
+0 & = \omega(j'(\mu_1),j'(\mu_2)) \\
+& = \omega(j(\mu_1) + \psi(\mu_1), j(\mu_2) + \psi(mu_2) \\
+& = \underbrace{\omega(j(\mu_1), j(\mu_2))}_{=0\text{ since $j$ isotropic }} + \underbrace{\omega(\psi(\mu_1),\psi(\mu_2))}_{=0\text{ since $M$ isotropic}} \\
+& + \omega(j(\mu_1), \psi(\mu_2)) + \omega(\psi(\mu_1),j(\mu_2)) \\
+& = \langle \mu_1, \psi(\mu_2)\rangle - \langle \mu_2, \psi(\mu_1) \rangle \\
+\end{align*}
 
+So $\psi$ is self-adjoint, $\beta(\mu_1,\mu_2) = \langle \mu, \psi \mu \rangle$. 
 
+Again we see $\dim = \frac{n(n + 1)}{2}$.
+
+Down-to-earth version
+
+Let $E = \R^{2n}$, $M = 0\oplus\R^n = \Span\{f_1, \dots, f_n\}$. 
+
+$\R^{2n} = L\oplus M$ means $L$ is graph of linear map $S: \R^n\to\R^n$.
+
+$L$ has basis 
+\[
+g_i = e_i + \sum_{j=1}^n S_{ij}f_j
+\]
+is Lagrangian if and only if for all $i, k$, 
+\begin{align*}
+0 = \omega(g_i, g_k) & = \omega(e_i + \sum S_{ij}f_j, e_k + S_{kl}f_l \\
+& = \cdots \\
+& = S_{ki} - S_{ik}
+\end{align*}
+
+\section*{Lecture 5 - 9/19/24}
+
+\subsection*{\underline{Maslov Indices}}
+
+Let $(E,\omega)$ be a symplectic vector space, $\dim E = 2n$. We consider $\Lag(E)$, the Lagrangian Grassmannian, the set of all Lagrangian subspaces. We know this is homeomorphic to $U(n)/O(n)$, once you choose a symplectic basis. It is a manifold, of dimension $frac{n(n+1)}{2}$. 
+
+We have $\pi_1(\Lag(E)) \cong \pi_1(U(n)/O(n))$. The function $\det^2$ descends to a function on this space, and gives a morphism from $\pi_1(U(n)/O(n))$ to $\pi_1(U(1)) \cong \Z$. 
+
+So we have a canonical $\mu:\pi_1(\Lag(E)) \to \Z$ is called the \underline{Maslov Index}. It is somewhat akin to winding number. 
+
+We want to generalize to \underline{paths} of Lagrangians. Fix a Lagrangian subspace $M\in\Lag(E)$, and define
+\[
+\Lag(E,M) = \{L\in \Lag(E) \mid L \cap M = 0 \}
+\]
+This is canonically an affine space, and so is contractible. Let $\sum_M = \Lag(E) \setminus \Lag(E,M) = \{L \mid L \cap M \neq 0\}$. This is some kind of singular space. 
+
+Consider a path $L:[a, b] \to \Lag(E), t \mapsto L(t)$ with $L(a), L(b) \not\in\sum_M$
+
+Define the Maslov Index $[L:M]\eqdef$ Maslov index of \underline{loop} obtained by concatenating $L(t)$ with a path in $\Lag(E,M)$ to make a loop. The contractibility of this space means the choice of path doesn't matter. 
+
+This is Maslov's ``original" index as intersection number with the sincular cycle $\sum_M$. 
+
+More generally, we want to find $[L_1:L_2]$ for two arbitrary Lagrangian paths, a kind of signed number of nonzero intersections $L_1(t) \cap L_2(t)$ (remember that $L_i(t)$ is a vector space!). 
+
+Let $L_1, L_2 \in \Lag(E,M)$ related by some $\beta_{12} \in \Sym^2(M)$ (symmetric bilinear form on $M^* \cong L_1$. Recall from last time we have $\beta_{12} \cdot L_1 = L_2$, $\beta_{21} \cdot L_2 = L_1$, $\beta_{12} = \beta_{21}$. To this setting we can attach an invariant. 
+
+Does there exist a symplectomorphism $A$ such that $(L_1, L_2, M) \mapsto_A (L_1, L_2', M)$, with $L_2'$ a Lagrangian transverse to all the others. 
+
+\subsection*{\underline{Signature of symmetric bilinear form}}
+
+For a symmetric matrix $B$, we say the Signature, $\Sig(B)$, is the number of positive eigenvalues minus the number of negative eigenvalues. 
+
+For a symmetric bilinear form $\beta$, $\Sig(\beta) = \Sig(B)$, for $B$ the matrix of $\beta$ in terms of a basis (which does not affect the eigenvalues). 
+
+The number $\Sig(\beta_{12})$ depends on $M$. 
+
+\prop
+
+If $L_1,L_2,L_3 \in \Lag(E;M)$. Then the number $s(L_1,L_2,L_3) = \Sig(\beta_{21}) + \Sig(\beta_{32}) + \Sig(\beta_{13})$ is actually independent of $M$. This is also called a Maslov index. 
+
+\proof
+
+\prop
+\,
+
+\begin{enumerate}
+
+\item $s(L_1,L_2,L_3) = s(L_2,L_3,L_1)$
+
+\item $S(L_1,L_2,L_3) = -S(L_2,L_1,L_3)$
+
+\item Cocycle identity: for all Lagrangians $L_1,L_2,L_3,L_4$, 
+\[
+S(L_2,L_3,L_4) - s(L_1,L_3,L_4) + s(L_1,L_2,L_4) - s(L_1,L_2,L_3) = 0
+\]
+
+\item If $M(t)$ is always transverse to $L_1,L_2$, then $s(L_1,L_2, M)$ doesn't depend on $t$. 
+
+\item Up to symplectomorphism, $L_1,L_2,L_3$ is uniquely determined by $\dim(L_1\cap L_2), \dim(L_2\cap L_3), \dim(L_1\cap L_3), \dim(L_1\cap L_2\cap L_3)$, s$(L_1,L_2,L_3)$
+
+\end{enumerate}
+
+\prop
+
+Suppose $[a,b]\to\Lag(E), t \mapsto L_i(t)$, $i = 1, 2$ are paths, and that there exists some $M\in\Lag(E)$ such that $L_i(t) \cap M = 0$ for all $i = 1, 2, t \in [a,b]$. Then
+\[
+[L_1;L_2] = \frac12(s(L_1(a),L_2(a),M) - s(L_1(b),L_2(b),M))
+\]
+
+\proof
+
+Suppose $M'$ is another choice. First term changes by 
+
+\begin{align*}s(L_1(a),L_2(a),M') - s(L_1(a),L_2(a),M')  &= s(L_1(a),M,M') - s(L_2(a),M,M') \\
+& = s(L_1(b),M,M') - s(L_2(b),M,M') \\
+\end{align*}
+This is the change in the second term, so they cancel out.
+
+General definition: 
+
+Consider a partition $a = t_0 < t_1 < \dots < t_k = b$ such that for all $[t_{j-1},t_j] \in M_j\in\Lag(E)$ with $L_i(t) \cap M_j = 0$ for all $t \in [t_{j-1},t_j]$
+
+Then 
+\[
+[L_1;L_2] = \frac12\sum_{j=1}^k\left(s(L_1(t_{j-1}),L_2(t_{j-1}),M_j) - s(L_1(t_j),L_2(t_j),M_j)\right)
+\]
+
+For $A\in\spew$, we have $\operatorname{Graph}(A) = \{(Av,v)\}\subseteq E\times \bar{E}$ (where $\bar{E}$ has the same symplectic form but with an opposite sign) is Lagrangian. 
+
+Define, for any path $A(t)$, $\mu(A) = [\operatorname{Graph}(A), \bigtriangleup]$
+
+\section*{Lecture 6, 9/24/24}
+
+\section*{\underline{Part 2: Symplectic Manifolds}}
+
+Recall that the Lie derivative of a vector field, $\ms{L}_X$, is given by $\dd{}{t}|_{t=0}(F_{-t})^*$, where $F_t$ is a flow along $X$. Note $X(f) = \ms{L}_Xf = \dd{}{t}|_{t=0}(F_{-t})^*f$
+
+Differential of a map $F:M_1\to M_2$ is a map $TF:TM_1\to TM_2$.
+
+For $f:M\to R$, $Tf:TM\to T\R$, while $df\in\Omega^1(M)$.
+
+We will introduce symplectic manifolds by analogy to a complex manifold. 
+
+\subsection*{Complex manifolds}
+
+A complex manifold comes with a family of linear transformations $\mc{J}_m:T_mM\to T_mM$, with $\mc{J}_m^2 = -\Id_{T_mM}$, which depends smoothly on $m\in M$. 
+
+This is typically called an ``almost complex structure".
+
+A complex manifold is the same as a real manifold, but charts go to $\C^n$, and we want transition functions to be holomorphic. Any complex manifold has an almost complex structure on its tangent spaces, but a manifold with an almost complex structure is not necessarily a complex manifold. 
+
+It is some kind of \underline{integrability condition} on $\mc{J} = \{\mc{J}_m\}$, and if this condition vanishes, then the almost complex structure comes from an honest complex manifold. 
+
+\subsection*{Symplectic manifolds}
+
+A symplectic manifold is equipped with a family of functions $\omega_m:T_mM\times T_mM \to \R$ which is symplectic, depending smoothly on $m$. This is called an ``almost symplectic structure." There is again an integrability condition we can impose. We want to stipulate that $\omega_m$ arises from an $\omega = \{\omega_m\}\in \Omega^2M$. The integrability condition is that $d\omega = 0$. 
+
+\defn
+
+A \underline{symplectic structure} on a manifold $M$ is a non-degenerate 2-form $\omega\in\Omega^2(M)$ with $d\omega = 0$.
+
+Non-degenerate just means that each $\omega|_{T_mM\times T_mM}$ is non-degenerate. 
+
+\prop
+
+Any symplectic 2-form $\Omega$, for $\dim M = 2n$, is non-degenerate if and only if $\underbrace{\omega^n}_{=\underbrace{\omega\wedge\cdots\wedge\omega}_{n\text{ times}}}\neq0$ everywhere. 
+
+\proof
+
+Check at $m \in M$. 
+
+In one direction,  suppose $(\omega_m)^n\neq0$. We want to show $\ker\omega_m = 0$. Since $(\omega_m)^n \neq0$, we have $\iota_V(\omega_m^n)$, where we define $\iota_v:\Omega^k(M)\to\Omega^{k-1}(M)$ by $\iota_V(\alpha) = \alpha(V, \cdots)$. 
+
+Anyways, $\iota_V(\omega^n)$ is nonzero for all $v \in T_m$. 
+
+But $\iota_V(\underbrace{\omega_m\wedge\cdots\wedge\omega_m}_{n}) = n(\iota_v\omega_m)\omega_m^{n-1}$, so $\iota_V\omega_m\neq0$. 
+
+In the other direction, suppose $\ker(\omega_m) = 0$, so $\omega_m$ is symplectic. Let $e_1, \dots, e_n, f_1, \dots, f_n$ be a symplectic basis for $T_mM$ with respect to $\omega_m$.
+
+Consider 
+\begin{align*}
+\iota_{e_n}\iota_{e_{n-1}}\cdots\iota_{e_1}(\omega_m^n) & = n(\iota_{e_n}\cdots\iota_{e_2})((\iota_{e_1}\omega_m)\wedge \omega_m^{n-1}) \\
+& = n(n-1)(\iota_{e_n}\cdots\iota_{e_3})((\iota_{e_2}\omega_m)(\iota_{e_1}\omega_m)\omega_m^{n-2} \\
+& \vdots \\
+& = n!(\iota_{e_n}\omega_m)\wedge\cdots\wedge(\iota_{e_1}\omega_m)
+\end{align*}
+
+So $\iota_{f_n}\cdots\iota_{e_1}(\omega_m^n) = \pm n! \neq 0$
+
+\defn
+
+Let $(M,\omega)$ be an (almost) symplectic manifold. The volume form 
+\[
+\bigwedge = \frac{\omega^n}{n!} = (\exp(\omega))_{\dim M}
+\]
+is called the \underline{Liousville volume form} on $M$. 
+
+\defn
+
+Let $(M,\omega)$ be a symplectic manifold.
+\begin{enumerate}[label=(\alph*)]
+
+\item A \underline{symplectomorphism} is a diffeomorphism $F \in \operatorname{Diff}(M)$ preserving $\omega$, i.e. $F^*\omega = \omega$. The group of symplectomorphisms of $(M,\omega)$ is denoted $\Diff(M,\omega)$
+
+\item A \underline{symplectic vector field} on $M$ is a vector field $X \in \ms{X}(M)$ preserving $\omega$, i.e. $\ms{L}_X\omega = 0$.
+
+The Lie algebra of symplectic vector fields is denoted $\ms{X}(M,\omega)$, i.e. the Local flow is symplectic. 
+
+\end{enumerate}
+
+\defn
+
+Let $(M,\omega)$ be a symplectic manifold, let $H\in C^\oo(M)$. 
+
+The \underline{Hamiltonian vector field} $X_H \in \ms{X}(M)$ is the unique vector field such that 
+\[
+\iota(X_H)\omega = -dH
+\]
+The space of Hamiltonian vector fields is denoted $\ms{X}_{Ham}(M,\omega)$
+
+\prop Indeed, $\ms{X}_{Ham}(M,\omega) \subseteq \ms{X}(M,\omega)$.
+
+\proof
+
+Let $X = X_H$ be Hamiltonian. We check 
+\begin{align*}
+\ms{L}_X\omega & = (d\iota_X + \iota_Xd)\omega \\
+& = d\iota_X\omega \\ 
+& = -ddH \\
+& = 0\\
+\end{align*}
+by the Cartan Formula
+
+\qed
+
+It turns out that $\omega$ is symplectic if and only if $\iota_X\omega$ is closed. 
+
+$X$ is Hamiltonian if and only if $\iota_X$ is exact. 
 
 \end{document}
