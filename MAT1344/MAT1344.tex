@@ -29,6 +29,8 @@
 \newcommand{\h}{\mk{h}}
 \newcommand{\J}{\mc{J}}
 \newcommand{\tphi}{\tilde{\phi}}
+\newcommand{\pois}[2]{\{#1,#2\}}
+\newcommand{\fibrate}[3]{\begin{tikzcd} #1 \ar[d, "#2"] \\ #3 \end{tikzcd}}
 \DeclareMathOperator{\Perm}{Perm}
 \DeclareMathOperator{\pdim}{pdim}
 \DeclareMathOperator{\gldim}{gldim}
@@ -999,5 +1001,1917 @@ by the Cartan Formula
 It turns out that $\omega$ is symplectic if and only if $\iota_X\omega$ is closed. 
 
 $X$ is Hamiltonian if and only if $\iota_X$ is exact. 
+
+\underline{Basic examples:} 
+
+Open subsets $U \subseteq \R^n$. Let $e_1, \dots, e_n, f_1, \dots, f_n$ be the standard symplectic basis. 
+
+Let $q_1, p_1, q_2, p_2, \dots$ be corresponding coordinates. Take \[
+\omega = \sum_{j=1}^ndq_i\wedge dp_i
+\]
+Liousville Volume form: $\bigwedge= \frac{1}{n!}\omega\wedge\cdots\wedge\omega$, 
+\begin{align*}
+\bigwedge & =\frac{1}{n!}(dq_1\wedge dp_1 + \cdots)\wedge(dq_1 + dp_1 + \cdots)\wedge \cdots \\
+& = dq_1 \wedge dp_1 \wedge dq_2 \wedge dp_2 \wedge\cdots\wedge dq_n \wedge dp_n
+\end{align*}
+which is the standard volume form. 
+
+Given $H \in C^\oo(U)$, $dH = \sum(\pp{H}{q_i}dq_i + \pp{H}{p_i}dp_i)$. 
+
+$\iota(X_H)\omega = -dH$ implies $X_H = \sum(\pp{H}{q_j}\pp{}{p_j} - \pp{H}{p_j}\pp{}{q_j})$, with corresponding ODE $\dot{q_j} = \pp{H}{p_j}, \dot{p_j} = -\pp{H}{q_j}$, which are Hamilton's equations. 
+
+\underline{Example: Cotangent bundles}
+
+Let $M = T^*Q$ (dual of $TQ$), with $Q$ any manifold. Let $\pi:T^*Q\to Q$ be the projection. 
+
+There's a distinguished 1-form $\theta \in \Omega^1(T^*Q)$
+
+\defn
+
+The \underline{canonical $1$-form} $\theta \in \Omega^1(T^*Q)$ is defined in terms of its contractions with $v \in T_{\mu}(T^*Q)$, $\mu \in T^*Q$, where
+\[
+\langle \theta_\mu, v\rangle = \langle \underbrace{\mu}_{\in T_{\pi(\mu)}^*Q}, \underbrace{T\pi(v)}_{\in T_{\pi(\mu)}Q} \rangle
+\]
+
+Another perspective: 
+
+$T\pi:T_\mu(T^*Q) \to T_{\pi(\mu)}Q$ has a dual map $(T_\mu\pi)^*:\underbrace{T_{\pi(\mu)}^*Q}_{\ni\mu}\to T_{\mu}^*(T^*Q)$. Then $(T_\mu\pi)^*(\mu) = \theta_|mu$
+
+Another perspective:
+
+For $\alpha\in\Omega^1(Q)$, let $\sigma_\alpha:Q\to T^*Q$ be the corresponding section. 
+
+\prop
+
+$\theta\in\Omega^1(T^*Q)$ is the unique $1$-form such that for all $\alpha\in\Omega^1(Q)$, $\sigma_\alpha^*\theta = \alpha$. 
+
+\proof
+
+Let $\omega\in T_qQ$, $q \in Q$. Let $\mu = \sigma_\alpha(q) = \alpha|_q$. Then
+\begin{align*}
+\langle\sigma_\alpha^*\theta|_q, \omega \rangle & = \langle \theta_\mu, (T_q\sigma_\alpha)(\omega)\rangle \\
+& = \langle \mu, (T_\mu\pi)(T_q\sigma_\alpha)(\omega)\rangle \\
+& = \langle \mu, \omega \rangle \\
+& = \langle \alpha_q, \omega \rangle
+\end{align*}
+
+\qed
+
+In coordinates: Let $q_1, \dots, q_n$ be local coordinates on $U \subseteq Q$. Then $dq_1, \dots, dq_n \in \Gamma(T^*Q|_\mu)$ are (pointwise) basis of $1$-forms on $U$. 
+
+This gives a basis of $T_q^*Q$, all $q$. Let $p_1, \dots, p_n$ be fiber coordinates, with cotangent coordinates $q_1, \dots, q_n, p_1, \dots, p_n$. 
+
+\lem
+
+In cotangent coordinates, 
+\[
+\theta =\sum_{i=1}^np_idq_i
+\]
+
+\proof
+
+Let $\alpha = \sum_{i=1}^n \alpha_i(q_1,\dots,q_n)dq_i \in \Omega^1(Q)$. 
+
+Then 
+\[
+\sigma_\alpha:U\to T^*Q|_U, (q_1, \dots, q_n) \mapsto (\alpha_1(q_1, \dots, q_n), \alpha_2(q_1,\dots,q_n),\cdots)
+\]
+i.e. $\sigma_\alpha^*p_i = \alpha_i, \sigma_\alpha^*q_i = q_i$.
+\[
+\sigma_\alpha^*(\sum p_idq_i) = \sum \alpha_idq_i = \alpha
+\]
+So $\theta = \sum p_idq_i$
+
+\qed
+
+\thm
+
+The 2-form
+\[
+\omega = -d\theta \in \Omega^2(T^*Q)
+\]
+is symplectic. 
+
+This is the \underline{canonical symplectic form} on $T^*Q$. 
+
+\proof
+
+In local coordinates, 
+\begin{align*}
+-d\theta & = -d\left(\sum p_idq_i\right) \\
+& = \sum dq_i\wedge dp_i
+\end{align*}
+
+\qed
+
+We'll describe symplectomorphisms etc. of $T^*Q$, taking into account $\pi:T^*Q\to Q$ is a fibration.
+
+Terminology: For any surjective submersion $\pi:P\to Q$, we say $F\in\Diff(P)$ ``\underline{lifts}" $f \in \Diff(Q)$ if $\pi\circ F = f\circ \pi$. Denote by $\Diff(P,\pi)$ the ``fibration-preserving" diffeomorphisms.
+
+We'll find all of $\Diff(T^*Q,\omega) \cap \Diff(T^*Q,\omega)$
+
+\underline{Example:} If $P = TQ$, $f \in \Diff(Q)$, then $f_T = Tf \in \Diff(TQ)$ is a lift.
+
+If $P = T^*Q$, $f \in \Diff(Q)$, $f_{T^*} = (Tf^{-1})^*\in\Diff(T^*Q,\pi)$
+
+The upshot is that all $f_{T^*}$ are symplectic. 
+
+Other lifts: given $\alpha\in \Omega^1(Q)$ we get $G_\alpha\in\Diff(T^*Q,\pi)$ by adding $\alpha$ fiberwise. 
+
+We'll see that $G_\alpha$ is symplectic if and only if $d\alpha = 0$. 
+
+\section*{Lecture 7, 9/26/24}
+
+Let $\pi:T^*Q\to Q$ be the projection of the cotangent bundled, and let $\theta \in \Omega^1(T^*Q)$ be the canonical 1-form, characterized by $\sigma_\alpha^*\theta = \alpha$ (that is, if we view $\sigma$ as a map from $Q$ to $T^*Q$, then the pullback of the form $\theta$ along this map is $\alpha$. 
+
+In coordinates, $\theta = \sum p_jdq_j$, $\omega = -2\theta$ is symplectic.
+
+Let $\pi:P\to Q$ be a surjective submersion. Recall that $\Diff(P,\pi)$ is the set of diffeomorphisms of $P$ which preserve the fibration, i.e. $F:P\to P$ such that $F\circ\pi= \pi\circ f$ for some $f \in \Diff(Q)$
+
+\lem
+
+Suppose that $\pi$ has connected fibers. Then $\beta\in\Omega^*(P)$ is of the form $\beta = \pi^*(\alpha)$ if and only if for all vertical vector fields $Z \in \ms{X}(p)$, $\iota_Z(\beta) = 0$, and $\ms{L}_Z\beta=0$.
+
+\proof
+
+Exercise. Use coordinates adapted to submersion. 
+
+E.g. for $\beta\in\Omega^1(P)$, $\beta = \sum f_i(q, p)dq_i + \sum g_i(q, p)dp_i$
+
+Given $f \in \Diff(Q)$, we have the cotangent lift $f_{T^*}\in \Diff(T^*Q)$, $f_{T^*} = (Tf^{-1})^*$. 
+
+\prop
+
+We have $(f_{T^*})^*\theta = \theta$. In particular, $f_{T^*}\in\Diff(T^*Q,\omega)\cap \Diff(T^*Q,\pi)$. Conversely, all $F \in \Diff(T^*Q,\pi)$ with $F^*\theta = \theta$ are of this form. 
+
+\proof
+
+Note this diagram commutes:
+
+\[
+\begin{tikzcd}
+T^*Q\ar[r, "f_{T^*}"] & T^*Q \\
+Q \ar[u, "\sigma_\alpha"]\ar[r, "f"] & Q\ar[u, "\sigma_{(f^{-1})^*\alpha}"']
+\end{tikzcd}
+\]
+
+For any $\alpha\in\Omega^1(Q)$, 
+\begin{align*}
+\sigma_\alpha^*(f_T)^*\theta &  = (f_T\circ\sigma_\alpha)^*\theta \\
+& = (\sigma_{(f^{-1})^*\alpha}\circ f)^*\theta\\
+& = f^*\circ ((\sigma_{(f^{-1})^*\alpha})^*\theta\\
+& = f^*(f^{-1})^*\alpha \\
+& = \alpha \\
+\end{align*}
+
+Now for uniqueness?
+
+The corresponding cotangent coordinates are $\theta = \sum p_jdq_j$, and we have $F^*q_j = q_j$, since $f = \Id_Q$. Hence $F^*\theta = \theta$ gives $F^*p_j = p_j$. 
+
+So $F = \Id_{T^*Q}$.
+
+\qed?
+
+Given $\alpha\in\Omega^1(Q)$, let $G_\alpha \in \Diff(T^*Q,\pi)$, $G_\alpha = \mu + \alpha|_{\pi(\mu)}$, i.e. $G_\alpha\circ\sigma_\beta = \sigma_{\alpha + \beta}$.
+
+\prop
+
+For $\alpha\in\Omega^1(Q)$, 
+\[
+G_\alpha^*\theta = \theta + \pi^*\alpha
+\]
+
+So $G_\alpha \in \Diff(T^*Q,\omega)$ if and only if $\alpha\in\Omega^1_{Cl}(Q)$, where $\Omega^1_{Cl}$ denotes the closed forms. 
+
+Every $F \in \Diff(T^*Q,\omega)\cap\Diff(T^*Q,\pi)$ with trivial base map, then it is of the form $F = Q_\alpha$. 
+
+\proof
+
+For $\beta\in\Omega^1(Q)$, we have 
+\begin{align*}
+\sigma_\beta^*(G_\alpha^*\theta-\pi^*\alpha) & = (G_\alpha\circ\sigma_\beta)^*\theta - (\pi\circ\sigma_\beta)^*\alpha \\
+& = \sigma_{\alpha+\beta}^*\theta \\
+& = \alpha + \beta - \alpha \\
+& = \beta
+\end{align*}
+
+For uniqueness part, suppose we have $F \in \Diff(T^*Q,\omega)\cap\Diff(T^*Q,\pi)$ induces $f = \Id_Q$. Let $\tilde{\alpha} = F^*\theta - \theta$. 
+
+For $Z \in \ms{X}(T^*Q)$ \underline{vertical} (i.e. at every point it is in the kernel of $d\pi$), we get 
+\[
+\iota_Z\tilde{\alpha}-\underbrace{\iota_Z\theta}_{=0} = f^*\iota_{(F_*Z)}\theta = 0
+\]
+
+\[
+\ms{L}_Z\tilde{\alpha} = \iota_Zd\tilde{\alpha} + \underbrace{d\iota_Z\tilde{\alpha}}_{=0} = \iota_Z\underbrace{(f^*d\theta - d\theta)}_{=0} = 0
+\]
+Hence $\tilde{\alpha} = \pi^*\alpha$. 
+
+$F^*\theta - \theta = \pi^*\alpha$. 
+
+So $F = G_\alpha$.
+
+Recall for a representation of a group $G$ on a vector space $V$, $V\rtimes G$ is the group on the set $V\times G$, with 
+\[
+(v, g) (v', g') = (v + g'\cdot v', gg')
+\]
+
+In our case, $G = \Diff(Q)$, which acts on $\Omega^1_\alpha(Q)$. 
+
+\thm
+\[
+\Diff(T^*Q,\omega)\cap\Diff(T^*Q,\pi) = \underbrace{\Omega^1_{Cl}(Q)}_{G_\alpha} \rtimes \underbrace{\Diff(Q)}_{f_{T^*}}
+\]
+
+\proof
+
+\qed
+
+There is an infinitesimal counterpart 
+\[
+\ms{X}(T^*Q,\omega) \cap \ms{X}(T^*Q,\pi) = \Omega^1_{Cl}(Q)\rtimes\ms{X}(Q)
+\]
+where $\ms{X}(Q)$ acts on $\Omega_{Cl}^1(Q)$ by the Lie derivative. 
+
+In particular, for $Y \in \ms{X}(Q)$, the cotangent lift $Y_{T^*} \in \ms{X}(T^*Q,\omega)$
+
+\prop
+
+We have $Y_{T^*}\in\ms{X}_{Ham}(T^*Q,\omega)$ with the Hamiltonian   
+\[
+H = -\iota(Y_{T^*})\theta = - \langle\theta,Y_{T^*}\rangle
+\]
+
+\proof
+
+Let $X = Y_{T^*}$. Then $dH = -d\iota_X\theta = -\ms{L}_X\theta + \iota_Xd\theta = -\iota_X\omega$
+
+$(f_{T^*})^*\theta = \theta$, so $\ms{L}_{Y_{T^*}}\theta = 0$
+
+So $X = X_H$
+
+\qed
+
+In coordinates $q_1, \dots, q_n, p_1, \dots, p_n$, $Y = \sum Y_j\pp{}{q_j}$
+
+Note: for lifts $X$ of $Y$, $\iota_X\theta$ doesn't depend on choice of lift !
+
+So in coordinates, we can take $X = \sum Y_j\pp{}{q_j}$
+
+\[
+\iota_X(\theta) = \sum Y_j\iota(\pp{}{q_j} + \sum p_k dq_k = \sum Y_j(q)P_j
+\]
+\[
+H = -\sum Y_j(g)P_j
+\]
+\[
+dH = \sum\pp{Y_j}{q_k}p_jdq_k + \sum Y_jdp_j
+\]
+So with $\omega = \sum dq_i \wedge dp$, 
+\[
+X_H = Y_{T^*} = \sum Y_j\pp{}{q_j} - \sum p_j\pp{Y_j}{q_k}\pp{}{p_k}
+\]
+
+\section*{Lecture 8, 10/1/24}
+
+\subsection*{\underline{K\"ahler Manifolds}}
+
+An almost complex structure on a manifold $M$ is a collection $\{\mc{J}_m\}$, $\mc{J}_m \in \End(T_mM), \mc{J}_m^2 = -I$ depending smoothly on $m$, i.e. the map $M \mapsto \End(TM) = \coprod \End(T_mM)$, $m \mapsto \mc{J}_m$, has to be smooth. 
+
+A complex manifold has $\C^n \cong \R^{2n}$-valued charts with holomorphic transition functions. If we have a complex manifold, we have a complex structure on the tangent spaces. 
+
+\thm (Newland-Nirenberg)
+
+$\mc{J}$ comes from a complex structure if and only if $(N_{ij})_{\mc{J}} = 0$
+\[
+(N_{ij})_{\mc{J}} = [\mc{J}X,\mc{J}Y] - [X, Y] - \mc{J}[\mc{J}X, Y] + \mc{J}[\mc{J}Y, X]
+\]
+
+In this case, the complex structure is \underline{unique}
+
+\proof
+
+\qed
+
+\cor If $M$ is a complex manifold, $N \subseteq M$ a real submanifold, sutch that $\mc{J}(TN) \subseteq TN$, then $N$ is a complex submanifold. 
+
+\proof
+
+\qed
+
+
+Let $(M,\omega)$ be a symplectic manifold. $\mc{J}$ is \underline{$\omega$-compatible} if for all $m \in M$, $\mc{J}_m$ is $\omega_m$-compatible. 
+
+Equivalently, for all vector fields $g(X, Y) = \omega(X,\mc{J}Y)$, $X, Y \in \ms{X}(M)$ is a Riemannian metric. 
+
+Let $\mc{J}(M,\omega) =$ the set of all $\omega$-compatible almost complex structures. 
+
+From discussion for symplectic vector spaces, the map $\mc{J}(M,\omega) \to \Riem(M)$, $\omega \mapsto g$, has a left inverse $\Riem(M) \to \mc{J}(M,\omega)$. In particular, $\mc{J}(M,\omega)\neq\varnothing$. 
+
+Given $\mc{J}_0,\mc{J}_1\in\mc{J}(M,\omega)$, there exists a smooth homotopy $\mc{J}_t\in\mc{J}(M,\omega)$
+
+\defn
+
+A K\"ahler manifold is a triple $(M,\omega,\mc{J})$ where $M$ is a manifold, $\omega\in\Omega^2(M)$ symplectic, and $\mc{J}\in\mc{J}(M,\omega)$ is a \underline{complex} (i.e integrable) structure. 
+
+\exm
+
+$M = \C^n$, standard complex and symplectic structure, and open subsets thereof. 
+
+\exm 
+
+$M = \Sigma$ a 2-dimensional manifold, $\omega\in\Omega^2(\Sigma)$ the volume form (so $d\omega = 0$ automatically), any $\mc{J}\in\mc{J}(M,\omega)$ is automatically integrable. 
+
+\prop
+
+If $(M,\omega,\mc{J})$ is K\"ahler, and $\iota:N \into M$ is a complex submanifold (i.e. $\mc{J}(TN) \subseteq TN$), then $(N,\omega_N, \mc{J}_M)$, with $\omega_n = \iota^*\omega$, is K\"ahler. 
+
+\proof
+
+All we have to show $\omega_N$ is non-degenerate, i.e. that every nonzero vector $v\in TN$ has a friend $\omega\in TN$ with $\omega(v,w)\neq0$. Consider $w = \mc{J}v$. We have
+\[
+\omega(v,w) = \omega(v,\mc{J}v) = g(v,v) > 0
+\]
+\qed
+
+A consequence is that any complex submanifold of $\C^n$ is K\"ahler and in particular symplectic. 
+
+Consider $\CP(n) = \frac{\C^{n+1}\setminus\{0\}}{\C\setminus\{0\}}= S^{2n+1}/U(1)$
+
+There is a complex structure such that $q:\C^{n+1}\setminus\{0\} \to \CP(n)$ is holomorphic. 
+
+Let $S^{2n + 1} \subset \C^n$ be the unit sphere. 
+
+Then 
+\[
+\begin{tikzcd}
+\ar[d, "\pi"] S^{2n + 1} \ar[r, "\iota", hook] & \C^{n+1}\setminus\{0\} \\
+\CP(n) & 
+\end{tikzcd}
+\]
+
+\thm $\CP(n)$ has a unique symplectic structure, usually denoted $\omega_{FS}$ (for Fubini-Study), such that $\pi^*\omega_{FS} = \iota^*\omega$. With this symplectic structure it's a K\"ahler manifold. 
+
+\proof
+
+To show that $\iota^*\omega \in\Omega^2(S^2)$ descends under $\pi$, we have to show 
+\[
+\iota_z(\iota^*\omega) = 0, \ms{L}_Z(\iota^*\omega) = 0
+\]
+for all vertical vector fields. By Cartan, since $\iota^*\omega$ is closed, it is enough to check the 1st condition. 
+
+Since the fibers of $\pi$ are 1-dimensional, it is enough to show $\ker(T_z\pi) \subseteq \ker(\iota^*\omega)$
+
+For $z \in S^{2n+1}$, $T_z(\C^{n+1}\setminus\{0\}) = \C^{n+1}$. $\ker(T_zq) = \Span_{\C}(z) = \C\cdot z$.
+
+This contains $\Span_{\R}(z) = \R\cdot z = (T_zS^{2n+1})^\perp$, hence also $\mc{J}(\R z)\subseteq T_zS^{2n+1}$
+
+We get
+\[
+T_z(\C^{n+1}\setminus\{0\}) = \R z\oplus \underbrace{ \mc{J}(\R z) \oplus\overbrace{\left(T_zS^{2n+1} \cap \mc{J}(T_zS^{2n+1}\right)}^{\text{complex structure(?)}}}_{T_z(S^{2n+1})}
+\]
+and $\mc{J}(\R z) = \ker(T_z\pi)$, $\R z\oplus \mc{J}(\R z)$ is complex. 
+
+...
+
+\qed
+
+\subsection*{\underline{Basics of symplectic manifolds}}
+
+Let $\mk{X}(M,\omega) = \{X \mid \ms{L}_X\omega = 0\}$, and $\mk{X}_{\Hom}(M,\omega) = \{X \mid \exists H, \iota_X\omega = -dH\}$
+
+For $H \in C^\oo(M)$, we call $X_H$ the vector field such that $\iota(X_H)\omega = -dH$.
+
+\prop
+
+There is an exact sequence
+\[
+\exactshort{\mk{X}_{Ham}(M,\omega)}{}{\mk{X}(M,\omega)}{}{H^1(M)}
+\]
+where $H^1(M)$ is the de Rham cohomology.
+
+\proof
+
+The map $\omega^\flat:TM\to T^*M$ given by $v \mapsto \iota_v\omega = \omega(v,\cdot)$, gives an isomorphism $\omega^\flat:\mk{X}(M)\to\Omega^1(M)$. 
+
+We have $L_X\omega=0 \iff d\iota_X\omega = 0 \iff \iota_X\omega \in \Omega^1_{Cl}(M)$
+
+We see $\omega^\flat:\mk{X}(M,\omega)\to \Omega^1_{Cl}(M), \omega^\flat:\mk{X}_{Ham}(M,\omega) \to \Omega^1_{ex}(M)$
+
+\qed
+
+\prop
+
+We have $[\mk{X}(M,\omega),\mk{X}(M,\omega)]\subseteq\mk{X}_{Ham}(M,\omega)$
+
+\proof
+
+Exercise
+
+\qed
+
+\prop
+
+
+In fact, for $Y_1,Y_2 \in \mk{X}(M,\omega)$
+\[
+[Y_1,Y_2] = X_{\omega(Y_1,Y_2)}
+\]
+\proof
+This is because 
+\begin{align*}
+d\omega(Y_1,Y_2) & = d\iota_{Y_2}\iota_{Y_1}\omega \\
+& = \ms{L}_{Y_2}(\iota_{Y_1}\omega) - \iota_{Y_2}d\iota_{Y_1}\omega \\
+& = \iota(\ms{L}_{Y_2}Y_1)\omega + \iota_{Y_1}\ms{L}_{Y_2}\omega - \iota{Y_2}\ms{L}_{Y_1}\omega + \iota_{Y_1}\iota_{Y_2}\omega \\
+& = -\iota([Y_1,Y_2])\omega
+\end{align*}
+Various things in the third line dissapear because of various things being symplectic.
+\qed
+
+Consider next the map $C^\oo(M) \to \mk{X}_{Ham}(M,\omega)$, $H \mapsto X_H$.
+
+We have an exact sequence
+\[
+\exactshort{H^0(M)}{}{C^\oo(M)}{}{\mk{X}_{Ham}(M,\omega)}
+\]
+$H^0(M)$ is the locally constant functions. We want to define a Lie algebra on these things to make this a short exact sequence of Lie algebras. 
+
+\defn
+
+The \underline{Poisson bracket} of $F, G \in C^\oo(M)$ is defined by 
+\[
+\{F, G\} = \omega(X_F,X_G)
+\]
+
+It can be shown that $\{F,G\} = -\{G,F\}$.
+
+\prop
+
+$\{\cdot,\cdot\}$ is a Lie bracket on $C^\oo(M)$. That is, 
+\begin{enumerate}
+
+\item $\{F,G\}=-\{G,F\}$
+
+\item $\pois{F}{\pois{G}{H}} + \pois{G}{\pois{H,F}} + \pois{H}{\pois{F,G}} = 0$
+\end{enumerate}
+
+The map $C^\oo(M) \to \mk{X}_{Ham}(M,\omega), F \mapsto X_F$, is a Lie algebra homomorphism. 
+
+\proof\,
+
+We start by proving (2). 
+
+We want to show that $[X_F,X_G] = X_{\pois{F}{G}} = X_{\omega(X_F,X_G)}$, which follows from the previous proposition, $(*)$.
+
+For (1), note first that 
+\[
+\pois{F}{G} = \omega(X_F,X_G) = \iota(X_G)\underbrace{\omega(X_f,\cdot)}_{-dF} = -\ms{L}_{X_G}F = \ms{L}_{X_F}G
+\]
+
+Now 
+\begin{align*}
+\pois{F}{\pois{G}{H}} & = \ms{L}_{X_F}\pois{G}{H} \\
+& = \ms{L}_{X_F}\omega(X_G,X_F) \\
+& = \underbrace{(\ms{L}_{X_F}\omega)}_{=0}(X_G,X_H) + \omega(\ms{L}_{X_F}X_G,X_H) + \omega(X_G,\ms{L}_{X_F}X_H \\
+& = \omega([X_F,X_G],X_4) + \omega(X_G,[X_F,X_H]) \\
+& = \omega(X_{\pois{F}{G}},X_H) + \omega(X_G, X_{\pois{F}{G}}) \\
+& = \pois{\pois{F}{G}}{H} + 
+\end{align*}
+He erased it :(
+
+Note: we also have 
+\[
+\pois{F}{G\cdot H} = \pois{F}{G}H + G\pois{F}{H}\hfill\hfill(*)
+\]
+since $\pois{F}{\cdot} = \ms{L}_{X_F}$. 
+
+\underline{Remark:} A Poisson structure on a manifold $M$ is a Lie bracket $\pois{\cdot}{\cdot}$ on $C^\oo(M)$, satisfying the above equation.
+
+(word I can't read) For classical mechanics: note for algebra $\ms{A}$, the commutator $[a,b] = ab - ba$ has a property similar to $(*)$: $[a,bc] = [a,b]c + b[a,c]$
+
+\prop
+
+If $\pois{F}{G} = 0$, then 
+\begin{enumerate}[label=(\alph*)]
+
+\item $G$ is constant along the integral curves of $X_F$
+
+\item The flows of Hamiltonian vector fields $X_F, X_G$, commute. 
+
+\end{enumerate}
+
+\proof
+\,
+\begin{enumerate}[label=(\alph*)]
+
+\item From $\ms{L}_{X_F}G = \pois{F}{G} = 0$. 
+
+\item $[X_F,X_G] = X_{\pois{F}{G}} = 0$
+
+\end{enumerate}
+
+\qed
+
+\prop
+
+For $(M,\omega)$ compact connected, the Lie algebra map $C^\oo(M) \to \mk{X}_{Ham}(M,\omega)$ has a canonical splitting, i.e. a right inverse. 
+
+\proof
+
+Given $X \in \mk{X}_{Ham}(M,\omega)$, let $H\in C^\oo(M)$ be the unique function such that $X = X_H$, and $\int_MH\frac{\omega^n}{n!} = 0$
+
+If $F, G$ are normalized in this way, we get
+\[
+\int_M\pois{F}{G}\frac{\omega^n}{n!} = \int_M\left(\ms{L}_{X_F}G\right)\frac{\omega^n}{n!} = \int_M\ms{L}_{X_F}\left(G\frac{\omega^n}{n!}\right) = 0
+\]
+
+In coordinates, $q_1, p_1, \dots, q_n, p_n$, 
+\[
+\omega = \sum dq_i \wedge dp_i
+\]
+\[
+X_F = \pm \sum\left(\pp{F}{p_i}\pp{}{q_i} - \pp{F}{q_i}\pp{}{p_i}\right)
+\]
+and
+\[
+\pois{F}{G} = \pm\sum\left(\pp{F}{p_i}\pp{G}{q_i} - \pp{F}{q_i}\pp{G}{p_i}\right)
+\]
+
+\section*{Lecture 9, 10/3/24}
+
+\subsection*{\underline{Lagrangian Submanifolds}}
+
+Let $(M,\omega)$ be a symplectic manifold. 
+
+\defn 
+
+A submanifold $N\subseteq M$ is 
+\begin{itemize}
+
+\item \underline{Isotropic}
+
+\item \underline{Coisotropic}
+
+\item \underline{Lagrangian}
+
+\end{itemize}
+
+If, for all $m \in N$, the tangent space $T_mN\subseteq T_mM$ has that property. 
+
+\underline{Remark:} Letting $\iota:N\into M$, we have that $N$ is isotropic if and only if $\iota^*\omega = 0$ and Lagrangian if also $\dim N = \frac12\dim M$.
+
+\underline{Remark:} Every 1-dimensional submanifold is isotropic, and every codimension-1 submanifold is coisotropic. 
+
+Weinstein: ``Everything is a Lagrangian submanifold"
+
+\exm\,
+\begin{enumerate}
+
+\item Let $\pi:M=T^*Q\to Q$, and $N = \pi^{-1}(q)$ are Lagrangian for any $q \in Q$. This comes from $\omega = \sum dq_i \wedge dp_i$, looking at a fiber is setting $dq_i = 0$. 
+
+\item $M = T^*Q, N = Q$(as zero-section). More generally, if $\alpha\in\Omega^1(Q)$, the range of $\sigma_\alpha:Q\to T^*Q$ is Lagrangian if and only if $d\alpha = 0$. 
+
+proof 
+\[
+\sigma_\alpha^*\omega = -\sigma_\alpha^*d\theta = -d\sigma_\alpha^*\theta = -d\alpha
+\]
+
+\item $\R^n \subseteq \C^n \cong \R^{2n}$, or likewise $\RP^n\subseteq \CP^n$ are Lagrangian submanifolds.
+
+More generally, if $(M,\omega,\J)$ is a K\"ahler manifold with a ``complex conjugation" $F \in \Diff(M)$ (i.e. $F\circ F = \Id_M$, $F^*\circ \J = -\J$, $F^*g = g$) then the fixed set of $F$ is a Lagrangian submanifold. 
+
+\item More generally, if $(M,\omega)$ is a symplectic manifold with a symplectic involution $F\in\Diff(M)$ (i.e. $F\circ F = \Id_M, F^*\omega = -\omega$), then the fixed point set is a Lagrangian submanifold. 
+
+proof: 
+
+Fixed point set of any involution is a submanifold, $N\subseteq M$. 
+
+This reduces the problem to tangent spaces $T_mN\subseteq T_mM$ (fixed point set of $T_mF$). 
+
+It is enough to look at symplectic vector space $(V,\omega)$ with $A \in \operatorname{Symp}(V,\omega)$, $A^2 =I, A^*\omega = -\omega$. Write $V = V_{+1} \oplus V_{-1}$, the eigenspaces of $A$.
+
+\underline{Claim:}
+
+$\omega$ restricts to 0 on both $V_{\pm}$. 
+
+proof: 
+
+For $v, w \in V_{-1}$, 
+\[
+\omega(v, w) = -\omega(Av,Aw) = -\omega(-v,-w) = -\omega(v, w)
+\]
+since $A^*\omega=-\omega$. 
+
+\item For $(M,\omega)$ symplectic, denote by $\bar{M}$ the same manifold but with the symplectic form negated. Then $\bigtriangleup_M \subseteq M \times \bar{M}$ is a Lagrangian submanifold. 
+
+More generally, if $F \in \Diff(M)$, then $gr(F) = \{(F(m),m) \mid m \in M \}\subseteq M \times \bar{M}$ is a Lagrangian submanifold if and only if $F \in \Diff(M,\omega)$.
+
+\item Let $F:Q_1\to Q_2$ be a smooth map. Then $gr(T^*F) \subseteq T^*Q_2\times\bar{T^*Q_1}$ is Lagrangian, where $gr(T^*F) = \{(\mu_2,\mu_1) \mid \mu_1 = (T_q^*(F))(\mu_2), q = \pi(\mu_1)\}$
+
+proof
+
+Exercise (understand the linear case)
+
+\item Suppose $S\subseteq Q$ is a submanifold. The conormal bundle $\nu^*(Q,S)$ which we define as follows. First, let
+\[
+\nu(Q,S) \eqdef TQ|_S / TS
+\]
+$(V/W)^* = \ann(W) \subseteq V^*$, i.e. the elements of $V^*$ which kill $W$. So we define
+\[
+\nu^*(Q,S) = \ann(TS) \subseteq T^*Q|_S
+\]
+is a Lagrangian submanifold. 
+
+proof
+
+Near any given point of $S$, choose coordinates $q_1,\dots,q_n$ such that $S$ is given by $q_{k + 1} = \cdots = q_n = 0$. 
+
+Let $q_1,p_1, \dots, q_n,p_n$ be the corresponding coordinates on the cotangent bundle. 
+
+Then $\nu^*(Q,S)$ given by $q_{k+1} = \cdots = q_n = 0$
+
+$TS = \Span\{\pp{}{q_1},\cdots\pp{}{q_n}\}$
+
+\item
+
+Prop: If $j:S \into Q$ is a submanifold, and $\alpha\in\Omega^1(S)$ is closed, then $N = \{\mu\in T^*Q|_S, j^*\mu = \alpha|_{\pi(\mu)}\}\subseteq T^*Q$ is again a lagrangian submanifold. 
+
+Rem: In particular, every function $f \in C^\oo(S)$ determines a Lagrangian submanifold of $T^*Q:$ take $\alpha = df$.
+
+Proof: Again use coordinates. This time, if $\alpha = \sum_{i=1}^k \alpha_idq_i$, equations for $N$ are $q_{k+1} = \cdots = q_n = 0$, $p_1 = \alpha_1, \dots, p_k = \alpha_k$
+\[
+\sum_{i=1}^n dq_i\wedge dp_i = \sum_{i,j =1}^k \pp{\alpha_i}{q_j}dq_i \wedge dq_j = d\alpha
+\]
+so this will be zero if and only if $\alpha$ is closed. 
+\end{enumerate}
+
+\section*{Lecture 10, 10/8/24}
+
+\subsection*{\underline{Lagrangian submanifolds (continued)}}
+
+\underline{Recall:} Let $(M,\omega)$ be a symplectic manifold, $F \in \Diff(M_1,M_2)$ is symplectic if and only if $gr(F)$, the graph of $F$, is a Lagrangian submanifold of $M_2\times\bar{M}_1$.
+
+More generally: 
+
+\defn
+
+A \underline{Lagrangian relation} from $M_1$ to $M_2$ is a Lagrangian submanifold of $M_2\times \bar{M_1}$. 
+
+Write $R:M_1\dashrightarrow M_2$.
+
+\exm
+\,
+\begin{itemize}
+
+\item $R = gr(F)$, $F \in \Diff(M,\omega)$
+
+\item Any Lagrangian submanifold $N \subseteq M$ is a Lagrangian relation $pt\dashrightarrow M$, or $M\dashrightarrow pt$ 
+
+\item For $f \in C^\oo(Q_1,Q_2)$, the cotangent relation $T^*f: T^*Q_1\dashrightarrow T^*Q_2$, that is $\underbrace{\mu_1}_{\in T_xQ_1}\sim\underbrace{\mu_2}_{\in T_{f(x)}Q_2} \iff \mu_1 = (T_xf)^*\mu_2$
+
+\item Given another Lagrangian relation $R'\subseteq M_3\times\bar{M_2}$, i.e. $R':M_2\dashrightarrow M_3$, we can compose 
+\[
+R'\circ R\eqdef \{(m_3,m_1) \mid \exists m_2\in M_2: (m_3,m_2)\in R', (m_2,m_1) \in R\} \subseteq M_3\times\bar{M_1}
+\]
+
+Under suitable transversality conditions (e.g. $(R'\times R)$ needs to be transverse to $M_3\times\bigtriangleup_{M_2}\times M_1$), $R'\circ R$ is a submanifold, and is again Lagrangian.
+
+Weinstein calls this the Symplectic ``category". 
+
+\item Let $j:S\into Q$ be a submanifold, $\alpha\in\Omega^1_{Cl}(S)$. From $j$ we get the cotangent relation 
+\[
+T^*j: T^*S\dashrightarrow T^*Q
+\]
+From $\alpha$, get Lagrangian submanifold $N_\alpha \subseteq T^*S$, which we think of as a relation $pt\dashrightarrow T^*S$. 
+
+By composition, we get $pt\dashrightarrow T^*Q$,i.e. a Lagrangian submanifold of $T^*Q$. 
+
+\end{itemize}
+
+\underline{Applications:}
+
+\thm(Tulczyjew)
+
+Let $E\to B$ be a vector bundle. Then there is a canonical symplectic isomorphism; 
+\[
+T^*E\to T^*E^*
+\]
+
+\proof
+
+Note that $T^*E$ is not just a vector bundle over $E$, but over $E^*$, in some kind of ``double bundle."
+\[
+\begin{tikzcd}
+T^*E \ar[r] \ar[d] & E^* \ar[d] \\
+E \ar[r] & B
+\end{tikzcd}
+\]
+we also have
+\[
+\begin{tikzcd}
+TE \ar[r] \ar[d] & TB \ar[d] \\
+E \ar[r] & B
+\end{tikzcd}
+\]
+We consider the pullback
+
+\[
+\begin{tikzcd}
+\pi^*E \ar[r] & TE \ar[r] \ar[d] & TB \ar[d] \\
+& E \ar[r] & B
+\end{tikzcd}
+\]
+dualizing, we have
+\[
+\begin{tikzcd}
+T^*E^* \ar[r] \ar[d] & E \ar[d] \\
+E^* \ar[r] & B
+\end{tikzcd}
+\]
+
+So this is an isomorphism of double bundles, not just of vector bundles. 
+
+For the proof, we'll describe it in terms of its graph. Consider $\underbrace{E^*\oplus E}_{S}$ (meaning pairs $(u,w)$ where $u$ is a tangent vector and $w$ is a cotangent vector on the same base point) as a submanifold of $\underbrace{E^*\times E}_{Q}$
+
+We have a function $f:E^*\oplus E\to \R$ given by pairing. Take $\alpha = df$. 
+
+Then we get a Lagrangian submanifold of $T^*Q = T^*E^*\times T^*E$
+
+After sign change in last factor, we get Lagrangian submanifold in $T^*E^*\times\bar{T^*E}$, i.e. a Lagrangian relation $T^*E\dashrightarrow T^*E^*$ one checks that this is the graph of a symplectomorphism. 
+
+One checks this by assuming $E = B\times V$, then $T^*E = T^*B\times T^*V, T^*E^* = T^*B\times T^*V^*, E^* = B\times V^*$. One finds: the map 
+\[
+T^*V=V\oplus V^* \to T^*V^* = V^*\oplus V
+\]
+is $(\nu,\mu)\mapsto(-\mu,\nu)$
+
+\qed
+
+Special case: $T^*(TQ) \cong T^*(T^*Q)$, the Legendre transform. 
+
+\section*{\underline{Coisotropic submanifolds}}
+
+Recall that if $(V,\omega)$ is a symplectic vector space, then $F^\omega = \{v\in V \mid \omega(v, w) = 0 $for all $w\in F\}$
+
+Recall $\omega^\flat:V\to V^*$: we have $\omega^\flat:F^\omega\to \ann(F)$
+
+Recall: $N\subseteq M$ is \underline{coisotropic} if $(TN)^\omega \subseteq TN$. 
+
+In general, consider for $N \subseteq M$, 
+\[
+I_N = C^\oo(M)_N = \{f\in C^\oo(M) \mid f|_N = 0\}
+\]
+the vanishing ideal. 
+
+\begin{itemize}
+
+\item $X \in \ms{X}(M)$ is tangent to $N \iff X$ preserves $C^\oo(M)_N$
+
+\item $v\in TM$ lies in $TN \iff v(f) = 0$ for all $f \in C^\oo(M)_N$.
+
+\item $T^*M|_N \supseteq \ann(TN) = \Span\{df|_N\mid f \in C^\oo(M)_N\}$
+
+\end{itemize}
+
+\lem
+
+For any submanifold $N$ of $(M,\omega)$, the bundle $TN^\omega$ is spanned by $X_f$ with $f \in C^\oo(M)_N$
+
+\proof
+
+$\omega^\flat$ restricts to an isomorphism $TN^\omega \to \ann(TN)$, under this isomorphism $X_f|_N \mapsto df|_N$, and $\ann(TN)$ is spanned by all $df|_N, f\in C^\oo(M)_N$.
+
+\qed
+
+\thm
+
+The following are equivalent:
+\begin{enumerate}
+
+\item For all $f \in C^\oo(M)_N$, $X_f$ is tangent to $N$
+
+\item $C^\oo(M)_N$ is closed under $\{\cdot,\cdot\}$
+
+\item $N\subseteq M$ is a coisotropic submanifold
+
+\end{enumerate}
+
+\proof
+
+For the first, it follows because $TN^\omega$ is spanned by $X_f, f \in C^\oo(M)_N$.
+
+For the second, for all $f \in C^\oo(M)_N$, $X_f$ is tangent to $N$ means that for all $g\in C^\oo(M)_N$, $\underbrace{X_f(g)}_{=\pois{f}{g}} \in C^\oo(M)_N$
+
+\qed
+
+If we want to check the second condition (that is, that $C^\oo(M)_N$ is closed under $\pois{\cdot}{\cdot}$), it's enough to check $\pois{f_i}{f_j} = 0$ for any collection $f_1, \dots, f_k \in C^\oo(M)_N$ such that $df_i|_N$ span $\ann(TN)$
+
+\prop
+
+Let $(M,\omega)$ be symplectic, and $\pi:M\to Q$ a submersion. Then the fibers of $\pi$ are all coisotropic $\iff \pi^*C^\oo(Q) \subseteq C^\oo(M)$ 
+
+\proof
+
+In the left direction, suppose all the fibers are coisotropic. Given $q \in Q$, $N = \pi^{-1}(q)$ is coisotropic. For $f \in C^\oo(Q)$, then $\pi^*f - f(q) \in C^\oo(M)_N$. Given $f, g \in C^\oo(Q)$, get $\pois{\pi^*f}{\pi^*g} = \pois{\pi^*f - f(q)}{\pi^*g - g(q)}$ vanishes on $N = \pi^{-1}(q)$. Since $q$ was arbitrary, this bracket vanishes everywhere. 
+
+In the right direction, suppose that $\pi^*C^\oo(Q)$ has zero Poisson bracket. 
+
+Given $q\in Q$, we want to sho $N = \pi^{-1}(q)$ is coisotropic. Choose $f_1,\dots, f_n$ with $f_i(q) = 0$ such that $df_i|_q$ span $T_qQ$. 
+
+Then their pullbacks $\pi^*f_i$ are such that $d(\pi^*f_i)$ span $\ann(\pi^{-1}(q))$, and by assumption $\pois{\pi^*f_i}{ \pi^*f_j} = 0$
+
+\qed
+
+Note for $\dim Q = \frac12\dim M$, we get a ``Lagrangian Fibration."
+
+\section*{\underline{Constant rank submanifolds}}
+
+\defn
+
+A 2-form $\sigma\in\Omega^2(Q)$ has \underline{constant rank} if the rank of $\sigma^\flat|_q:T_qQ\to T_q^*Q$ is constant. 
+
+This is equivalent to saying that the dimension of $\ker(\sigma) = \{v\mid \sigma(v,\cdot) =0\}$ is constant (which is by definition the kernel of $\sigma^\flat)$.
+
+\defn
+
+For $(M,\omega)$ a symplectic manifold with submanifold $j:N\into M$ has \underline{constant rank} if $j^*\omega$ has constant rank.
+
+E.g: isotropic, coisotropic, Lagrangian, symplectic
+
+\prop
+
+If $\sigma \in \Omega_{Cl}^2(Q)$ is a closed 2-form of constant rank, then $\ker(\sigma)\subseteq TQ$ is integrable, i.e. corresponds to some fibration.
+
+\proof
+
+Use Fubini's theorem: $E \subseteq TQ$ is integrable if for all $X, Y \in \Gamma(E) \subseteq \Gamma(TQ) = \ms{X}(Q)$, we have $[X,Y]\in \Gamma(E)$
+
+\underline{Check:} Suppose $X, Y \in \ker(\sigma)$. Then 
+\begin{align*}
+\iota([X,Y])\sigma & = \iota(L_XY)\sigma \\
+& = L_X(\underbrace{\iota(Y)\sigma}_{=0})-\iota(Y)L_X\sigma \\
+& = -\iota(Y)(\iota(X)d + d\iota(X))\sigma \\
+& = 0 
+\end{align*}
+
+So, if $N\subseteq M$ is constant rank, we get a fibration of $N$.
+
+In particular, for coisotropic. 
+
+$\hfill$
+
+For $\sigma\in\Omega^2_{Cl}(Q)$ closed, constant rank, this fibration is called the \underline{null fibration}.
+
+\underline{If} this foliation is ``fibrating," i.e. comes from a submersion $\pi:Q\to B$ (i.e. the space of leaves of foliations is a manifold). 
+
+In that case, $\sigma$ descends to a 2-form $\omega_B\in\Omega^2(B)$, $\pi^*\omega_B = \sigma$. 
+
+Furthermore, $\omega_B$ is symplectic (closed: $\pi^*\omega_B = d\pi^*\omega_B - dt = 0$, nondegenerate...)
+
+So if $N \subseteq M$ $(M,\omega)$ is constant rank submanifold, and if (big if!) the nullfibration of $j^*\omega$ is fibrating, then $B = N/\sim$ (the space of leaves?) inherits a symplectic form. This is the general case of ``symplectic reduction."
+
+\underline{Moser argument}
+
+\defn
+
+The flow of a time-dependent vector field $X_t\in\ms{X}(Q)$, $t \in \R$, is a smooth family of diffeomorphisms $\varphi_t\in\Diff(Q)$ such that $\phi_0 = \Id$, $\phi_t^*(\ms{L}_{X_t}f) = -\dd{}{t}\phi^*_t(f)$
+
+In coordinates, if $X_t = \sum_{i=1}^na_i(x,t)\pp{}{x_i}$, this corresponds to the ODE
+\[
+\dd{x_i}{t} = a_i(x(t),t)
+\]
+
+\thm(Moser stability for volume forms)
+
+Let $Q$ be a compact oriented manifold, $\Lambda_0,\Lambda_1\in\Omega^{\dim Q}(Q)$ are volume forms, with $\int_Q\wedge_0 = \int_Q\wedge_1$. Then there exists a diffeomorphism $\varphi\in\Diff(Q)$ such that $\varphi^*\Lambda^1=\Lambda^0$. 
+
+\proof
+
+Let $\Lambda_t = t\Lambda_1 + (1-t)\Lambda_0$. These are all volume forms, same volume. 
+
+We want a family of diffeomorphisms $\varphi_t$ such that $\varphi_t^*\Lambda_t = \Lambda_0$.
+
+Let $X_t$ corresponding time-dependent vector field having $\varphi_t$ as its flow. 
+Then 
+$\varphi_t^*\Lambda_t = \Lambda_0 \iff \dd{}{t}(\varphi_t^*\Lambda_t) = 0$. We calculate
+\begin{align*}
+\dd{}{t}(\varphi_t^*\Lambda_t) & = -\varphi_t^*(-\ms{L}_{X_t}\Lambda_t + \Lambda_1-\Lambda_0) \\
+& = \varphi_t^*(-d\iota(X_t)\Lambda_t + d\beta) \\
+& = d\varphi_t^*(-\iota(X_t)\Lambda_t + \beta) \\
+\end{align*}
+Now define $X_t$ by $\iota(X_t)\Lambda_t = \beta$ (where $\beta$ is a primitive of $\Lambda_1-\Lambda_0$ (because they are by definition cohomologous)) (this definition also uniquely determines $X_t$). 
+
+Then we are done.
+
+\qed
+
+\section*{Lecture 11, 10/10/24}
+
+\subsection*{\underline{Moser-Weinstein theorems}}
+
+\underline{Background: Homotopy operators}
+
+\defn
+
+Given smooth maps $F_0,F_1\in C^\oo(Q_1,Q_2)$, a \underline{smooth homotopy} between them is a map $F \in C^\oo([0,1]\times Q_1,Q_2), (t, q) \mapsto F_t(q)$, such that the values at $t = 0$ and $t = 1$ are the given ones.
+
+In this case, $F_0^* = F_1^*$ in de Rham cohomology. But how can we see this? 
+
+Define a homotopy operator
+\[
+\begin{tikzcd}
+\Omega^k(Q_2) \ar[rr, bend right = 30, "h"]\ar[r, "F^*"] & \Omega^k([0,1]\times Q_1) \ar[r, "\int_{[0,1]}"] & \Omega^{k-1}(Q_1)
+\end{tikzcd}
+\]
+Here 
+\[
+\int_{[0,1]}(ds\wedge\underbrace{\beta_s}_{\in \Omega^{k-1}(Q_1)} + \underbrace{\gamma_s}_{\in\Omega^k(Q_1)}) = \int_0^1\beta_s|ds|
+\]
+
+\underline{Exercise:}
+
+For $\alpha\in\Omega^k([0,1]\times Q_2)$, $\int_{[0,1]}d\alpha + d\left(\int_0^1\alpha\right) = \iota_1^*\alpha - \iota_2^*\alpha$
+
+One finds: $d\circ h + h\circ d = F_1^* - F_0^*$ as maps $\Omega^k(Q_2) \to \Omega^k(Q_1)$. 
+
+So $h$ is a chain homotopy between $F_1^*,F_0^*$, so by basic homological algebra, $F_1^* = F_0^*$.
+
+\exm
+
+Consider $\R^n$, let $F_1 = \Id, F_0(x) = 0$. Get homotopy by $F_t = tF_1$ for $t \in [0,1]$. So we get a homotopy operator $h:\Omega^k(\R^n)\to\Omega^{k-1}(\R^n)$.
+
+The point is these homotopy operators give canonical primitives to closed forms. 
+
+\thm(Moser stability theorem for symplectic structures)
+
+Let $M$ be a compact manifold, $\omega_t\in\Omega^2(M)$ a family of symplectic forms with 
+\[
+\dd{\omega_t}{t} = d\beta_t
+\]
+for some family of 1-forms $\beta_t$. Then there exists a family $\varphi_t \in \Diff(M)$, with $\varphi_0=\Id_M$, such that
+\[
+\varphi_t^*\omega_t = \omega_0
+\]
+\proof
+
+Recall: $X_t \in \ms{X}(M)$ time dependent vector field, has flow $\varphi_t$ ($\varphi_0=\Id_M$)
+\[
+\dd{}{t}\varphi_t^*\alpha = -\varphi_t^*\left(\ms{L}_{X_t}\alpha\right)
+\]
+for $\alpha \in \Omega^k(M)$.
+
+We want $0 = -\dd{}{t}(\varphi_t^*\omega_t)$. We have
+\begin{align*}
+-\dd{}{t}(\varphi_t^*\omega_t) & = \varphi_t^*\left(\ms{L}_{X_t}\omega_t - \dd{\omega_t}{t}\right) \\
+& = \varphi_t^*d(\iota_{X_t}\omega_t -\beta_t) 
+\end{align*}
+(recall that by hypothesis $\dd{\omega_t}{t} = d\beta_t$, which means $[\dd{\omega_t}{t}] = 0$ in $H^2(M)$, which implies $[\omega_t]$ in $H^2(M)$ doesnt depent on $t$. The converse is also true, but is more difficult).
+
+We use compactness to guarantee the existence of flows (this is also what we use it for in the Moser argument from last time). 
+
+Define $X_t$ by $\iota_{X_t}\omega_t=\beta_t$
+
+\qed
+
+\thm(Darboux' theorem (Libermann, 1948))
+
+Let $(M,\omega)$ be a symplectic manifold, $m\in M$. There exists a local coordinate chart $(U,\varphi)$ around $m$, with coordinates $q_1,p_1,\dots,q_n,p_n$, such that $\omega|_U = \varphi^*(\sum_{i=1}^n dq_i\wedge dp_i)$. Coordinates of this type are called ``Darboux coordinates".
+
+\proof
+
+Start by choosing any coordinates around $m$ to reduce to the case that $U \subseteq \R^{2n}$, with $m$ the origin. 
+
+Let $\omega_0 = \sum_{i=1}^n dq_i \wedge dp_i$. Using linear change of coordinates, we may assume $\omega|_{T_0\R^{2n}\times T_0\R^{2n}}$ is the standard one. 
+
+Let $\omega_t = (1-t)\omega_0 + t\omega_1$, where $\omega_1$ is the $\omega$ we defined above. 
+
+These are all standard on $T_0\R^{2n}$, hence are all symplectic on the origin, hence also on some open neighborhood of 0. By shrinking $U$, we may assume symplectic on all of $U$, and may also assume $U$ is an open ball around 0. Now, by de Rham homotopy operator for $U = \R^{2n}$, 
+\[
+\dd{\omega_t}{t} = \omega_1 = \omega_0 = d\beta
+\]
+Define $X_t$ by $\iota(X_t) = \beta$. Let $\varphi_t$ be its flow.  But $X_t$ vanishes at $0\in U$ since $\beta_t|_0 = 0$. 
+
+Hence close to 0, $X_t$ is ``small." Hence, the time-1-flow exists in some neighborhood $U'\subseteq U$.
+
+Then define $\varphi_t:U'\to U$ for $t \in [0,1]$.
+
+Now we use Moser's argument. 
+
+\qed
+
+\underline{Remark:} If a compact Lie group $G$ acts on $(M,\omega)$ by symplectic diffeomorphisms, and if $m\in M$ is $G$-fixed, then we get an equivariant Darboux theorem, i.e. with $U$ $G$-invariant, and $\varphi$ $G$-equivariant for some \underline{linear symplectic} $G$-action on $\R^{2n}$.
+
+(Indeed, can make all choices $G$-invariant by using averaging (because the Lie group is compact))
+
+
+\section*{Lecture 12, 10/15/24}
+
+\subsection*{\underline{Normal Form Theorems}}
+
+Last time, we did Darboux' theorem. Today, we consider generalizations along submanifolds. 
+
+Given a symplectic manifold $(M,\omega)$ and a submanifold $N \subseteq M$, the symplectic structure is uniquely determined on some neighborhood $U$ of $N$ by $\omega|_N \in \Gamma(\wedge^2T^*M|_N)$. More precisely:
+
+\thm(``Master Theorem")
+
+Let $(M_i,\omega_i)$, $i \in \{0,1\}$ be symplectic manifolds and $N_i \subseteq M_i$ submanifolds. Suppose there is an isomorphism of symplectic vector bundles (i.e. a vector bundle whose fibers have symplectic structures)
+\[
+\begin{tikzcd}
+TM_0|_{N_0} \ar[r, "\hat{\psi}"] \ar[d] & TM_1|_{N_1} \ar[d] \\
+N_0 \ar[r, "\psi"] & N_1
+\end{tikzcd}
+\]
+such that $\hat{\psi}$ extends $T\psi:TN_0\to TN_1$. Then $\psi:N_0\to N_1$ extends to a symplectomorphism $\varphi:U_0\to U_1$ of open neighborhoods $U_i$ of $N_i$ such that $\tilde{\psi} = T\varphi|_{N_0}$
+
+\proof
+
+Later
+
+\qed
+
+\underline{Review:} Normal bundles. 
+
+Given a submanifold $N \subseteq M$, then the normal bundle $\nu(M,N)$ is defined by $TM|_N/TN$, a vector bundle over $N$. Then:
+\begin{itemize}
+
+\item $\nu$ is functorial: Given $\varphi:M_0\to M_1$ with $\varphi(N_0) \subseteq N_1$, we get $\nu(\varphi): \nu(M_0,N_0) \to \nu(M_1,N_1)$.
+
+\item If $M = E \to N$ is a vector bundle, then $TE|_N = E\oplus TN$, so $\nu(E,N) = E$.
+
+\end{itemize}
+
+
+\defn Given $(M,N)$, a \underline{tubular neighborhood embedding} $\varphi:U\to M$ of some open neighborhood $U \subseteq \nu(M,N)$ of $N$ is an embedding such that $\varphi(N) \subseteq N$ and $\nu(\varphi) = $identity of $\nu(M,V)$. 
+
+\begin{itemize}
+
+\item Tubular neighborhood embeddings exist. For ex, can take $U$ to be a bundle of open balls ($\varepsilon$-neighborhoods of $N$).
+
+\end{itemize}
+
+Now we prove the theorem. 
+
+\proof
+
+Using tubular neighborhood embeddings, we may assume $M_i = \nu(M_i,N_i)$. The map $\hat{\psi}$ gives an isomorphism $\nu(M_0,N_0) \to \nu(M_1,N_1)$, because it takes the tangent bundle to the tangent bundle, and the tangent of the submanifold to the tangent of the submanifold. 
+
+Using this, we may assume $M_0 = M_1 = M$ is a vector bundle $\pi:M\to N = N_0 = N_1$ equipped with two symplectic forms, $\omega_0,\omega_1$, so that $\omega_0|_N = \omega_1|_N$.
+
+In particular, $\iota^*\omega_0 = \iota^*\omega_1$, hence $[\omega_0] = [\omega_1]$. 
+
+The homotopy operator $h:\Omega^k(M) \to \Omega^{k-1}(M)$ for the vector bundle $\pi:M\to N$, gives $\beta\in\Omega^1(M)$, $\beta = h(\omega_1-\omega_0)$ such that $d\beta = \omega_1-\omega_0$. 
+
+We get a family of cohomologous symplectic forms on smaller neighborhood of $N\subseteq M$, $\omega_t = (1-t)\omega_0 + t\omega_1 = \omega_0 + td\beta$.
+
+Now, use the Moser argument.
+
+\qed
+
+Special case: \underline{Lagrangian submanifolds}
+
+Recall that $N \subseteq M$ is Lagrangian $\iff$ $TN^\omega = TN \iff$ $\iota^*\omega = 0$, $\dim N = \frac12\dim M$
+
+\lem
+
+For $N$ Lagrangian, we have canonical isomorphism of vector bundles $\nu(M,N) = T^*N$
+
+\proof
+
+Recall the isomorphism $\omega^\flat:TM|_N\to T^*M|_N$ restricts to an isomorphism $TN^\omega \to \ann(TN)$
+
+But for a Lagrangian submanifold, $TN^\omega=TN$.
+
+So, $\nu(M,N) = TM/TN \to T^*M|_N/\ann(TN) = T^*N$
+
+\qed
+
+\thm(Weinstein)
+
+Let $(M,\omega)$ be symplectic, and $N\subseteq M$ Lagrangian. Then there exists a tubular neighborhood embedding
+\[
+\psi:U\to M
+\]
+with $U \subseteq\nu(M,N) = T^*N$ which is \underline{symplectic} (for the standard symplectic structure on $T^*N$).
+
+\proof
+
+We need to find $\hat{\psi}$ so that 
+\[
+\begin{tikzcd}
+T\nu(M,N)|_N \ar[r,"\hat{\psi}"] \ar[d] & TM|_N \ar[d] \\
+N \ar[r, "\cong"] & N
+\end{tikzcd}
+\]
+commutes. Now, $TM|_N$ has a Lagrangian tubbundle $TN$. Choose complex Lagrangian subbundle $L \subseteq TM|_N$ (e.g. Take $L = \J(TN)$ for compatible complex structure $\J$), symplectic structure identifies $L \cong T^*N$ so, $TM|_N = TN \oplus T^N$ with fiberwise symplectic structure given by pairing. 
+
+Do the same for $T(T^*M)|_N = TN \oplus T^*N\cong TM|_N$
+
+\qed
+
+For constant rank submanifolds $N \subseteq M$, define the \underline{symplectic normal bundle} as 
+\[
+F = TN^\omega / (TN \cap TN^\omega)
+\]
+
+Note $F \subseteq TM|_N/TN$
+
+\thm(Constant rank embedding theorem)
+
+Let $(M_i,\omega_i)$, $i \in 2$, $N_i \subseteq M_i$ constant rank submanifolds, with symplectic noraml bundles $F_i = TN_i^\omega /(TN_i \cap TN_i^\omega)$. Suppose
+\[
+\begin{tikzcd}
+F_0 \ar[r, "\hat{\psi}"] \ar[d] & F_1 \ar[d] \\
+N_0  \ar[r,"\psi"'] & N_1
+\end{tikzcd}
+\]
+is an isomorphism of symplectic vector bundles, and such that $\psi^*\iota_1^*\omega_1 = \iota_0^*\omega_0$. 
+
+Then $\psi$ extends to symplectomorphism of neighborhoods of $N_0, N_1$, inducing $\hat{\psi}$. 
+
+\proof
+
+We want to reduce to the master theorem. Given constant rank submanifold $N \subseteq M$, define three symplectic vector bundles 
+\begin{align*}
+E & = TN/(TN\cap TN^\omega) \\
+F & = TN^\omega/(TN\cap TN^\omega) \\
+G & = (TN \cap TN^\omega)\oplus(TN\cap TN^\omega)^*
+\end{align*}
+with $E, G$ symplectidc subbundles. 
+
+Choosing splittings for $E, F$, we get 
+\begin{align*}
+TN & \cong E\oplus(TN\cap (TN)^\omega) \\
+TN^\omega & \cong F\oplus(TN\cap(TN)^\omega)
+\end{align*}
+
+One has 
+\[
+TM|_N /(TN + TN^\omega) \cong (TN\cap(TN^\omega))^*
+\]
+choosing splittings get
+\[
+TM|_N = (TN + TN^\omega)\oplus(TN\cap TN^\omega)^*
+\]
+
+We get 
+\[
+TM|_N = E\oplus F \oplus (TN\cap TN^\omega)\oplus(TN\cap TN^\omega)^*
+\]
+
+So $TM|_N$ is sum of three symplectic vector bundles.
+
+Note $E\oplus (TN\cap TN^\omega) = TN$, $F\oplus(TN\cap TN^\omega) = TN^\omega$, and $(TN\cap TN^\omega)\oplus(TN\cap TN^\omega)^* = G$. 
+
+Do this for both $N_i \subseteq M_i, i \in 2$, 
+\begin{align*}
+TM_0|_{N_0} & = E_0\oplus F_0\oplus G_0 \\
+TM_1|_{N_1} & = E_1\oplus F_1\oplus G_1 \\
+\end{align*}
+The map $\psi$ gives isomorphisms $E_0\to E_1, G_0\to G_1$, and $\hat{\psi}$ gives an isomorphism $F_0\to F_1$. So by the master theorem we get $TM_0|_{N_0} \to TM_1|_{N_1}$ is an isomorphism. 
+
+\qed
+
+\underline{Special cases:}\,
+\begin{enumerate}
+
+\item $N_i$ is coisotropic, i.e. $TN_i^\omega\subseteq TN_i, F_i = 0$. 
+
+Get symplectomorphism of neighborhoods provided that 
+\[
+\psi^*(\iota_1^*\omega_1) = \iota_0^*\omega_0
+\]
+
+\item If $N_i$ is isotropic, i.e. $TN_i^\omega\supseteq TN$, $F_i = TN_i^\omega/TN_i$. Need $F_0 \simeq F_1$. 
+
+\item If $N_i$ is symplectic, we have $F_i = (TN_i)^\omega$. Need $N_0\to N_1$ to be symplectic and an isomorphism of symplectic vector bundles.
+
+\end{enumerate}
+
+
+\subsection*{\underline{Lagrangian fibrations}}
+
+(Here, ``fibration" is used as a synonym for ``fiber bundle," and does \underline{NOT} refer to Serre fibrations)
+
+Let $\begin{tikzcd} M \ar[d,"\pi"] \\ B \end{tikzcd}$ be a fiber bundle, i.e. surjective submersion such that all $\pi^{-1}(b) \cong F$, with local triviality, meaning that any point admits a neighborhood $U$ with $\pi^{-1}(U) \cong U\times F$. 
+
+\defn
+
+Let $(M,\omega)$ be symplectic. A \underline{Lagrangian fibration} of $M$ is a fibration $\fibrate{M}{\pi}{B}$ such that fibers are Lagrangian submanifolds. 
+
+Recall: These are the fibrations such that $\pois{\pi^*f}{\pi^*g} = 0$ for all $f, g \in C^\oo(B)$ and $\dim B = \frac12\dim M$
+
+\exm\,
+\begin{enumerate}
+
+\item $\pi:T^*Q\to Q$ cotangent bundle.
+
+\item Suppose $Q = \R^n/\Z^n = (S^1)^n$. Then $TQ = Q\times\R^n$, $\pi:T^*Q=Q\times(\R^n)^*\to (\R^n)^*$ is also a Lagrangian fibration, with fibers the torus.
+
+\end{enumerate}
+
+We'll see that fibers of Lagrangian fibration are products of vector spaces and tori (I notice these are exactly the homeomorphism types of connected Abelian Lie groups, but I don't know the significance of this). 
+
+\thm
+
+Let $(M,\omega)$ be a symplectic manifold, and $\fibrate{M}{\pi}{B}$ a Lagrangian fibration with compact connected fibers. Then there is a canonical, fiberwise transitive action of the vector bundle $\fibrate{T^*B}{}{B}$ on $\fibrate{M}{}{B}$. 
+
+Then $M$ has structure of an ``affine torus bundle."
+
+\proof
+
+Later
+
+\qed
+
+\underline{Background:}
+
+A $G$-action on manifold $M$ is when a Lie group $G$ acts on a manifold $M$. Recall this is a function $G\times M \to M$, $(g, m) \mapsto g\cdot m$, so that $g\cdot(g'\cdot m) = (gg')\cdot m$, and $e\cdot m = m$. 
+
+The orbits through $m$ are $\{g\cdot m\mid g \in G\} = G\cdot m$.
+
+The stabilizer of $m$ is $G_m = \{g \in G \mid g\cdot m = m\}$. Have $G\circ m = G/G_M$ is a manifold 
+
+If the action is \underline{transitive}, meaning for any $m, m'$, there is a $g$ with $g\cdot m = m'$, then $G\circ m = M$. We say the action is \underline{free} if all $G_m = \{e\}$, i.e. all stabilizers are trivial. 
+
+A vector space is a group. If it has a free and transitive action on manifold $M$, then $M$ is an affine space.
+
+If we have a free and transitive action of $G = \R^n/\Z^n$, then $M$ is an affine torus. 
+
+Now, a vector bundle action of $\fibrate{T^*B}{}{B}$ means each $T^*B|_b$ acts on $\pi^{-1}(b)$.
+
+\proof
+
+Let $VM = \ker(T\pi) \subseteq TM$ the vertical subbundle. This is a Lagrangian subbundle. For any $\alpha\in\Gamma(T^*B) = \Omega^1(B)$, we have $\pi^*\alpha \in \Omega^1(M)$
+
+Let $X_\alpha \in \ms{X}(M)$ defined by $\iota(X_\alpha)\omega = -\pi^*\alpha$
+
+Now, we claim that $X_\alpha \in \Gamma(VM)$, i.e. it is a vertical vector field. For all $Y \in \Gamma(VM)$, we have $\omega(X_\alpha, Y) = \iota(Y)\iota(X_\alpha)\omega = -\iota(Y)\pi^*\alpha=0$. 
+
+So $X$ is vertical. 
+
+Note: Restriction of $X_\alpha$ to $\pi^{-1}(m)$ depends only on $\alpha|_m$. 
+
+This gives a map $\pi^*(T^*B)\to VM$.
+
+Let $F_\alpha^t:M\to M$ be the flow of that vector field. Since $X_\alpha$ is vertical it takes fibers to fibers, and exists for all time because the fibers are compact. Action of $T^*B$ is the trace $1$-form $F_\alpha^1$ (etc.)
+
+\section*{Lecture 13, 10/17/24}
+
+\subsection*{\underline{Lagrangian fibrations and a dim-angle coordinates(?)}}
+
+Recall; $\pois{H}{F} = 0 \iff L_{X_H}F = 0$, which implies that the integral curves of $X_H$ are constrained by level sets of $F$. 
+
+More generally, consider $F_1,\dots,F_k$ such that $\pois{F_i}{F_j} = 0$, $\pois{H}{F_i} = 0$, then we can try to build coordinate systems to ``solve" $X_H$.
+
+Recall: Regular level sets of $F = (F_1,\dots, F_k)$ are coisotropic submanifolds of codimension $k$. 
+
+For $k = n$ these will be Lagrangian submanifolds. 
+
+\defn
+
+A \underline{Lagrangian submersion} $\pi:M\to B$ is a submersion with Lagrangian fibers. 
+
+We'll see: All compact fibers of a Lagrangian submersion of a Lagrangian submersion are tori. 
+
+For any submersion $\pi:M\to B$, we have an exact sequence of vector bundles over $M$
+\[
+\exactshort{\ker(T\pi)}{}{TM}{q}{\pi^*(TB)}
+\]
+where $\pi^*(TB)$ is the pullback bundle, where $\pi^*(TB)|_m \subseteq T_{\pi(m)}B$. So, $TM/\ker(T\pi) = \pi^*(B)$.
+
+For a Lagrangian submersion, $\omega$ gives a nondegenerate pairing between $\ker(T\pi)$ and $TM/\ker(T\pi)$
+
+(Recall: For symplectic vector space $V$, and Lagrangian subspace $L\subseteq V$, we have a pairing between $L, V/L$, i.e. we have an identification $L \cong (V/L)^*$)
+
+Thus $\ker(T\pi) \cong (TM/\ker(T\pi))^* = \pi^*(T^*B)$
+
+Thus $\ker(T_m\pi) \cong T_{\pi(M)}^*B$ for all $m$.
+
+So, for any fiber $\pi^{-1}(b)$, $\ker(T\pi)|_{\pi^{-1}(b)} = T(\pi^{-1}(b)) \cong \pi^{-1}(b)\times T^*_bB$
+
+\prop
+
+For a Lagrangian submersion $\pi:M\to B$ there is a canonical isomorphism 
+\[
+\underbrace{\ker(T\pi)}_{\text{tangent bundle to fibers}} \cong \pi^*(T^*B)
+\]
+
+\proof
+
+\qed
+
+Taking $v \in \ker(T_m\pi)$ to $\mu\in T_{\pi(m)}^*B$ defined by $\iota(v)\omega_m = -(T_m\pi)^*\mu$
+
+For $\mu\in T_b^*B$, we get $X_\mu \in \ms{X}(\pi^{-1}(b))$ by this isomorphism.
+
+Equivalently, for $\alpha\in\Omega^1(B)$, we get $X_\alpha \in \Gamma(\ker(T\pi))\subseteq \ms{X}(M)$
+
+\prop
+
+For $\mu_1,\mu_2 \in T_b^*B$, we have $[X_{\mu_1},X_{\mu_2}] = 0$.
+
+\proof
+
+Extend $\mu_i$ to $\alpha_i\in\Omega^1(B)$. Let $X_i = X_{\alpha_i}$. By def, $\iota(X_i)\omega = -\pi\alpha_i$. 
+Now, 
+\begin{align*}
+\iota(\underbrace{[X_1,X_2]}_{L_{X_1}X_2})\omega & = L_{X_1}(\iota_{X_2}\omega) - \iota_{X_2}L_{X_1}\omega \\
+& = - L_{X_1}\pi^*\alpha_2 - \iota_{X_2}\iota_{X_1}\underbrace{d\omega}_{=0} - \iota_{X_2}d\underbrace{\iota_{X_1}}_{-\pi^*\alpha_1}\omega \\
+& = -L_{X_1}\pi^*\alpha + L_{X_2}\pi^*\alpha_1 - d\iota_{X_2}\pi^*\alpha_1 \\
+\end{align*}
+
+Because $X_i$ are vertical vector fields (in the kernel of $T\pi$), all three of these terms above disappear.
+
+\qed
+
+\underline{Remark:} Choose a basis of $T_b^*B, \mu_1,\dots,\mu_n$. Get corrresponding vector fields $X_{\mu_1},\dots,X_{\mu_n}$. We can use these to build coordinate systems. 
+
+For $m \in \pi^{-1}(b), (t_1,\dots,t_n) \mapsto F_{t_1}^{X_{\mu_1}}\circ\cdots\circ F_{t_n}^{F_{X_{\mu_n}}}(m)$ is a coordinate system. In fact, this is canonical up to affine transformation. 
+
+So $\pi^{-1}(b)$ has an affine structure. 
+
+\defn
+
+Call a Lagrangian submersion $\pi:M\to B$ \underline{complete} if for all $X_\alpha, \alpha\in\Omega^1(M)$ are complete, i.e. flow exists for all $t$. 
+
+E.g. if fibers $\pi^{-1}(b)$ are compact, then it is complete. 
+
+Let $F_\alpha(t):M\to M$ be the flow of $X_\alpha$. $(F_\alpha^t\circ F_\beta^s = F_{\beta}^s\circ F_\alpha^t$. Let $F_\alpha = F_\alpha^1$. We have $F_\alpha\circ F_\beta = F_{\alpha + \beta}$ (we are using that $F_\alpha^t \circ F_\beta^t = F_{\alpha+\beta}^t$ when they commute). 
+
+On each $\pi^{-1}(b)$, get action of $T_b^*B$ (viewed as an Abelian group).
+
+Then $\mu\circ m = F_\mu(m)$. Note $(\mu_1 + \mu_2)\circ m = \mu_1\circ(\mu_2\circ m)$, and $0\circ m = m$. 
+
+\prop
+
+For a complete Lagrangian submersion, all fibers $\pi^{-1}(b)$ have locally free, transitive action of $T_b^*B$, meaning that there is only one orbit, and discrete stabilizers. 
+
+\proof
+
+Since $X_\mu, \mu\in T_b^*B$ spans $\ker(T\pi)$, the orbits (which are fibers) are $n$-dimensional, hence are open, hence all of $\pi^{-1}(b). $
+
+So $\pi^{-1}(b) = T_b^*B / \Lambda_b$, where $\Lambda_b$ is the stabilizer of $b$.
+
+\qed
+
+We've seen that $\pi^{-1}(b) = T^*_bB/\Lambda_b$, where $\Lambda_b$ is discrete. Choose a basis of $e_1, \dots, e_n\ell$ of $\Lambda_b$, extend to basis $e_1,\dots,e_n$ of $T_b^*B$
+
+Then $\pi^{-1}(b) = \R^n/\Z^k = (\R/\Z)^k\times\R^{n-k}$. In particular, if this is compact, it must be a torus.
+
+
+
+
+\section*{Lecture 14, 10/22/24}
+
+Missed
+
+\section*{Lecture 15, 10/24/24}
+
+\subsection*{\underline{Hamiltonian group actions}}
+
+\underline{Review of Lie theory:}
+
+\begin{itemize}
+
+\item A Lie group $G$ is a manifold, also a group, such $Mult_G:G\times G \to G$ is $C^\oo$. 
+
+\item Cartan's theorem: every closed subgroup of a Lie group is a Lie group. 
+
+\item A Lie algebra $\g = T_eG$ with bracket from left invariant vector fields, the set of which we denote by $\ms{X}^L(G)$ (i.e. invariant under all $L_a:G\to G, g \mapsto ag$). For matrix Lie groups, the bracket is the commutator.
+
+\item There is a map called the exponential map $\exp:\g\to G$ which sends $\xi \mapsto \exp(\xi) = \gamma_\xi(1)$, where $\gamma_\xi:\R\to G$ is a one-parameter subgroup such that $\dd{}{t}|_{t=0}\gamma_\xi(t) = \xi$. The assignment of $\g = T_eG$ to $G$ is functorial. For matrix Lie groups, it is the matrix exponential
+
+\item Adjoint action: For every $a \in G$, we have the action $Ad_a:G\to G$, $g\mapsto aga^{-1}$. At the tangent space we have the derivative $T_eAd_a$, and the assignment $a \mapsto T_eAd_a$ is a Lie algebra morphism $G \mapsto \Aut(\g) \subseteq \GL(\g)$. 
+
+This induces a Lie algebra morphism $\g \to \Aut(\g)$, which is the Lie algebra of $\GL(\g)$. THe image of $\xi$ under this is called $ad_\xi$. It turns out that
+\[
+ad_\xi(y)=\dd{}{t}Ad_{\exp(t\xi)}(y)
+\]
+
+The assignment of $G$ to $T_eG=\g$ is functorial. That is, if we have $\varphi:G_1\to G_2$, then the a map $T_e\varphi:\g_1\to\g_2$ makes the diagram commute:
+\[
+\begin{tikzcd}
+\g_1 \ar[r, "\exp"']\ar[d, "T_e\varphi"] & G_1 \ar[d, "\varphi"]\\
+\g_2 \ar[r, "\exp"] & G_2
+\end{tikzcd}
+\]
+
+A consequence is that $\exp(ad_\xi) = \Ad(\exp(\xi))$
+
+\end{itemize}
+
+
+\defn
+
+Let $G$ be a Lie group. A \underline{$G$-action} on a manifold $Q$ is a group homomorphism $\ms{A}:G\to\Diff(Q)$, $g\mapsto \ms{A}_g$, such that the map $\ms{A}:G\times Q \to Q, (g,q) \mapsto \ms{A}_g(q)$ is smooth. 
+
+\defn
+
+Let $\g$ be a finite dimensional Lie algebra. A $\g$-action on $Q$ is a Lie algebra homomorphism $\g\to\ms{X}(Q)$, $\xi\mapsto \xi_Q$ such that the map $\g\times Q\to TQ, (\xi,q) \mapsto \xi_Q(q)$ is smooth. 
+
+\exm
+\,
+
+\begin{enumerate}
+
+\item For $Q = G$, we have the $G$-actions
+
+\begin{itemize}
+
+\item Adjoint action: $g\mapsto Ad_g, a \mapsto gag^{-1}$
+
+\item Left multiplication: $g \mapsto L_g, a \mapsto ga$
+
+\item Right multiplication: $g\mapsto R_{g^{-1}}: a\mapsto ag^{-1}$
+
+\end{itemize}
+
+\item Any representation of $G$, i.e. a group homomorphism $G \mapsto \GL(V)$ is a G-action 
+
+\item Given a $G$-action on $Q$, we get actions on $TQ, T^*Q$ induced by $g \mapsto \ms{A}_g$, $G \curvearrowright TQ$, $g\mapsto T\ms{A}_g$, $G \curvearrowright T^*Q, g \mapsto (T\ms{A}_{g^{-1}})^*$
+
+\end{enumerate}
+
+
+\underline{Notation:} For $G\curvearrowright Q$, instead of $g\mapsto \ms{A}_g$, we write $\ms{A}_g(q) = g\cdot q$. Note 
+\[
+g_1\cdot(g_2\cdot q) = (g_1\cdot g_2)\cdot q
+\]
+
+
+
+Given a $G$-action $\ms{A}:G\mapsto\Diff(G)$ $g\mapsto \ms{A}_g$, we get a Lie algebra $\g$-action $\g \mapsto \ms{X}(Q),\xi\mapsto\xi_Q$ as follows.
+
+From $\ms{A}$ we get a $G$-representation on functions: 
+\[
+(g\cdot f)(q) = f(g^{-1}\cdot q)
+\]
+Define $\xi_Q$ by derivative: 
+\[
+(\ms{L}_{\xi_q}(f))(q) = \dd{}{t}|_{t=0}f(\exp(-t\xi)\cdot q)
+\]
+
+I.e $\xi_Q$ is the vector field having flow $g \mapsto (\exp t\xi)\cdot q$
+
+\prop
+
+The map $\g\to \ms{X}(Q)$, $\xi\mapsto \xi_Q$ is a Lie algebra action, i.e. 
+\[
+[\xi_Q,\eta_Q] = [\xi,\eta]_Q
+\]
+We have 
+\[
+(Ad_g\xi)_Q = (\ms{A}_g)_*\xi_Q
+\]
+
+\proof
+
+\qed
+
+
+For any $\xi\in G$, let $\xi^L\in\ms{X}^L(G)$ be the corresponding left-invariant vector field, and $\xi^R \in \ms{X}^R(G)$ the right invariant vector field with the property that $\xi^R|_e = \xi^L|_e = \xi$
+
+\exm
+
+Consider left multiplication of $G$ on itself $g\cdot a = ga$. Then $\xi_Q = ?$
+
+Since this commutes with right multiplication, $\xi_Q$ is a right-invariant vector field. 
+
+At $e$, we have $(\ms{L}_{\xi_Q}f)(e) = \dd{}{t}|_{t=0}f(\exp(-t\xi)) = -\underbrace{\xi}_{\in T_eG}(f)$
+
+So $\xi_Q = -\xi^R$. So 
+\[
+[-\xi^R,-\eta^R] = -[\xi,\eta]^R
+\]
+similarly for the action $g\cdot a = ag^{-1}$, we get the left invariant vector field $\xi_Q = \xi^L$. So 
+\[
+[\xi^L,\eta^L] = [\xi,\eta]
+\]
+
+For action $g\cdot a = gag^{-1}$, $\xi_Q = \xi^L-\xi^R$
+
+\section*{Lecture 16, 1/12/24}
+
+\subsection*{\underline{Hamiltonian action and moment maps}}
+
+\underline{Recall:} Given a group action $\ms{A}:G\to\Diff(M)$, we define generating vector fields by 
+\[
+\g \to \ms{X}(M), \xi \mapsto \xi_M
+\]
+\[
+(\ms{L}_{\xi_M}f)(m) = \dd{}{t}|_{t=0}f(\exp(-t\xi)\cdot m)
+\]
+where $\exp:\g\to G$ is the Lie exponential.
+
+\exm
+
+Let $M = \R^n, G = \GL(n,\R)$, $\g = \gl(n,\R) = \End(R^n)$. What is the formula for the generating vector fields? 
+
+For $A \in \gl(n,\R)$, 
+\begin{align*}
+(\ms{L}_{A_{\R^n}}f)(x) & = \dd{}{t}|_{t=0}f(\exp(-tA)\cdot x) \\
+& = \sum_{i=1}^n\pp{f}{x_i}(x)(Ax)_i \\
+& = \underbrace{-\sum_{i,j=1}^n A_{ij}x_j\pp{}{x_i}}_{A_{\R^n}}f
+\end{align*}
+
+If we take the commutator, 
+\[
+[A_{\R^n},B_{\R^n}] = [A,B]_{\R^n}
+\]
+In general, 
+\[
+[\xi_M,\zeta_M] = [\xi,\zeta]_M
+\]
+
+\exm
+
+Take $M = \R^n, G = \R^n$ as an additive Lie group. Then $\g = \R^n$ (with zero Lie bracket), and $\exp:\g\to G$ is given by the identity: $\exp(b) = b$. For any $b \in \g = \R^n$ gives rise to a 1-parameter subgroup $\gamma_b(t) = tb$, and the derivative of this is again $b$. 
+
+Let $G$ act on $\R^n$ by translations, namely $x \mapsto x - b$ (we use a minus sign so formulas turn out nicer, but can put a plus sign). 
+
+Then the generating vector field is 
+\begin{align*}
+(\ms{L}_{B_{\R^n}}f)(x) & = \dd{}{t}|_{t=0} f(\exp(-tb)\cdot x) \\
+& = \dd{}{t}|_{t=0}f(x + tb) \\
+& = \sum_i\pp{f}{x_i}b_i\\
+\end{align*}
+so $b_{\R^n} = \sum b_i\pp{}{x_i}$
+
+For a real vector space $V$, let $G = \GL(V)$, $T_vV = V$. Then 
+\[
+\xi_V|_v = -\xi\cdot v, \g = \gl(V) = \End(V)
+\]
+
+Let $(M,\omega)$ be a (connected) symplectic manifold, $\ms{A}:G\to\Diff(M)$, which has generating vector field $\g\to\ms{X}(M,\omega) = \{X \mid \ms{L}_X\omega = 0\}$
+
+Recall we have $C^\oo(M) \to \ms{X}(M)$ given by $f \mapsto X_f$, where $X_f$ is determined by. $\iota(X_f)\omega = -df$. Such a vector field is called Hamiltonian.
+
+\defn
+
+The $G$-action is called \underline{weakly Hamiltonian} if all generating vector fields are Hamiltonian vector fields, i.e. $\xi_M \in \ms{X}_{Ham}(M,\omega)$. 
+
+We have the short exact sequence 
+\[
+\exactshort{\R}{}{C^\oo(M)}{}{\ms{X}_{Ham}(M,\omega)}
+\]
+where the kernel of $C^\oo\to \ms{X}_{Ham}(M,\omega)$ is the constant functions. But because the action is weakly hamiltonian, we have a map from $\g\to\ms{X}_{Ham}(M,\omega)$, which we can lift: 
+\[
+\begin{tikzcd}
+0 \ar[r] & \R \ar[r] & C^\oo(M) \ar[r] & \ms{X}_{Ham}(M,\omega) \ar[r] & 0 \\
+&&& \g \ar[u] \ar[ul, dotted, "\tilde{\Phi}"] 
+\end{tikzcd}
+\]
+
+The choice of a linear map $\tilde{\Phi}:\g\to C^\oo(M)$ (lifting $\xi \to \xi_M)$ is called a \underline{weak moment map}, or sometimes a comoment map. 
+
+In general, this won't be a Lie algebra homomorphism. 
+
+The comoment map can be regarded as a map $\Phi:M \to \g^*$, $\langle \Phi(m),\xi\rangle = \tilde{\Phi}(\xi)(m)$
+
+This is called the (weak) moment map. 
+
+\defn
+
+A symplectic $G$-action on a symplectic manifold $(M,\omega)$ is called \underline{Hamiltonian} if there exists a $G$-equivariant $\Phi:M\to\g^*$ such that $\iota(\xi_M)\omega = -d\langle\Phi,\xi\rangle$
+
+The map $\tilde{\Phi}:G\to C^\oo(M)$, $\tilde{\Phi}(\xi)(m) = \langle \Phi(m),\xi\rangle$ is the comoment map. 
+
+\underline{Remarks:}
+\begin{enumerate}
+	\item $G$ acts on $\g$ by $g\cdot\xi = Ad_g\xi$, hence on $\g^*$ by $g\cdot\mu = (Ad_{g^{-1}})^*\mu$. So equivariance means $\Phi(g\cdot m) = g\cdot\Phi(m)$.
+
+Alternatively, $\tilde{\Phi}(Ad_g\xi) = g\cdot\tilde{\Phi}(\xi)$, so $(g\cdot f)(m) = f(g^{-1}\cdot m)$
+
+Infinitesimally, $\g$ acts on $\g^*$ by $\xi\cdot\mu = -(ad_\xi)^*\mu$
+
+Now, $\Phi(g\cdot m) = g\cdot \Phi(m)$ implie $\ms{L}_{\zeta_M}\Phi = -(ad_\zeta)^*\Phi$
+
+\item Name comes from French ``application moment" (Souriaux (sp?)), but ``Moment map" is an incorrect translation. Correct is ``momentum map". 
+
+\item If $G$ is abelian (e.g. $\R^n$, torii, or products thereof), equivariance means invariance. 
+\end{enumerate}
+
+\prop
+
+For Hamiltonian $G$-action, the comoment map 
+\[
+\tilde{\Phi}:\g\to C^\oo(M)
+\]
+is a Lie algebra homomorphism. 
+
+\proof
+
+Denote $\Phi^\xi = \tilde{\Phi}(\xi) = \langle \Phi, \xi\rangle$. Then $\pois{\Phi^\xi}{\Phi^\eta} = \underbrace{\ms{L}_{\xi_M}\Phi^\eta}_{\ms{L}_{\xi_M}\langle\Phi,\eta\rangle} = \langle -ad_\xi^*\Phi,g\rangle = -\langle\Phi,[\xi,\eta]\rangle = -\Phi^{[\xi,\eta]}$ (there is a sign error in here somewhere...)
+
+\qed
+
+\prop
+
+A weakly Hamiltonian $G$-action on $(M,\omega)$ is Hamiltonian in following cases:
+\begin{enumerate}[label=(\alph*)]
+
+\item $G$ compact
+
+\item $M$ compact
+
+\end{enumerate}
+
+\proof
+
+$\Phi$ is $G$-equivariant if and only if $(g\cdot\Phi)(m) = \Phi(g\cdot m)$. Given a \underline{weak} moment map, define
+\[
+(g\cdot\Phi)(m) = g\cdot(\Phi(g^{-1}\cdot m))
+\]
+
+This is again a weak moment map. If $G$ is compact, can average 
+\[
+\tilde{\Phi}(m) = \int_G(g\cdot\Phi)(m)|dg|
+\]
+This is a $G$-equivariant map. This proves (a).
+
+Now, assume $M$ is compact. Note: weak moment maps $\Phi:M\to\g^*$ are unique up to a constant. If $M$ is compact, we can fix a normalization by 
+\[
+\int_M\Phi\frac{\omega^n}{n!} = 0
+\]
+This uniquely determines $\Phi$. If $\Phi$ is normalized then $g\cdot\Phi$ is again normalized, hence $g\cdot\Phi=\Phi$.
+
+\qed
+
+Remark: 
+
+If we have a lie algebra homomorphism $\g\to \ms{X}_{Ham}(M,\omega)$, we want to lift to a Lie algebra homomorphism $\tilde{\Phi}.$ We have the central extension $\hat{\g}$
+\[
+\begin{tikzcd}
+0 \ar[r] & \R \ar[r] & C^\oo(M) \ar[r] & \ms{X}_{Ham}(M,\omega) \ar[r] & 0 \\
+0 \ar[r] & \R \ar[r] & \hat{\g} \ar[u]\ar[r] & \ar[l,bend left = 30, dotted] \g\ar[u] \ar[r] & 0 
+\end{tikzcd}
+\]
+So the weak Hamiltonian action is Hamiltonian if $G$ is connected and the central extension $\hat{\g}$ is ``trivial" (splits), E.G. $G = \SL(n,\R)$.
+
+\exm
+
+Recall: Cotangent bundles $M = T^*Q, \omega = -d\theta$ (in coordinates $\theta = \sum p_idq_i$). 
+
+For $Y \in \ms{X}(Q)$, the cotangent lift $Y_{T^*}\in\ms{X}(T^*Q)$ is Hamiltonian vector field, with function 
+\[
+H = \langle \theta, Y_{T^*} = \iota(Y_{T^*})\theta \in C^\oo(T^*Q)
+\]
+
+This gives a Lie algebra morphism (exercise)
+\[
+\ms{X}(Q) \to C^\oo(T^*Q), Y \mapsto \iota(Y_{T^*})\theta
+\]
+
+This is $\Diff(Q)$-equivariant (Exercise). 
+
+If $Q$ has a $G$-action, $\ms{A}:G\to\Diff(Q) \curvearrowright T^*Q$
+
+we gete a $G$-action on $T^*Q$ by composition, with comoment map
+\[
+\tilde{\Phi}:\g\to C^\oo(T^*Q), \xi \mapsto \iota(\xi_{T^*Q})\theta
+\]
+In coordinates, if 
+\[
+Y = \sum Y_j(q)\pp{}{q_j} \implies H = \sum Y_j(q)p_j
+\]
+
+Special case: $Q = \R^n, G = \GL(n,\R)$, $G\curvearrowright T^*Q = T^*\R^n = \R^n\times\R^n$
+
+Generating vector fields are given by the formula: for $A \in \gl(n,\R) = Mat_{\R}(n)$, 
+\[
+A_{\R^n}|_{x} = -\sum_{i,j}A_{ij}x_j\pp{}{x_i}
+\]
+
+Comoment map: $\g\to C^\oo(T^*\R^n), A \mapsto - \sum A_{ij}q_jp_i$. 
+
+To get moment map, first identify $\gl(n,\R) \simeq \gl(n,\R)^*$ by the bilinear form 
+\[
+\langle A, B\rangle = \tr(AB)
+\]
+This form is $Ad$-invariant:
+\[
+\langle Ad_g A, Ad_gB \rangle = \langle A, B \rangle
+\]
+
+In terms of this identity (?) 
+$\Phi:T^*\R^n\to\gl(n,\R)$, $(q, p) \mapsto \Phi(q,p)_{ij} = -q_jp_i$
+
+Same kind of calculation for any $G \subseteq \GL(n,\R)$ such that $\g$ invariant under $A \mapsto A^T$.
+
+E.G $G = \SO(n)$ rotation group, with $\g = so(n) = \{A \mid A^T = -A\}$, the Skew-adjoint matrices.
+
+The moment map becomes
+\[
+\Phi:T^*\R^n \to so(n)^* =so(n)
+\]
+\begin{align*}
+(q,p) \mapsto \Phi(q,p)_{ij} & =-\frac12(q_jp_i - q_ip_j) \\
+& = \frac12(q_ip_j - q_jp_i)
+\end{align*}
+
+If $h = 3$ this is $\vec{q}\times\vec{p}$ (up to factor). In physics this is angular momentum, hence momentum map.
+
+\exm
+
+\underline{Special case:} $Q = \R^n$, $M = T^*\R^n$, $G = \R^n$ acting by $x \mapsto x - b$.
+
+Generating vector field: $b_{\R^n} = \sum b_i\pp{}{q_i}$ 
+
+Hamiltonian: $\sum b_ip_i$
+
+Comoment map: $\tilde{\Phi}:\R^n\to C^\oo(T^*\R^n), b \mapsto \tilde{\Phi}(q,p) = b\cdot p$. 
+
+$\Phi:T^*\R^n \to (\R^n)^* \cong \R^n$ (by dot product), $(q, p) \mapsto p$ (linear momentum). 
+
+These calculations generalize to ``exact symplectic manifolds," which are symplectic manifolds whose symplectic form is also exact, i.e. $\omega = -d\theta$ (for some $\theta \in \Omega^1(M)$)
+
+Whenever $\ms{A}:G \to \Diff(M)$ preserves $\theta$, (i.e. $\ms{A}^*_g\theta = \theta$), then the generating vector field $\xi_M$ are Hamiltonian, with obvious candidate for the moment map 
+\[
+\langle\Phi,\xi\rangle = \iota(\xi_M)\theta
+\]
+Check: 
+\begin{align*}
+d\langle\Phi,\xi\rangle & = d\iota(\xi_M)\theta \\
+& = (\ms{L}(\xi_M)-\iota(\xi_M)d)\theta \\
+& = \iota(\xi_M)\omega
+\end{align*}
+There is a sign error here somewhere as well...
+
+\exm: Symplectic representation
+
+Let $(E,\omega)$ be a symplectic vector space. Then the symplectic group $G = \spew$ acts on $E$
+
+Generating vector fields for this action: $\xi_E|_V = -\xi\cdot v$ (identifying $T_vE \cong E$)
+
+$\Phi:E\to\g^*$, $\langle \Phi(v),\xi\rangle =(\cdots) \frac12\omega(\xi v, v)$. Taking the exterior derivative, 
+\begin{align*}
+\langle d \langle \Phi,\xi \rangle |_V,w \rangle & = \dd{}{t}|_{t=0}\langle\Phi(v + tw), \xi \rangle \\
+& = \dd{}{t}|_{t=0}\omega(\xi\cdot(v + tw), v + tw) \\
+& = \omega(\xi\cdot w, v) + \omega(\xi\cdot v, w) \\
+& = \omega(\xi\cdot v, w) \\ 
+& = -\langle\iota(\xi_E|_V)w,w\rangle
+\end{align*}
+
+\underline{Remark:} If $G\curvearrowright (M,\omega)$ is a Hamiltonian action, and $\varphi:H\to G$ is a Lie group homomorphism, then we get an action $H \curvearrowright (M,\omega)$ just by composition. Then the action of $H$ is again Hamiltonian, with moment map
+\[
+\h \to \g \to C^\oo(M)
+\]
+and moment map
+\[
+M \to \g^* \to \h^*
+\]
+
+\section*{Lecture 17, 11/14/24}
+
+Suppose $G \curvearrowright (M,\omega)$ is a \underline{Hamiltonian} $G$-action. Then there exists a $G$-equivariant $\Phi:M\to\g^*$ such that
+\[
+\iota(\zeta_M)\omega = -d\langle\Phi,\zeta\rangle
+\]
+(i.e. $\langle \Phi,\zeta\rangle$ are Hamiltonian for $\zeta_M$). 
+
+Then $\g \to C^\oo(M)$ given by $\zeta \mapsto \langle\Phi,\zeta\rangle$ is a Lie algebra map. 
+
+\underline{Exact Case:}
+
+Let $\omega = -d\theta$. If $G$ preserves $\theta$ then 
+\[
+\langle\Phi,\zeta\rangle = -\iota(\zeta_M)\theta
+\]
+
+\exm
+
+Let $(E,\omega)$ be a symplectic vector space, and let $G = \spew\curvearrowright E$ is Hamiltonian with moment map 
+\[
+\langle\Phi(v),\zeta\rangle = -\frac12\omega(v,\zeta v)
+\]
+
+\exm
+
+Pick compatible complex structure $\J$ on $(E,\omega)$. Then $E$ becomes a \underline{complex} vector space with Hamiltonian metric  (inner prod) given by 
+\[
+h(v,w) = \underbrace{g(v,w)}_{=\omega(v,\J w)} + i\omega(v,w)
+\]
+
+Now, $U(E) \subseteq\spew$ preserves $\omega$. If $\varphi:H\to G$  is a group homomorphism then 
+\[
+\Phi_H = \varphi^*\circ\Phi
+\]
+where $\varphi^*:\g^*\to\h^*$ is the dual map.
+
+\underline{Notation:} For inner product spaces, and linear map $A:E\to F$, let $A^\dagger:F\to E$ be the adjoint. Then 
+\begin{align*}
+U(E) & = \{A:F\to E \mid A^\dagger = A^{-1}\} \\
+u(E) & = \{\xi:E\to E \mid \xi^\dagger = -\xi\}
+\end{align*}
+
+So 
+\begin{align*}
+h(v,\xi v) & = -h(\xi v, v) = - \bar{h(v,\xi v)}
+\end{align*}
+So $h(v,\xi v) = i\omega(v,\xi v)$, and so 
+\[
+\langle\Phi(v),\xi\rangle = \frac{i}{2}h(v,\xi v)
+\]
+$u(E)$ has positive definite, $U(E)$-invariant metric given by 
+\[
+(\xi,\eta) = \tr(\xi^\dagger\eta) = -\tr(\xi,\eta)
+\]
+So we identify $u(E)\cong u(E)^*$ by this metric. 
+
+Write 
+\begin{align*}
+\langle\Phi(v),\xi\rangle & = \frac{i}{2}h(v,\xi v) \\
+& = \frac{i}{2} v^\dagger\xi v \\
+& = \frac{i}{2}\tr(v^\dagger\xi v) \\
+& = \frac{i}{2}\tr(vv^\dagger \xi) \\
+& = \tr(\frac{i}{2}vv^\dagger\xi)
+\end{align*}
+where we view $v$ as a linear map $\C\to E$. So 
+\[
+\Phi(v) = -\frac{i}{2}vv^\dagger
+\]
+
+For sepcial case $E = \C^n$, $v =\begin{pmatrix} z_1 \\ \vdots \\ z_n \end{pmatrix}, v^\dagger = (\bar{z_1},\cdots,\bar{z_n})$, so 
+\[
+\Phi(z) = \frac{1}{2i}zz^\dagger
+\]
+\[
+(\Phi(z))_{ij} = \frac{1}{2\sqrt{-1}}z_i\bar{z_j}
+\]
+
+\exm
+
+Let $M = \CP(n),$ with Fubini-Study form $\omega_{FS}$ and with action of $U(n+1)$, $[z] = [z_0:\dots:z_n], A\cdot[z] = [Az]$.
+
+This action is Hamiltonian, with moment map 
+\[
+\Phi:\CP(n)\to u(n+1)^* \geq u(n + 1)
+\]
+\[
+[z_0:\dots:z_n] \mapsto \frac{1}{2\sqrt{-1}}\frac{zz^\dagger}{\norm{z}^2}
+\]
+
+We will see a proof of this later. 
+
+\subsection*{\underline{Coadjoint orbits}}
+
+Recall: A homogeneous $G$-space is a manifold $M$ with \underline{transitive} $G$-actio n (i.e. only one orbit). 
+
+Given $m\in M$, with stabilizer $H = G_m$, get $M = G/H$.
+
+Consider homogeneous Hamiltonian $G$-space $(M,\omega),\Phi:M\to\g^*$. 
+
+Since the generating vector fields $\xi_M$ span tangent space to $M$ everywhere, the 2-form $\omega$ is determined entirely by moment map condition !
+\[
+\omega(\xi_M,\cdot) = -d\langle\Phi,\xi\rangle
+\]
+\begin{align*}
+\omega(\xi_M,\eta_M) & = -\iota(\eta_M)d\langle\Phi,\xi\rangle \\
+& = -\ms{L}(\eta_M)\langle\Phi,\xi\rangle \\
+& = -\langle\ms{L}(\eta_M)\Phi,\xi\rangle \\
+& = \langle\eta\cdot\Phi,\xi\rangle \\
+& = -\langle\Phi,\eta\cdot\xi\rangle \\
+& = \langle\Phi,[\xi,\eta]\rangle
+\end{align*}
+where the $\cdot$ is the coadjoint action. 
+
+So $\omega(\xi_M,\zeta_M) = \langle\Phi,[\xi,\eta]\rangle$
+
+Note also: $\Phi(M)\subseteq\g^*$ is a single coadjoint orbit. 
+
+\thm[Kostant, Kirillov, Souriau (Sp? all)]
+
+Let $\ms{O}\subseteq\g^*$ be an orbit under the coadjoint action. Then $\ms{O}$ has a unique symplectic $2$-form $\omega$ such that the $G$-action is Hamiltonian, with $\Phi:\ms{O}\to\g^*$ the inclusion. 
+
+\proof
+
+Recall generating vector field for $G$-action on $\g^*$ are $\xi_{\g^*}|_{\mu} = -\xi\cdot\mu$ (coadjoint representation). 
+
+This is also formula for $\xi_{\ms{O}}|_{M}$. Only candidate for $\omega$ (taking care of uniqueness) is
+\begin{align*}
+\omega|_{\mu}(\xi_{\ms{O}}|_{M}, \eta_{\ms{O}}|_{M}) & = \langle\mu,[\xi,\eta]\rangle\\
+&=-\langle\xi\cdot\mu,\eta\rangle\\
+&=\langle\eta\cdot\mu,\xi\rangle
+\end{align*}
+This is well-defined. Now, $\xi_G|_M\in\ker\omega|_M \iff \omega_M(\xi_{\ms{O}}|_M,\eta_{\ms{O}}|_M) = 0$ for all $\eta \iff$ $\langle\xi\cdot\mu,\eta\rangle=0$ for all $\eta \iff \xi\cdot\mu = 0$, and gives nondegenerate.
+
+If $\omega$ closed:
+\begin{align*}
+\iota(\xi_{\ms{O}})d\omega & = \underbrace{\ms{L}(\xi_{\ms{O}})}_{=0}\omega-d\iota(\xi_{\ms{O}})\omega \\
+& = dd\langle\Phi,\xi\rangle \\
+& = 0
+\end{align*}
+
+\qed
+
+
+
+
+
+
+
+
+
+
 
 \end{document}
