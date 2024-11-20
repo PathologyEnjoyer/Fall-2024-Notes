@@ -2904,6 +2904,254 @@ If $\omega$ closed:
 
 \qed
 
+\section*{Lecture 18, 11/19/24}
+
+\subsection*{\underline{Coadjoint orbits (ct'd)}}
+
+For homogeneous Hamiltonian $G$-spaces $(M,\omega,\Phi)$ (meaning the $G$-action is transitive with moment map $\Phi$. We have
+\[
+\omega(\xi_M,\eta_M)|_m = \langle\Phi(m),[\xi,\eta]\rangle
+\]
+
+Special cases: $\ms{O}\subseteq\g^*$ coadjoint orbits
+\[
+\omega_{\ms{O}}(\xi_{\ms{O}}(\mu),\eta_{\ms{O}}(\mu)) = \langle\mu,[\xi,\eta]\rangle
+\]
+
+\exm
+
+$G = U(n) = \{U \in \Mat_\C(n)\mid U^T = U^{-1}\}$. Use $\tr(\xi^T\eta) = -\tr(\xi\eta)$ on $u(n)$ to identify $u(n) \cong u(n)^*$, so coadjoint orbits = adjoint orbits. 
+
+\[
+u(n) = \{\xi \mid \xi^T = -\xi\} = \sqrt{-1}\cdot(\text{self adjoint matrices})
+\]
+
+From linear algebra, given a matrix we can always conjugate it to get a diagonal matrix, 
+\[
+U\xi U^{-1} = \sqrt{-1}\begin{pmatrix} \lambda_1 & & 0 \\ & \ddots & \\ 0 & & \lambda_n\end{pmatrix}, \lambda_1\geq\lambda_2\geq\cdots\geq\lambda_n
+\]
+So coadjoint orbits are classified by $\lambda = (\lambda_1,\dots,\lambda_n), \lambda_1\geq\cdots\geq\lambda_n$.
+
+Have $\ms{O} = G/H$, where $H$ is stabilizer of $\sqrt{-1}\begin{pmatrix} \lambda_1 & & 0 \\ & \ddots & \\ 0 & & \lambda_n\end{pmatrix}$. 
+We have
+\[
+H = U(k_1)\times\cdots\times U(k_r)
+\]
+correspond to (????) of eigenvalues, e.g. $\lambda_1 = \lambda_2 >\lambda_3 > \lambda_4 = \lambda_5=\lambda_6$, $H = U(2)\times U(1)\times U(3)$
+
+Sub-case: $\lambda_1 = \cdots = \lambda_k > \lambda_{k+1} = \cdots = \lambda_n$, $H = U(k)\times U(n-k)$, $\ms{O} = U(n)/(U(k)\times U(n-k)) = Gr_\C(k,n)$
+
+\thm(Kostant, Souriau)
+
+A homogeneous Hamiltonian $G$-space $(M,\omega,\Phi)$ is a covering space of a coadjoint orbit $\ms{O} = \Phi(M)$, with $\omega = \pi^*\omega_{\ms{O}}$, $\pi:M\to\ms{O}$. 
+
+\proof
+
+Let $\pi:M\to\ms{O}$ be the map $\Phi$ viewed as a map auto $\Phi(M) = \ms{O}$. The range $ran(T_m\pi)$ contains all orbit directions, hence is all of $T_{\pi(m)}\ms{O}$
+
+Then $\pi$ is a submersion. Hence $\omega = \pi^*\omega_0$ from explicit formulas. This implies that $T_m\pi$ is injective: $(\pi^*\omega_{\ms{O}})(v_1,v_2) = \omega_G((T_m\pi)(v_1),(T_m\pi)(v_2))$. 
+
+So $\pi$ is a local diffeomorphism. 
+
+We have $\pi:M\to\ms{O}$, $M = G/G_m, \ms{O} = G/G_{\Phi(m)}$ has fibers $G_{\Phi(m)}/G_m$ which is discrete. 
+
+I.e. $\dim G_m = \dim G_{\Phi(m)}$
+
+So $G_m$ is collection of connected components of $G_\mu, \mu = \Phi(m)$ nontrivial only if $G_\mu$ disconnected.
+
+\underline{Fact:} If $G$ is compact, connected then all $G_\mu$ are connected.
+
+For $G$ compact connected, homogeneous Hamiltonian $G$-spaces are exactly the coadjoint orbit. 
+
+\qed
+
+\exm
+
+$M = \CP(n)$ (with FS form) is a Hamiltonian $U(n+1)$-space, so coadjoint orbit of something. To figure this out, just look at moment map, which will give diffeomorphism to coadjoint orbit. Just look at formula for moment map and pick an element in its image. 
+
+Philosophically, Hamiltonian $G$-spaces $(M,\omega,\Phi)$ are classical-analogues to unitary $G$-representations. 
+
+\begin{itemize}
+
+\item We have a ``tensor product:" Given $(M_i,\omega_i,\Phi_i)$, $i = 1, 2$, $M = M_1\times M_2$ has diagonal $G$-action, $\omega = \pi_1^*\omega_1 + \pi_2^*\omega_2, \Phi = \pi_1^*\Phi_1 + \pi_2^*\Phi_2$
+
+\item ``Duals:" $(M,-\omega,-\Phi)$ is again a Hamiltonian $G$-space. 
+
+\item ``Restriction to subgroup:" If $H \subseteq G$, $(M,\omega,\Phi)$ a Hamiltonian $G$-space, then there is a Hamiltonian $H$-space $(M,\omega,\Phi_H)$ with $\Phi_H = p\circ \Phi$ where $p:\g^*\to\h^*$ is dual to $\iota:\h\into\g$
+
+\item ``Irreducible rep's" Coadjoint orbits
+
+\item ``Left regular representation" $G$ acts on $T^*G$ on the left.
+
+\item etc. 
+
+\end{itemize}
+
+\subsection*{\underline{Gauge theory example (informally)}}
+
+Let $\Sigma$ a compact connected surface, $G$ a matrix Lie group. Let $\mc{G}(\Sigma) = C^\oo(\Sigma, G)$ the gauge group, $\ms{A}(\Sigma) = \Omega^1(\Sigma,\g)$, which are Lie-algebra valued 1-forms, called the space of connections. The infinite dimensional $\mc{G}(\Sigma)$ acts on the infinite dimensional space $\ms{A}(E)$ by the gauge action, $g\cdot A = Ad_gA-(dg)g^{-1}$
+
+Can check that this really is an action, i.e. $g_1\cdot(g_2\cdot A) = (g_1g_2)\cdot A$ despite the extra term. 
+
+Let $V$ be a $G$-representation. Then $A \in \ms{A}(\Sigma)$ defines a ``covariant derivative" $d_A = d + A:\Omega^k(\Sigma,V) \to \Omega^{k+1}(\Sigma,V)$
+
+Also have action of $\mc{G}(\Sigma) = C^\oo(\Sigma,G)$ on $\Omega^1(\Sigma,V)$ pointwise. 
+
+\prop
+
+For $\sigma\in\Omega^k(\Sigma,V), A \in \ms{A}(\Sigma), g \in \mc{G}(\Sigma)$, 
+\[
+d_{g\cdot A}(g\cdot\sigma) = g\cdot(d_A\sigma)
+\]
+
+\proof
+
+\begin{align*}
+d(g\cdot\sigma) & = dg\cdot\sigma + g\cdot\sigma \\
+& = (dgg^{-1})\cdot g\cdot\sigma + g\cdot d\sigma \\
+\end{align*}
+\begin{align*}
+d_{g\cdot A}(g\cdot \sigma) & = d(g\cdot\sigma) + (Ad_gA - (dg)g^{-1})\cdot g\cdot\sigma \\
+& = g\cdot d\sigma + (\underbrace{Ad_gA}_{gAg^{-1}} - (dg)g^{-1})\cdot g\cdot\sigma \\
+& = g\cdot(g_A\sigma)
+\end{align*}
+\qed
+
+So this is why we define the gauge action in this way. 
+
+Now, 
+\begin{align*}
+(d_A)^2\sigma & = d_A(d\sigma + A\cdot\sigma) \\
+& = A\cdot d\sigma + d(A\cdot \sigma) + A\cdot A\cdot\sigma \\
+& = (dA)\cdot\sigma + \frac12[A,A]\sigma \\
+& = (\underbrace{(dA + \frac12[A,A]}_{\in\Omega^2(\Sigma,\g)})\cdot\sigma
+\end{align*}
+$A = \sum A_idx_i$, 
+\begin{align*}
+[A,A] & = \sum_{ij}[A_i,A_j]dx_i\wedge dx_j  \\
+& = 2A^2
+\end{align*}
+
+\defn
+
+We define the \underline{curvature at $A$}, $\operatorname{curv}(A)$, by 
+\[
+\operatorname{curv}(A) = dA + \frac12[A,A]
+\]
+ Note $(d_A)^2 = 0$ if $\operatorname{curv}(A) = 0$, so the curvature is a sort of measure of the failure of $d_A$ to be a differential. 
+
+
+\lem
+
+$\operatorname{curv}(g\cdot A) = Ad_g\operatorname{curv}(A)$
+
+\proof
+
+Exercise
+
+\qed
+
+\underline{Generating vector fields for $\mc{G}(\Sigma)$-action?}
+
+$\operatorname{Lie}(\mc{G}(\Sigma)) = C^\oo(\Sigma,\g)$ (don't worry too much about quite what an infinite dimensional Lie group is)
+
+Recall: For a $G$-action on a manifold $M$, the generating vector fields $\xi_M$ are given by 
+\[
+\xi_M|_m = \dd{}{t}|_{t=0}\exp(-t\xi)\cdot m
+\]
+
+Let $\xi \in \operatorname{Lie}(\mc{G}(\Sigma)) = C^\oo(\Sigma,\g)$, 
+\begin{align*}
+\xi_{\ms{A}(\sigma)} |_A & = \dd{}{t}|_{t=0}(Ad_{\exp(-t\xi)}(A) - d(\exp(-t\xi))\exp(t\xi)) \\
+& = -[\xi,A] - \underbrace{\dd{}{t}|_{t=0}(d(\exp(-t\xi))\exp(t\xi))}_{d\xi} \\
+& = d\xi - [\xi,A] \\
+& = d_A\xi\in\Omega^1(\Sigma,\g)
+\end{align*}
+
+Generating vector field action is given by covariant derivatives:
+\[
+\xi_A|_A = d_A\xi
+\]
+
+Suppose now that $\g = \operatorname{Lie}(G)$ has an $Ad$-invariant metric $\cdot$. (E.g. $G$ compact)
+
+Then the space $\ms{A}(\Sigma)$ becomes a symplectic manifold with following symplectic structure: 
+
+For $a, b \in T_A\ms{A}(\Sigma) = \Omega^1(\Sigma,\g)$, 
+\begin{align*}
+\omega_A(a,b) & = \int_{\Sigma}\underbrace{a\cdot b}_{\in\Omega^2(\Sigma)}
+\end{align*}
+The ``constant" 2-forms are an affine subspace of $\ms{A}(\Sigma)$
+
+This is $\mc{G}(\Sigma)$-invariant:
+\[
+\omega_{g\cdot A}(g_*a,g_*b) = \omega_A(a,b)
+\]
+because $g_*a = Ad_ga$
+
+\thm
+
+The $\mc{G}(\Sigma)$ action on $\ms{A}(\Sigma)$ is Hamiltonian with moment map $\langle\Phi,\xi\rangle, \xi \in \operatorname{Lie}(\mc{G}(\Sigma)) = C^\oo(\Sigma,\g)$. 
+\begin{align*}
+\langle\Phi,\xi\rangle|_A & = \int_{\Sigma}\operatorname{curv}(A)\cdot\xi \\
+\end{align*}
+(i.e. $\Phi(A) = \operatorname{curv}(A)$)
+
+\proof
+
+We take 
+\begin{align*}
+\langle \underbrace{d\langle\Phi\xi\rangle}_{\in T_A^*\ms{A}(\Sigma)}|_A, \underbrace{a}_{\in T_A\ms{A}(\Sigma)}\rangle & = \dd{}{t}|_{t=0}\langle\Phi(A + ta),\xi\rangle \\
+& = \dd{}{t}|_{t=0}\int_{\Sigma}\operatorname{curv}(A + ta)\cdot\xi \\
+& = \dd{}{t}|_{t=0}\sum_{\Sigma}(dA + tda+ \frac12([A,A] + t(\overbrace{[A,a] + [a,A]}^{2[A,a]}) + t^2[a,a])\cdot\xi\\
+& = \int_{\Sigma}(da + [A,a])\cdot\xi \\
+& = \int_{\Sigma}(d_Aa)\cdot\xi \\
+& = -\sum_{\Sigma}a\cdot d_A\xi \\
+& = -\omega(d_A\xi,a) 
+\end{align*}
+(There's again a sign error somewhere...)
+
+\qed(modulo sign error)
+
+
+What if $\Sigma$ has boundary?
+
+Still have $\mc{G}(\Sigma)\curvearrowright\ms{A}(\Sigma)$ is a symplectic action. At the end we get an extra term $-\int_{\Sigma}a\cdot d_A\xi + \int_{\partial\Sigma}a\cdot\xi$, with the second term equal to $\dd{}{t}_{t=0}\int_{\partial\Sigma}(A + ta)\cdot\xi$
+
+We get moment map $A \mapsto (\pm\operatorname{curv}(A), \pm\iota_{\partial\Sigma}^*A)$, i.e. 
+\[
+\langle\Phi,\xi\rangle|_A = \int_{\Sigma}\operatorname{curv}(A)\cdot\xi + \int_{\partial\Sigma}A\cdot\xi
+\]
+
+But: This is only a ``weak" moment map, as it is not $\mc{G}(\Sigma)$-equivariant.
+
+Recall for a f.d.s.m we have exact sequence
+\[
+\exactshort{\R}{}{C^\oo(M)}{}{\ms{X}_{Ham}(M,\omega)}
+\]
+On the Lie algebra level there should be some central extension of the gauge group:
+\[
+\begin{tikzcd}
+0 \ar[r] &\R\ar[r] & C^\oo(M) \ar[r] & \ms{X}_{Ham}(M,\omega) \ar[r] & 0 \\
+0 \ar[r] & \R \ar[r] & \hat{\g} \ar[u] \ar[r] & \g \ar[r]\ar[u] & 0
+\end{tikzcd}
+\]
+
+Turns out, because equivariant for some central extension, we have exact sequence
+\[
+\exactshort{U(1)}{}{\hat{\mc{G}(\Sigma)}}{}{\mc{G}(\Sigma)}
+\]
+As set $\hat{\mc{G}(\Sigma)} = \mc{G}(\Sigma)\times U(1)$
+
+With $c(g_1,g_2) = \exp(-i\pi\int_{\Sigma}(g_1^{-1}dg_1)\cdot(dg_2g_2^{-1}))\in U(1)$
+
+
+
+
+
+
+
+
 
 
 
