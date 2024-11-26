@@ -31,6 +31,7 @@
 \newcommand{\tphi}{\tilde{\phi}}
 \newcommand{\pois}[2]{\{#1,#2\}}
 \newcommand{\fibrate}[3]{\begin{tikzcd} #1 \ar[d, "#2"] \\ #3 \end{tikzcd}}
+\renewcommand{\t}{\mk{t}}
 \DeclareMathOperator{\Perm}{Perm}
 \DeclareMathOperator{\pdim}{pdim}
 \DeclareMathOperator{\gldim}{gldim}
@@ -3145,16 +3146,392 @@ As set $\hat{\mc{G}(\Sigma)} = \mc{G}(\Sigma)\times U(1)$
 
 With $c(g_1,g_2) = \exp(-i\pi\int_{\Sigma}(g_1^{-1}dg_1)\cdot(dg_2g_2^{-1}))\in U(1)$
 
+\section*{Lecture 19, 11/21/24}
+
+\subsection*{\underline{Symplectic Reduction}}
+
+Let $G\curvearrowright(M,\omega), \Phi:M\to\g^*$, 
+\[
+\iota(\xi_M)\omega = -2\langle \Phi,\xi\rangle
+\]
+The \underline{symplectic quotient} is defined as
+\[
+M_0 = M//G = \Phi^{-1}(0)/G
+\]
+
+For any $m \in M$, consider the differential of the moment map, $T_m\Phi:T_mM\to T_{\Phi(m)}\g^* = \g^*$
+
+\prop The kernel and range of $T_m\Phi$ are 
+\[
+\ker(T_m\Phi) = T_m(G\cdot m)^\omega
+\]
+\[
+ran(T_m\Phi) = \ann(\g_m)
+\]
+where $\g_m = \operatorname{Lie}(G_m)$
+
+\proof
+
+We read it off from the moment map condition: 
+
+By definition, 
+\begin{align*}
+(*)\omega(\xi_M(m),v) & = -\langle d\langle\Phi,\xi\rangle|_m, v\rangle \\
+& = -\langle T_m\Phi(v), \xi\rangle \\
+\end{align*}
+
+So 
+\begin{align*}
+\ker(T_m\Phi) & = \{v\in T_mM \mid \langle T_m\Phi(v), \xi\rangle=0\text{ for all }\xi \} \\
+& = \{v \in T_mM \mid \omega(\xi_M(m),v) = 0 \text{ for all } \xi \} \\
+& = T_m(G\cdot m)^\omega
+\end{align*}
+
+$(*)$ also shows that $ran(T_m\Phi)$ vanishes on all $\xi$ such that $\xi_M(m) = 0$, i.e. $ran(T_m\Phi) \subseteq \ann(\g_m)$
+
+Equality holds by dimension count:
+\begin{align*}
+\dim(ran(T_m\Phi)) & = \dim M - \dim \ker (T_m\Phi) \\
+& = \dim M - \dim T_m(G\cdot m)^\omega \\
+& = \dim(G\cdot m) \\
+& = \dim G - \dim G_m \\
+& = \dim(\ann(\g_m)) 
+\end{align*}
+
+\qed
+
+\cor
+
+$T_m\Phi$ is surjective $\iff G_m$ is discrete
+
+\proof
+
+\qed
+
+\thm
+
+$\mu\in\g^*$ is a regular value of $\Phi \iff $ for all $m \in \Phi^{-1}(m), G_m$ is discrete. 
+
+In this case, $\Phi^{-1}(\mu) \subseteq M$ is a constant rank submanifold, with null foliation given by $G_{\mu}$-orbits, where $G_\mu$ is the stabilizer of $\mu\in\g^*$.
+
+\proof
+
+The null foliation for a constant rank submanifold $N \subseteq M$ is given by $TN \cap TN^\omega = \ker(\iota^*\omega)$.
+Note: $T_m\Phi^{-1}(\mu) = \ker(T_m\Phi)$
+In our case, 
+\begin{align*}
+T_m(\Phi^{-1}(\mu))\cap T_m(\Phi^{-1}(\mu))^\omega & = T_m(\Phi^{-1}(\mu))\cap T_m(G\cdot m) \\
+& = T_m(\Phi^{-1}(\mu))\cap G\cdot m) \\
+& = T_m(\Phi^{-1}(\mu))\cap T_m(G_\mu\cdot m) \\
+& = T_m(G_\mu\cdot m)
+\end{align*}
+
+Since $\dim (G_\mu\cdot m) = \dim G_\mu$, this has constant rank.
+
+\qed
+
+\underline{Fact:} If a Lie group $G$ acts \underline{freely} and {properly} on a manifold $Q$, then $Q/G$ is a manifold). 
+
+(Proper means: The map $G\times Q \to Q\times Q, (g,q)\mapsto(g\cdot q, q)$ is a proper map).
+
+For $G$ compact, properness is automatic. 
+
+\thm(Meyer-Marsden-Weinstein)
+
+Let $(M,\omega)$ be a Hamiltonian $G$-space, with moment map $\Phi:M\to\g^*$. 
+
+Suppose $\mu\in\g^*$ is a regular value of $\Phi$. Then the $G_\mu$-action on $\Phi^{-1}(\mu)$ is locally free (i.e. discrete stabilizer)
+
+If this action is free and proper, get symplectic structure on 
+\[
+M_\mu = \Phi^{-1}(\mu)/G_\mu
+\]
+``reduced space" such tha t
+\[
+\iota^*\omega = \pi^*\omega_M
+\]
+
+\[
+\begin{tikzcd}
+\Phi^{-1}(\mu) \ar[d, "\pi"] \ar[r, hook, "\iota"] & M \\
+M_\mu & \\
+\end{tikzcd}
+\]
+$\iota^*\omega = \pi^*\omega_\mu$. 
+
+\proof
+
+Special case of reduction of constant rank submanifolds
+
+\qed
+
+\exm
+
+\begin{enumerate}
+
+\item $M = \C^{n + 1} = \R^{2n + 2}$ with standard symplectic form 
+\[
+\omega = \frac{i}{2}\sum_{j=0}^ndz_j\wedge d\bar{z_j}
+\]
+and let $S^1 = \R/\Z$ act by scalar multiplication: $[t) \cdot z = e^{2\pi i t}z$ has moment map $\Phi(z_0,\dots,z_n) = -\pi\norm{z}^2$. Then 
+\[
+(\C^{n+1})_{-\pi} = S^{2n + 1}/S^1 = \CP(n)
+\]
+So automatically the Fubini-Study form on $\CP(n)$ is closed and in fact symplectic. 
+
+The $U(n+1)$-action on $\C^{n+1}$ commutes with this circle action, so descends to $\CP(n)$ with standard moment map. 
+
+\item $M = \Mat_{\C}(k,n) \cong \C^{k-n}$. We have
+\[
+U(k) \curvearrowright \Mat_{\C}(k,n) \curvearrowleft U(n)
+\]
+$\Mat_{\C}(k,n) //_\mu U(k)$, where $M//_\mu G = \Phi^{-1}(\mu)/G_m = M_m$
+
+\item $M = \ms{A}(\Sigma)$ spaceof (??)
 
 
+\end{enumerate}
+
+\section*{Lecture 20, 11/26/24}
+
+\subsection*{\underline{Normal form near zero level set}}
+
+Let $G\curvearrowright (M,\omega)$, $\Phi:M\to\g^*$, 
+
+$M//G = \Phi^{-1}(0)/G$ if 0 regular value and $G$ acts freely. 
+
+$\ker(T_m\Phi) = T_m(G\cdot m)^\omega, ran(T_m\Phi) = \ann(\g_m)$
 
 
+Big theorems (For $G = T$ a Torus $T \cong \R^k/\Z^k$) 
 
+Let $(M,\omega)$ be a compact connected Hamiltonian $T$-space. Then $\Phi(M) \subseteq \t^*$ is a convex polytope. 
 
+We can subdivide it into chambers by the set of singular values. There is a pushforward measure $\Phi_*|\frac{\omega^n}{n!}|$ is polynomial on the open chambers. 
+\begin{itemize}
 
+\item Normal form around $Z = \Phi^{-1}(0)$ if 0 is a regular value (so $Z$ is a submanifold). 
 
+\item Normal form around orbits $G \cdot m \subseteq \Phi^{-1}(0)$
 
+Note: $T_m(G\cdot m) \subseteq \ker(T_m\Phi) = T_m(G\cdot m)^\omega$.
 
+If $G = T$, nothing special about 0. 
+
+\end{itemize}
+
+Suppose 0 is a regular value of $\Phi$, let $Z = \Phi^{-1}(0), TZ^\omega\cong Z\times\mk{g}$ orbit directions
+
+$Z\times\g\into TZ$, 
+
+$(m,\xi) \mapsto\xi_M(m)$
+
+Want $G$-equivariant left inverse $TZ \to Z\times\g$ can take this to the orthogonal projection wrt invariant bundle metric on $TZ$.
+
+\lem
+
+There exists $\alpha\in\Omega^1(Z,\g)$ with properties
+\[
+\ms{A}_\g^*\alpha = Ad_{\g^+}\alpha
+\]
+\[
+\iota(\xi_Z)\alpha = \xi
+\]
+
+\proof
+
+\qed
+
+Model: $X = Z\times\g^*$ with $G$ acting diagonally, 2-form 
+\[
+\sigma = \iota^*\omega + d\langle\underbrace{pr_2}_{Z\times\g^*\to\g^*},\alpha\rangle
+\]
+
+and moment map 
+\[
+\psi = pr_2
+\]
+
+$i:\Phi^{-1}(0) = Z \into M$, $\iota^*\omega\in\Omega^2(Z)$
+
+\thm
+
+The 2-form $\sigma \in \Omega^2(Z\times\g^*$ is nondegenerate on neighborhood of $Z\times\{0\}$, and 
+\[
+\iota(\xi_{Z\times\g^*}) = -d\langle\psi,\xi\rangle
+\]
+
+There exists a $G$-equivariant symplectomorphism between neighborhoods of $Z$ in $M$ and in $Z\times\g^*$. 
+
+\proof
+
+$\xi_{Z\times\g^*} = \xi_Z + \xi_{\g^*}$
+
+We start by checking the moment map condition: 
+\begin{align*}
+\iota(\xi_{Z\times\g^*})\sigma & = i^*(\iota(\xi_Z)\omega) + \iota(\xi_{Z\times\g^*})d\langle\psi,\alpha\rangle \\
+& = -\underbrace{i^*d\langle\Phi,\xi\rangle}_{=0} + \underbrace{\ms{L}(\xi_{Z\times\g^*})\overbrace{\langle\psi,\alpha\rangle}^{G-\text{invariant}}}_{=0} - d\iota(\xi_{Z\times\g^*})\langle\psi,\alpha\rangle \\
+& = -d\langle\psi,\xi\rangle
+\end{align*}
+which is exactly the moment map condition. 
+
+$\sigma$ is nondegenerate near $Z\times\{0\}$, enough to check at points $(m,0) \in Z\times\g^*$. 
+
+$T_{(m,0)}(Z\times\g^*) =T_mZ\times\g^* =  \ker(\alpha_m)\oplus\g\oplus\g^*$
+
+Can check that $\sigma$ restricts to standard symplectic form on $\g\oplus\g^*$ and the given one on the kernel $\ker(\alpha_m) \subseteq T_mZ$
+
+etc....
+
+\qed
+
+Suppose $G = T$ is a torus $\R^k/\Z^k$. 
+
+We can use the model to compare reduced spaces $M_\mu = \Phi^{-1}(\mu) = \Phi^{-1}(\mu)/T$ for regular values $\mu$, use a given $\mu_0$,
+
+Adding $-\mu_0$ to $\Phi$, can assume $\mu_0 = 0$. 
+
+\begin{align*}
+\sigma & = \iota^*\omega + d\langle\psi,\alpha\rangle, \alpha \in\Omega^1(Z,\t)\text{ T - invariant } \iota(\xi_Z)\alpha=\xi \\
+\end{align*}
+
+on $Z\times\t^*, \psi = pr_2$. 
+
+Let $j_\mu:T\to Z\times\t^*, m \mapsto(m,\mu)$ inclusion of $\psi^{-1}(\mu)$
+
+\[
+\sigma = \iota^*\omega + d\langle\psi,\alpha\rangle = i^*\omega + \langle d\psi,\alpha\rangle + \langle\psi,d\alpha\rangle
+\]
+So 
+\[
+j_\mu^*\sigma = i^*\omega + \langle\mu,d\alpha\rangle
+\]
+
+Suppose $T$ acts freely on $\Phi^{-1}(0)$. Then, by the model, $T$ acts freely near the level set, hence on $\psi^{-1}(\mu)$. 
+\[
+\begin{tikzcd}
+\Phi^{-1}(\mu) \ar[r, "i_\mu"'] \ar[d, "\pi_\mu"] & M \\
+M_\mu & \\
+\end{tikzcd}
+\]
+$\pi^*_\mu\omega_\mu = \iota^*_\mu\omega$. 
+
+All the reduced spaces $M_\mu \cong \psi^{-1}(\mu)/T \cong Z/T$ are identified. For 2-form, we get 
+\[
+\pi^*\omega_\mu = \pi^*\omega_0 + \langle\mu, d\alpha\rangle
+\]
+
+This depends on choice of the model, but only up to homotopy. 
+
+$d\alpha \in \Omega^2(Z,\t)$ is $T$-basic. Since 
+\[
+\iota(\xi_Z)d\alpha = \underbrace{\ms{L}(\xi_Z)\alpha}_{=0} - \underbrace{d\underbrace{\iota(\xi_Z)\alpha}_{\xi}}_{=0}
+\]
+
+Descends to $C = F_\alpha\in\Omega^2(Z/T,\t)$, the ``curvature" form. 
+
+Now, $dF_\alpha = 0$, so $F_\alpha$ defines a cohomology class $[F_\alpha] \in H^2)(Z/T)\otimes\t$
+
+\thm[Duistemaat-Hackman (sp???)]
+
+The cohomology class of $\omega_\mu$ changes linearly:
+\[
+[\omega_\mu] = [\omega_{\mu_0}] + \langle \mu - \mu_0, C \rangle
+\]
+
+Recall $\operatorname{Vol}(M_\mu) = \frac{1}{k!}\int_{M_\mu}\omega_\mu^k$
+\begin{align*}
+k & = \frac12\dim M_\mu \\
+& = \frac12\dim M - \dim T
+\end{align*}
+Then 
+\[
+\operatorname{Vol}(M_\mu) = \frac{1}{k!}\int_{Z/T}\left(\underbrace{[\omega_{\mu_0}] + \langle\mu-\mu_0,C\rangle}_{\text{polynomial of degree $\leq k$ in $\mu$, with values in $H^{2k}(Z)$}}\right)^k
+\]
+
+\proof
+
+\qed
+
+\defn
+
+For compact Hamiltonian $T$-space $(M,\omega),\Phi:M\to\t^*$, one defines the \underline{Duestemaat-Hachmann}(SP????????) measure by
+\[
+\Phi_*|\frac{\omega^n}{n!}|
+\]
+measure on $\t^*$.
+
+At regular values of $\Phi$, this measure is smooth. 
+
+Have normalized Lebesgue measure $|d\mu|$ on $\t^*$ ($T \cong (\R/\Z)^, \t \cong \R^k \cong \t^*$)
+
+\[
+\Phi_*|\frac{\omega^n}{n!}| = f(\mu)|d\mu|
+\]
+$f(m) = \operatorname{Vol}(M_\mu)$. Different theorem says: This is piecewise polynomial. 
+
+\exm[Archimedes?]
+
+Let $M = S^2\subseteq\R^3$ with standard area form $\omega$ of total integral $4\pi$. 
+
+Let $\Phi:S^2\to\R$ be the projection onto the $z$-axis (moment map for rotation). 
+
+Then $\Phi_*|\omega| = 2\pi|dz|$ on $[-1,1]$, and 0 elsewhere.
+
+$\omega = dz\wedge d\phi$
+
+\thm[Atiyah, Guilleman-Steinberg(sp?)]
+
+Let $(M,\omega)$ be a compact, connected Hamiltonian $T$-space, with $\Phi(M) = $convex hull of $\Phi(M^T)$, where $M^T$ is the $T$-fixed points. 
+
+\exm
+
+Given $(\lambda_1,\dots,\lambda_n) = \lambda \in \R^n$, let $\ms{O}(\lambda)$ be the set of Hermitian matrices (i.e. $A^T= A$) with $\operatorname{spec}(A) = \{\lambda_1,\dots,\lambda_n\}$.
+
+Let $\ms{O}(\lambda)\to\R^n, A \mapsto (A_{11},A_{22},\dots,A_{nn})$
+
+$\pi(\ms{O}(\lambda))\subseteq\R^n$ is convex hull of 
+\[
+\{\lambda_{\sigma(1)},\dots,\lambda_{\sigma(n)}\mid\sigma\in S_n \}
+\]
+$u(n) \cong u(n)^*$, there is bijection between Hamiltonian and skew-hamiltonian matrices. 
+
+\subsection*{\underline{Symplectic $T$-representations}}
+
+Let $T \curvearrowright(V,\omega)$ be a Torus acting on a symplectic vector space. The corresponding moment map is $\Phi_V:V\to\t^*$ given by 
+\[
+\langle\Phi_V(v),\xi\rangle = -\frac12\omega(v,\xi v)
+\]
+What is $\Phi_V(V)?$
+
+A unitary $T$-representation on $\C$ is given by a homomorphism $T \to U(1) = S^1 = \R/\Z$. Let $\Lambda \subseteq\t$ be a lattice, i.e. $\Lambda = \{\xi\in \t \mid \exp(\xi) = e\}$. Then $T = \t/\Lambda$ ($T = \R^k/\Z^k), \Lambda = \Z^k, \exp:\xi\mapsto[\xi]$)
+
+We get $\t \mapsto Lie(S^1) = \R$, which restricts to $\alpha:\Lambda\to\Z$, a lattice homomorphism. We call this the ``weight" of the homomorphism. 
+
+$\underbrace{\exp(\xi)}_{=[\xi]}\cdot z = e^{2\pi i \langle \alpha,\xi\rangle}z$.
+
+The set $\Lambda^* = \Hom(\Lambda,\Z)\subseteq\t^*$ is the weight lattice. 
+
+1-dimensional $T$-reps are determined by their \underline{weight}. 
+
+$\alpha \mapsto \C_\alpha$
+
+Higher-dimensional $T$-representations are always direct sums of these: 
+\[
+T\curvearrowright V \cong C_{\alpha_1}\oplus \cdots \oplus C_{\alpha_k}
+\]
+
+For \underline{symplectic} $T$-representations, $(V,\omega)$ can choose $T$-invariant complex structure, unique up to homotopy. 
+
+So $V$ becomes a Hermition vector space, so get collection of weights $\alpha_1,\dots,\alpha_n\in \Lambda^*\subseteq\t^*$. Every symplectic $T$-representation is determined up to isomorphism by these weights. 
+
+Moment map for $S^1 \curvearrowright \C \cong \R^2$ is $z \mapsto -\pi|z|^2$. 
+
+For $\alpha \in \Lambda^*$, $T \curvearrowright C_\alpha$ has moment map $\langle\Phi(z),\xi\rangle = -\pi\langle\alpha,\xi\rangle|z|^2$
+
+More generally $T \curvearrowright C_{\alpha_1}\oplus\cdots\oplus C_{\alpha_k} \cong V$ has $\langle\Phi(z_1,\dots,z_n), \xi \rangle = -\pi\sum_{i=1}^n|z_i|^2\langle\alpha_i,\xi\rangle$
+
+So $\Phi_V(V) = -cone\{\alpha_1,\dots,\alpha_n\}$, the cone spanned by them (with a minus sign). 
 
 
 
