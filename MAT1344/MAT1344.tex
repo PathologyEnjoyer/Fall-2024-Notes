@@ -3533,6 +3533,90 @@ More generally $T \curvearrowright C_{\alpha_1}\oplus\cdots\oplus C_{\alpha_k} \
 
 So $\Phi_V(V) = -cone\{\alpha_1,\dots,\alpha_n\}$, the cone spanned by them (with a minus sign). 
 
+\section*{\underline{Lecture 	21, 11/28/24}}
+
+Let $(M,\omega,\Phi)$ be a Hamiltonian $T$-space, $\Phi:M\to\t^*$, and suppose $m_0 \in M$ is a fixed point, i.e. $T \cdot m_0 = \{m_0\}$.
+
+We have $T \curvearrowright T_{m_0}M$ symplectically. There exists a $T$-invariant open neighborhood $U$ of $m_0$ and $T$-equivariant symplectomorphism $M\supseteq U \to U' \subseteq T_{m_0}M$ to neighborhood of 0. 
+
+Pick $T$-invariant $\g$ on $T_{m_0}M$, so get unitary map of $T$ on $V = T_{m_0}M$.
+
+Fact: $\Phi:V\to\t^*$ is open as a map onto its image. 
+
+\prop
+
+Given a fixed point $m_0 \in M$, there exists an invariant open neighborhood $U$ of $m_0$ and $U'$ of $\Phi(m_0)$ such that $\Phi(U) = (\Phi(m_0) - cone\{\alpha_1,\dots,\alpha_n\})\cap U'$ where $\alpha_1,\dots,\alpha_n$ are weights for $T$-action on $T_{m_0}M$. 
+
+\proof
+
+\underline{Remark:} If $M$ is compact, then fixed points always exist. 
+
+Choose $\xi \in \t$ such that $\{\exp(s\xi)\mid s \in \R\}$ is dense in $T$. Then 
+\begin{align*}
+M^T  & = \{m\in M \mid \xi_M(m) = 0\} \\
+& = \{m\in M\mid d\langle\Phi,\xi\rangle|_m = 0\} \\
+& \neq \varnothing
+\end{align*}
+because there are always critical points on a compact manifold, e.g. the max or min.
+
+\lem
+
+The map $\Phi:\C^n\to\t^*$ has connected fibers. Moreover, every open neighborhood of 0 contains an open $U$ such that $\Phi|_U$ has connected fibers.
+
+\proof
+
+Want to show that any two solutions of $\sum|z_i|^2\alpha_i = \mu$ can be connected by a path. $z_i = r_ie^{i\phi_i}$. Suffices to show that any two solutions to $\sum s_i\alpha_i = \mu, s_i \geq 0$ are connected by a path, which is clear by convexity. Still works for $U = B_\varepsilon(0)$, i.e. $\sum |z_i|^2 < \varepsilon^2$, i.e. $\sum s_i \leq \varepsilon^2$.
+
+So, for $m_0 \in M$ a fixed point, can choose $U$ (as above) such that $\Phi|_U$ has connected fibers. 
+
+\qed
+
+Consider more general points. The orbits $O = T\cdot m_0 = T/H$, $H = T_{m_0}$ are isotropic (CF last time). 
+
+Recall: Neighborhood(unclear what word) of isotropic submanifolds $N \subseteq (M,\omega)$ are determined up to symplectomorphism by $TN^\omega/TN$
+
+$(TO)^\omega/TO \to O = T/H$ is determined by $H = T_{m_0}\curvearrowright ((TO)^\omega/TO)|_{m_0}$. 
+
+Let $V = (T_{m_0}O)^\omega/(T_{m_0}O)$ this $H$-representation. 
+
+\underline{\underline{Model}}
+
+$E = T\times\t^*$ is the cotangent bundle of $T$,  hence a symplectic manifold.
+
+Unitary $H$-action $h\cdot(t,\tau,v) = (th^{-1},\tau,h\cdot v)$ with moment map $(t,\tau,v) \mapsto -pr_{\g^*}(\tau) + \Phi_V$. 
+
+The $T$-action on $E$ induced from $t_\g\cdot(t,\tau,v) = (t,t,\tau,v)$ with moment map $(t,\tau,v)\mapsto\tau$.
+
+$\Phi_E:E\to\t^*$
+
+Zero level set for $H$-action given by 
+\[
+\{(t,\tau,v) \mid pr_{\h^*}(\tau) = \Phi_V(v)\}
+\]
+$\Phi_E(E) = (pr_{\h^*})^{-1}(\Phi_V(V))$
+
+We have $\Phi_V(V) = -cone\{\beta_1,\dots,\beta_k\}$ where $\beta_i\in\h^*$ are weights for $H^0$-action on $V$.
+
+So $\Phi_E(E) = \Phi(m_0) - \underbrace{(pr_{\h^*})^{-1}cone\{\beta_1,\dots,\beta_r\}}_{\supseteq\ann(\h)}$
+
+\thm[Local convexity theorem]
+
+Let $(M,\omega,\Phi)$ be a Hamiltonian $T$-space, $m_0\in M$. Then there exists an invariant open neighborhood $U \ni m_0$ and open neighborhood $U'$ of $\Phi(m_0)$ such that 
+\begin{enumerate}
+
+\item $\Phi|_U$ has connected fibers. 
+
+\item $\Phi(U) = \underbrace{(\Phi(m_0) - (pr_{\h^*})^{-1}cone\{\beta_1,\dots,\beta_r\})}_{\eqdef C_{m_0}}\cap U'$
+
+\end{enumerate}
+
+
+
+
+
+
+
+
 
 
 
